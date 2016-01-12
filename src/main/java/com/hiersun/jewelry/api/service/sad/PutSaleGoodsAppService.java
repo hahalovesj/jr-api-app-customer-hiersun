@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -22,6 +23,8 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("putSaleGoodsAppService")
 public class PutSaleGoodsAppService implements BaseService {
+	
+	private static Logger log = Logger.getLogger(PutSaleGoodsAppService.class);
 
 	@Resource
 	DirectGoodsService directGoodsService;
@@ -40,6 +43,8 @@ public class PutSaleGoodsAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+		log.info("正在处理提交直售订单接口putSaleGoods(3004),Header=" + reqHead.toString());
+		log.info("正在处理提交直售订单接口putSaleGoods(3004),Body=" + bodyStr);
 		try {
 			Request3004 body = JSON.parseObject(bodyStr, Request3004.class);
 
@@ -68,6 +73,7 @@ public class PutSaleGoodsAppService implements BaseService {
 
 			DirectGoodsInfoVo resultInfo = directGoodsService.createDirectGoods(directGoodsInfo);
 			if (resultInfo == null) {
+				log.error("生成直售商品对象失败，resultInfo=" + resultInfo);
 				ResponseHeader respHead = new ResponseHeader(9999);
 				ResponseBody responseBody = new ResponseBody();
 				this.packageMsgMap(responseBody, respHead);
@@ -85,7 +91,11 @@ public class PutSaleGoodsAppService implements BaseService {
 			return this.packageMsgMap(responseBody, respHead);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			for (int i = 0; i < e.getStackTrace().length; i++) {
+				log.error("提交直售订单失败，异常类：\"" + e.getStackTrace()[i].getClassName() + "\"; 函数方法：\""
+						+ e.getStackTrace()[i].getMethodName() + "()\"; Error：" + e.getMessage() + "; 错误行："
+						+ e.getStackTrace()[i].getLineNumber());
+			}
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			return this.packageMsgMap(responseBody, respHeader);
