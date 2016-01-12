@@ -24,6 +24,7 @@ import com.hiersun.jewelry.api.homescreen.pojo.JrdsSearchKeyword;
 import com.hiersun.jewelry.api.homescreen.service.KeyWordService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 @Service("searchAppService")
 public class SearchAppService implements BaseService{
@@ -103,7 +104,7 @@ public class SearchAppService implements BaseService{
 						.toString());
 				map.put("goodsMsgTimes", goodList.get(i).getMsgTimes() == null ? 0 + "" : goodList.get(i)
 						.getMsgTimes().toString());
-				map.put("createTime", goodList.get(i).getCreated());
+				map.put("createTime",DateUtil.dateToStr(goodList.get(i).getCreated(), "yyyy-MM-dd HH:mm:ss") );
 				map.put("goodsID", goodList.get(i).getId());
 				Map<String, Object> userMap = new HashMap<String, Object>();
 				userMap.put("userID", goodList.get(i).getUser().getUserID());
