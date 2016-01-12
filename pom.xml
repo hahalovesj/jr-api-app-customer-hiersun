@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	 <modelVersion>4.0.0</modelVersion>
-  <groupId>com.hiersun.jewelry</groupId>
-  <artifactId>jr-api-app-consumer</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>jr-api-app-consumer Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  <build>
-    <finalName>jr-api-app-consumer</finalName>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.hiersun.jewelry</groupId>
+	<artifactId>jr-api-app-consumer</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>jr-api-app-consumer Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<build>
+		<finalName>jr-api-app-consumer</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<pluginManagement>
 			<plugins>
@@ -20,16 +20,9 @@
 						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
-
-				<plugin>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>2.3</version>
-					<configuration>
-						<!-- <webappDirectory>WebContent</webappDirectory> -->
-						<warSourceDirectory>WebContent</warSourceDirectory>
-						<failOnMissingWebXml>false</failOnMissingWebXml>
-					</configuration>
-				</plugin>
+				<!-- <plugin> <artifactId>maven-war-plugin</artifactId> <version>2.3</version> 
+					<configuration> <webappDirectory>WebContent</webappDirectory> <warSourceDirectory>WebContent</warSourceDirectory> 
+					<failOnMissingWebXml>false</failOnMissingWebXml> </configuration> </plugin> -->
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -261,9 +254,9 @@
 
 		<!-- 私服的jar -->
 		<dependency>
-		  <groupId>com.hiersun.jewelry</groupId>
-		  <artifactId>jr-api-business-api</artifactId>
-		  <version>0.0.1-SNAPSHOT</version>
+			<groupId>com.hiersun.jewelry</groupId>
+			<artifactId>jr-api-business-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<!-- Nexus私服 -->

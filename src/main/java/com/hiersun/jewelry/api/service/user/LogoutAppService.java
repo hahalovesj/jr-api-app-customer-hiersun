@@ -6,6 +6,7 @@ import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,6 +18,8 @@ import java.util.Map;
  */
 @Service("logoutAppService")
 public class LogoutAppService implements BaseService {
+
+    private static final Logger log = Logger.getLogger(LogoutAppService.class);
 
     @Resource
     private RedisBaseService redisBaseServiceImpl;
@@ -33,6 +36,9 @@ public class LogoutAppService implements BaseService {
 
     @Override
     public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+
+        log.info("logout 1004 用户注销请求头信息: " + reqHead.toString());
+        log.info("logout 1004 用户注销请求消息体: " + bodyStr);
         try {
             String token = reqHead.getToken();
             boolean isDel = redisBaseServiceImpl.del("api.token." + token);
@@ -46,9 +52,11 @@ public class LogoutAppService implements BaseService {
             ResponseBody responseBody = new ResponseBody();
             return this.packageMsgMap(responseBody, respHeader);
         } catch (Exception e) {
+            log.error("logout 1004 用户注销接口，发生异常，异常信息：" + e.getMessage());
+            e.printStackTrace();
+
             ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
             ResponseBody responseBody = new ResponseBody();
-            e.printStackTrace();
             return this.packageMsgMap(responseBody, respHeader);
         }
     }

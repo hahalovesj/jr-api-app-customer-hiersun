@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -29,6 +30,8 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("buyGoodsAppService")
 public class BuyGoodsAppService implements BaseService{
+	
+	 private static Logger log = Logger.getLogger(BuyGoodsAppService.class);
 	
 	@Resource
 	RedisBaseService redisBaseServiceImpl;
@@ -52,6 +55,8 @@ public class BuyGoodsAppService implements BaseService{
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+		
+		log.info("XXX接口 请求消息体："+bodyStr);
 		try {
 			String reqToken = reqHead.getToken();
 			String userid = redisBaseServiceImpl.get("api.token." + reqToken);
@@ -153,6 +158,7 @@ public class BuyGoodsAppService implements BaseService{
 
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
+			log.error("XXX接口，发生异常，异常信息："+e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
