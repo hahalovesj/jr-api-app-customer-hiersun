@@ -53,25 +53,25 @@ public class RegistAppService implements BaseService {
             String mobile = body.getMobile();
             String acctionType = body.getsMsgAcctionType();
             // 对比验证码
-//            String cacheNumber = redisBaseServiceImpl.get("api" + acctionType + mobile);
-//            if (cacheNumber == null || cacheNumber.trim().length() < 1) {
-//                ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100201);
-//                ResponseBody responseBody = new ResponseBody();
-//                return this.packageMsgMap(responseBody, respHeader);
-//            }
-//            if (!veriCode.equals(cacheNumber)) {
-//                ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100201);
-//                ResponseBody responseBody = new ResponseBody();
-//                return this.packageMsgMap(responseBody, respHeader);
-//            }
-//            // ... 操作数据库
-//            boolean isExis = userService.isExistMobile(mobile);
-//            // 手机号存在返回已存在
-//            if (isExis) {
-//                ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100101);
-//                ResponseBody responseBody = new ResponseBody();
-//                return this.packageMsgMap(responseBody, respHeader);
-//            }
+            String cacheNumber = redisBaseServiceImpl.get("api" + acctionType + mobile);
+            if (cacheNumber == null || cacheNumber.trim().length() < 1) {
+                ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100201);
+                ResponseBody responseBody = new ResponseBody();
+                return this.packageMsgMap(responseBody, respHeader);
+            }
+            if (!veriCode.equals(cacheNumber)) {
+                ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100201);
+                ResponseBody responseBody = new ResponseBody();
+                return this.packageMsgMap(responseBody, respHeader);
+            }
+            // ... 操作数据库
+            boolean isExis = userService.isExistMobile(mobile);
+            // 手机号存在返回已存在
+            if (isExis) {
+                ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100101);
+                ResponseBody responseBody = new ResponseBody();
+                return this.packageMsgMap(responseBody, respHeader);
+            }
 
             User user = new User();
             user.setUserMobile(mobile);
