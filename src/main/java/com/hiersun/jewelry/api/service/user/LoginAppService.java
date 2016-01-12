@@ -1,0 +1,131 @@
+package com.hiersun.jewelry.api.service.user;
+
+import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.entity.RequestHeader;
+import com.hiersun.jewelry.api.entity.ResponseBody;
+import com.hiersun.jewelry.api.entity.ResponseHeader;
+import com.hiersun.jewelry.api.entity.request.RequestLogin;
+import com.hiersun.jewelry.api.entity.response.RespUser;
+import com.hiersun.jewelry.api.entity.response.ResponseLogin;
+import com.hiersun.jewelry.api.entity.vo.BankCardNum;
+import com.hiersun.jewelry.api.service.BaseService;
+import com.hiersun.jewelry.api.service.RedisBaseService;
+import com.hiersun.jewelry.api.service.utils.UserUtil;
+import com.hiersun.jewelry.api.user.domain.UserInfo;
+import com.hiersun.jewelry.api.user.service.UserService;
+import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.RandomStringUtil;
+import com.hiersun.jewelry.api.util.ResponseUtil;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by lijunteng on 16/1/11.
+ */
+@Service("loginAppService")
+public class LoginAppService implements BaseService {
+
+    @Resource
+    private UserService userService;
+    @Resource
+    private RedisBaseService redisBaseServiceImpl;
+
+    @Override
+    public boolean ifValidateLogin() {
+        return false;
+    }
+
+    @Override
+    public Integer baseValidateMsgBody(String bodyStr, Long userId) {
+        RequestLogin body = JSON.parseObject(bodyStr, RequestLogin.class);
+        return body.volidateValue();
+    }
+
+    @Override
+    public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+
+        try {
+            RequestLogin body = JSON.parseObject(bodyStr, RequestLogin.class);
+
+            UserInfo users = new UserInfo();
+            users.setUserMobile(body.getMobile());
+            // 数据库操作...
+            UserInfo userInfo = userService.getUserInfoByMobile(users);
+
+            if (userInfo == null) {
+                ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100102);
+                ResponseBody responseBody = new ResponseBody();
+                return this.packageMsgMap(responseBody, respHeader);
+            }
+            if (!userInfo.getPassword().equals(body.getPassword())) {
+                ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100304);
+                ResponseBody responseBody = new ResponseBody();
+                return this.packageMsgMap(responseBody, respHeader);
+            }
+            UserInfo info = new UserInfo();
+            info.setUserMobile(body.getMobile());
+            UserInfo resultUserInfo = userService.getUserInfoByMobile(info);
+
+            // 登陆成功 存token
+            String token = RandomStringUtil.randomString(16);
+            redisBaseServiceImpl.set(UserUtil.APP_USERID_CACH_KEY_START + token, userInfo.getUserId().toString());
+            // 配置返回信息
+            ResponseLogin responseBody = new ResponseLogin();
+
+            responseBody.setJumpTransaction(body.getJumpTransaction());
+            responseBody.setMobile(userInfo.getUserMobile());
+            responseBody.setToken(token);
+            RespUser user = new RespUser();
+            if (resultUserInfo.getSex() == null) {
+                user.setSex("男");
+            } else {
+                user.setSex(resultUserInfo.getSex().equals("0") ? "女" : "男");
+            }
+            if (resultUserInfo.getNickName() != null) {
+                user.setNickName(resultUserInfo.getNickName());
+            } else {
+                user.setNickName(CommonUtils.mobileForNickName(body.getMobile()));
+            }
+            if (resultUserInfo.getBirthday() != null) {
+                user.setBirthday(resultUserInfo.getBirthday());
+            }
+            BankCardNum bankCarNum = new BankCardNum();
+            if (resultUserInfo.getCardNo() != null) {
+                bankCarNum.setBankCardNum(resultUserInfo.getCardNo());
+            }
+            if (resultUserInfo.getBankName() != null) {
+                bankCarNum.setBankName(resultUserInfo.getBankName());
+            }
+            if (resultUserInfo.getRealName() != null) {
+                bankCarNum.setUserRealName(resultUserInfo.getRealName());
+            }
+            user.setBankCardNum(bankCarNum);
+            responseBody.setUser(user);
+
+            ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
+            return this.packageMsgMap(responseBody, respHead);
+        } catch (Exception e) {
+            ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
+            ResponseBody responseBody = new ResponseBody();
+            e.printStackTrace();
+            return this.packageMsgMap(responseBody, respHeader);
+        }
+    }
+
+    private Map<String,Object> packageMsgMap(ResponseLogin res, ResponseHeader respHead){
+        Map<String, Object> responseMsg = new HashMap<String, Object>();
+        responseMsg.put("body", res);
+        responseMsg.put("head", respHead);
+        return responseMsg;
+    }
+
+    private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+        Map<String, Object> responseMsg = new HashMap<String, Object>();
+        responseMsg.put("body", res);
+        responseMsg.put("head", respHead);
+        return responseMsg;
+    }
+}
