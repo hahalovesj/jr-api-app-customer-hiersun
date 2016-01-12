@@ -11,6 +11,7 @@ import com.hiersun.jewelry.api.service.RedisBaseService;
 import com.hiersun.jewelry.api.user.domain.User;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +23,8 @@ import java.util.Map;
  */
 @Service("resetpwdAppService")
 public class ResetpwdAppService implements BaseService {
+
+    private static final Logger log = Logger.getLogger(ResetpwdAppService.class);
 
     @Resource
     private RedisBaseService redisBaseServiceImpl;
@@ -41,6 +44,10 @@ public class ResetpwdAppService implements BaseService {
 
     @Override
     public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+
+        log.info("resetpwd 1005 用户重置密码请求头信息: " + reqHead.toString());
+        log.info("resetpwd 1005 用户重置密码请求消息体: " + bodyStr);
+
         try {
             RequestResetpwd body = JSON.parseObject(bodyStr, RequestResetpwd.class);
             int voliNumber = body.volidateValue();
@@ -79,9 +86,11 @@ public class ResetpwdAppService implements BaseService {
 
             return this.packageMsgMap(responseBody, respHead);
         } catch (Exception e) {
+            log.error("resetpwd 1005 用户注册接口，发生异常，异常信息：" + e.getMessage());
+            e.printStackTrace();
+
             ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
             ResponseBody responseBody = new ResponseBody();
-            e.printStackTrace();
             return this.packageMsgMap(responseBody, respHeader);
         }
     }

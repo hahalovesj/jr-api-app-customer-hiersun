@@ -16,6 +16,7 @@ import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +28,8 @@ import java.util.Map;
  */
 @Service("loginAppService")
 public class LoginAppService implements BaseService {
+
+    private static final Logger log = Logger.getLogger(LoginAppService.class);
 
     @Resource
     private UserService userService;
@@ -47,6 +50,8 @@ public class LoginAppService implements BaseService {
     @Override
     public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
 
+        log.info("login 1002 用户登录请求头信息: " + reqHead.toString());
+        log.info("login 1002 用户登录请求消息体: " + bodyStr);
         try {
             RequestLogin body = JSON.parseObject(bodyStr, RequestLogin.class);
 
@@ -108,9 +113,11 @@ public class LoginAppService implements BaseService {
             ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
             return this.packageMsgMap(responseBody, respHead);
         } catch (Exception e) {
+            log.error("login 1002 用户登录接口，发生异常，异常信息：" + e.getMessage());
+            e.printStackTrace();
+
             ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
             ResponseBody responseBody = new ResponseBody();
-            e.printStackTrace();
             return this.packageMsgMap(responseBody, respHeader);
         }
     }
