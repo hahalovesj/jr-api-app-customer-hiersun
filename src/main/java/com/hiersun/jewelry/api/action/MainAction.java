@@ -29,8 +29,8 @@ import com.hiersun.jewelry.api.util.SpringContextUtil;
 import com.hiersun.jewelry.api.util.ValiHeadUtil;
 
 @Controller
-@RequestMapping("/test")
-public class TestMainAction{
+@RequestMapping("/api")
+public class MainAction{
 
 	@Resource
 	RedisBaseService redisBaseServiceImpl;
@@ -65,7 +65,7 @@ public class TestMainAction{
 
 	}
 
-	@RequestMapping(value = "/test", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/main", method = { RequestMethod.POST, RequestMethod.GET })
 	public void main(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=gbk");
 		try{
