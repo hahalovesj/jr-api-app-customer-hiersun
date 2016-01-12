@@ -16,7 +16,6 @@ import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4017;
-import com.hiersun.jewelry.api.entity.response.Response4007;
 import com.hiersun.jewelry.api.entity.response.Response4017;
 import com.hiersun.jewelry.api.orderservice.domain.QualificationPicVo;
 import com.hiersun.jewelry.api.orderservice.pojo.JrasGoodInfoConfirm;
