@@ -97,4 +97,16 @@ public class RequestHeader extends Header {
 		this.networkStatus = networkStatus;
 	}
 
+	@Override
+	public String toString() {
+		return "RequestHeader{" +
+				"sign='" + sign + '\'' +
+				", terminal='" + terminal + '\'' +
+				", version='" + version + '\'' +
+				", imei='" + imei + '\'' +
+				", ua='" + ua + '\'' +
+				", token='" + token + '\'' +
+				", networkStatus='" + networkStatus + '\'' +
+				'}';
+	}
 }
