@@ -67,7 +67,7 @@ public class GoodsMsgListAppService implements BaseService{
 					map.put("msgToUserName", dvo.getReplyor());
 				}
 				if (dvo.getInitiatorId() != null) {
-					map.put("msgFormUserID", dvo.getInitiatorId());
+					map.put("msgFromUserID", dvo.getInitiatorId());
 				}
 				if (dvo.getReplyorId() != null) {
 					map.put("msgToUserID", dvo.getReplyorId());
