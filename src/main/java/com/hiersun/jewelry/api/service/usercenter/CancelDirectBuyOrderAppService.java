@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -20,6 +21,8 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("cancelDirectBuyOrderAppService")
 public class CancelDirectBuyOrderAppService implements BaseService {
+
+	private static Logger log = Logger.getLogger(CancelDirectBuyOrderAppService.class);
 
 	@Resource
 	DirectOrderService directOrderService;
@@ -37,6 +40,10 @@ public class CancelDirectBuyOrderAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+
+		log.info("cancelDirectBuyOrder	4020	请求信息：" + reqHead.toString());
+		log.info("cancelDirectBuyOrder	4020 	请求信息：" + bodyStr);
+
 		try {
 			Request4020 body = JSON.parseObject(bodyStr, Request4020.class);
 
@@ -58,6 +65,7 @@ public class CancelDirectBuyOrderAppService implements BaseService {
 			ResponseBody resp = new ResponseBody();
 			return this.packageMsgMap(resp, respHead);
 		} catch (Exception e) {
+			log.error("cancelDirectBuyOrder	4020	接口发生异常，异常信息" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody resp = new ResponseBody();

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -18,13 +19,14 @@ import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4025;
-import com.hiersun.jewelry.api.entity.response.Response4007;
 import com.hiersun.jewelry.api.entity.response.Response4025;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("cancelOrderAppService")
 public class CancelOrderAppService implements BaseService {
+
+	private static Logger log = Logger.getLogger(CancelOrderAppService.class);
 
 	@Resource
 	DirectGoodsService directGoodsService;
@@ -44,6 +46,10 @@ public class CancelOrderAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+
+		log.info("cancelOrder	4025	请求信息：" + reqHead.toString());
+		log.info("cancelOrder	4025 	请求信息：" + bodyStr);
+
 		try {
 			Request4025 body = JSON.parseObject(bodyStr, Request4025.class);
 			// 派分请求
@@ -104,6 +110,7 @@ public class CancelOrderAppService implements BaseService {
 			ResponseBody resp = new ResponseBody();
 			return this.packageMsgMap(resp, respHead);
 		} catch (Exception e) {
+			log.error("cancelOrder	4025	接口发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody resp = new ResponseBody();

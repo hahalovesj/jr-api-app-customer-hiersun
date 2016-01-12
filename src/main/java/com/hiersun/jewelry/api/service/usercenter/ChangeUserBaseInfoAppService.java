@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -22,6 +23,8 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 @Service("changeUserBaseInfoAppService")
 public class ChangeUserBaseInfoAppService implements BaseService{
 
+	private static Logger log = Logger.getLogger(ChangeUserBaseInfoAppService.class);
+	
 	@Resource
 	private UserService userService;
 	
@@ -39,6 +42,10 @@ public class ChangeUserBaseInfoAppService implements BaseService{
 	
 	@Override
 	public Map<String,Object> doController(RequestHeader reqHead,String bodyStr,Long userId)  throws Exception{
+		
+		log.info("changeUserBaseInfo	3007	请求信息：" + reqHead.toString());
+		log.info("changeUserBaseInfo	3007 	请求信息：" + bodyStr);
+		
 		try {
 			Request4008 body = JSON.parseObject(bodyStr, Request4008.class);
 
@@ -59,6 +66,7 @@ public class ChangeUserBaseInfoAppService implements BaseService{
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(res, respHead);
 		} catch (Exception e) {
+			log.error("changeUserBaseInfo	3007	接口发生异常，异常信息：" + e.getMessage());
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			e.printStackTrace();

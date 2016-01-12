@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -16,9 +17,11 @@ import com.hiersun.jewelry.api.orderservice.service.OrderService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
-@Service("confirmServiceOrderAppService")
-public class ConfirmServiceOrderAppService implements BaseService {
-
+@Service("confirmGoodsAppService")
+public class ConfirmGoodsAppService implements BaseService {
+	
+	private static Logger log = Logger.getLogger(ConfirmGoodsAppService.class);
+	
 	@Resource
 	OrderService orderService;
 
@@ -35,6 +38,10 @@ public class ConfirmServiceOrderAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+	
+		log.info("confirmGoods 	4016	接口请求消息体：" + reqHead.toString());
+		log.info("confirmGoods 	4016	接口请求消息体：" + bodyStr);
+		
 		try {
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
 			String orderNo = body.getOrderNO();
@@ -44,6 +51,7 @@ public class ConfirmServiceOrderAppService implements BaseService {
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(res, respHead);
 		} catch (Exception e) {
+			log.error("confirmGoods 	4016	接口发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseBody res = new ResponseBody();
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 99999);

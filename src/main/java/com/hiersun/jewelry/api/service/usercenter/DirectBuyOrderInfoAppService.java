@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.constant.StatusMap;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
@@ -26,17 +29,21 @@ import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 /***
- * 3.1.19 我购买的---订单详情 （directBuyOrderInfo  4019）
+ * 3.1.19 我购买的---订单详情 （directBuyOrderInfo 4019）
+ * 
  * @author lilong
  *
  */
-public class DirectBuyOrderInfoAppService  implements BaseService{
+@Service("directBuyOrderInfoAppService")
+public class DirectBuyOrderInfoAppService implements BaseService {
+
+	private static Logger log = Logger.getLogger(DirectBuyOrderInfoAppService.class);
 
 	@Resource
 	private DirectOrderService directOrderService;
 	@Resource
 	private UserService userService;
-	
+
 	@Override
 	public boolean ifValidateLogin() {
 		// TODO Auto-generated method stub
@@ -51,15 +58,19 @@ public class DirectBuyOrderInfoAppService  implements BaseService{
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-		try{
+
+		log.info("directBuyOrderInfo 	4019	接口请求消息体：" + reqHead.toString());
+		log.info("directBuyOrderInfo 	4019	接口请求消息体：" + bodyStr);
+
+		try {
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
 			String orderNo = body.getOrderNO();
 			// 基本信息
 			JrdsOrderVo jrdsOrderVo = directOrderService.selectDirectOrder(orderNo);
-	
+
 			List<JrdsOrderLog> jrdsOrderLogs = directOrderService.getJrdsOrderLogByOrderId(jrdsOrderVo.getId());
 			Response4019 response4019 = new Response4019();
-			
+
 			ResponseJrdsOrder order = new ResponseJrdsOrder();
 			order.setGoodsName(jrdsOrderVo.getGoodsName());
 			order.setGoodsPic(jrdsOrderVo.getGoodsPic());
@@ -70,8 +81,9 @@ public class DirectBuyOrderInfoAppService  implements BaseService{
 			order.setFreightDesc("￥0.00元运费（平台包邮）");// 暂时写死
 			order.setOrderMsg(jrdsOrderVo.getOrderMessage());
 			order.setOrderStatusCode(jrdsOrderVo.getOrderStatus().toString());
-			order.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_DB_MAP.get(jrdsOrderVo.getOrderStatus().intValue()));
-	
+			order.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_DB_MAP.get(jrdsOrderVo.getOrderStatus()
+					.intValue()));
+
 			Map<Integer, String> map = new HashMap<Integer, String>();
 			for (JrdsOrderLog jrdsOrderLog : jrdsOrderLogs) {
 				map.put(jrdsOrderLog.getLogStatus().intValue(),
@@ -83,43 +95,39 @@ public class DirectBuyOrderInfoAppService  implements BaseService{
 			order.setDeliveryedTime(map.get(9));
 			order.setConfirmedTime(map.get(10));
 			order.setAppraisaledTime(map.get(7) == null ? map.get(5) : null);
-	
+
 			// 收货地址
 			Long addressID = jrdsOrderVo.getAddressId();
 			JrMemberAddress address = userService.getAddressById(addressID);
-	
+
 			ResponseAddress addressResult = new ResponseAddress();
 			addressResult.setArea(address.getArea());
 			addressResult.setDetailedAddress(address.getDetailedAddress());
 			addressResult.setReceiver(address.getReceiver());
 			addressResult.setReceiverMobile(address.getReceiverMobile());
 			order.setAddress(addressResult);
-			
+
 			response4019.setOrder(order);
-			
+
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
-			return packageMsgMap(response4019,respHead);
-		}catch (Exception e) {
+			return packageMsgMap(response4019, respHead);
+		} catch (Exception e) {
+			log.error("directBuyOrderInfo 	4019	接口发生异常，异常信息：" + e.getMessage());
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			e.printStackTrace();
 			return this.packageMsgMap(responseBody, respHeader);
 		}
-		
-	
-
-
 	}
-	
-	
-	private Map<String,Object> packageMsgMap(Response4019 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response4019 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
