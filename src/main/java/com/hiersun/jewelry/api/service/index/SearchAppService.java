@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -29,6 +30,7 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 @Service("searchAppService")
 public class SearchAppService implements BaseService{
 	
+	private static final Logger log = Logger.getLogger(SearchAppService.class);
 	@Resource
 	private DirectGoodsService directGoodsService;
 	
@@ -48,6 +50,8 @@ public class SearchAppService implements BaseService{
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+		log.info("search	2002	接口 请求消息体："+reqHead.toString());
+		log.info("search	2002	接口 请求消息体："+bodyStr);
 		try {
 			Request2002 body = JSON.parseObject(bodyStr, Request2002.class);
 			String keyWord = body.getKeyWord();
@@ -138,6 +142,7 @@ public class SearchAppService implements BaseService{
 			return this.packageMsgMap(responseBody, respHead);
 			
 		} catch (Exception e) {
+			log.error("search 2002接口，发生异常，异常信息："+e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
