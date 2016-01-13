@@ -97,7 +97,7 @@ public class SearchAppService implements BaseService {
 			for (int i = 0; i < goodList.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("goodsPicUrl", Commons.PIC_DOMAIN + goodList.get(i).getHostGragp());
-				map.put("goodsPrice", goodList.get(i).getBuyingPrice());
+				map.put("goodsPrice", goodList.get(i).getDirectPrice());
 				map.put("goodsName", goodList.get(i).getGoodName());
 				if (goodList.get(i).getGoodDesc() != null && !goodList.get(i).getGoodDesc().equals("")) {
 					map.put("goodsDesc", goodList.get(i).getGoodDesc());

@@ -30,6 +30,7 @@ import com.hiersun.jewelry.api.uploadresource.domain.AttachmentVo;
 import com.hiersun.jewelry.api.user.domain.UserAllInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("goodsInfoAppService")
@@ -88,6 +89,7 @@ public class GoodsInfoAppService implements BaseService {
 			resultGoods.setGoodsName(goods.getGoodName());
 			resultGoods.setVisitTimes(goods.getViews().toString());
 			resultGoods.setGoodsPrice(goods.getDirectPrice().doubleValue());
+			resultGoods.setCreateTime(DateUtil.dateToStr(goods.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 			Long seleerUserID = goods.getSellerMemberId();
 
 			UserAllInfo userInifo = userService.getUserAllInfoByID(seleerUserID);

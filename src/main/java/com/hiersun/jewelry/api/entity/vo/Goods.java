@@ -17,6 +17,16 @@ public class Goods {
 	private ResultUser user;
 	private String goodsPicUrl;
 
+	private String createTime;
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
 	public String getGoodsPicUrl() {
 		return goodsPicUrl;
 	}

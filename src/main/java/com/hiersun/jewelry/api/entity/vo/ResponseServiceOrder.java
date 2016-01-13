@@ -4,7 +4,7 @@ public class ResponseServiceOrder {
 
 	private String createTime;
 	private String goodsName;
-	private String goodsPic;
+	private String goodsPicUrl;
 	private Long orderID;
 	private String orderNO;
 	private Double orderPrice;
@@ -12,8 +12,24 @@ public class ResponseServiceOrder {
 	private String orderStatusDes;
 	private Integer orderStatusCode;
 	private String sendGoodsTime;
-		
-	
+	private Double goodsBuyPrice;
+
+	public String getGoodsPicUrl() {
+		return goodsPicUrl;
+	}
+
+	public void setGoodsPicUrl(String goodsPicUrl) {
+		this.goodsPicUrl = goodsPicUrl;
+	}
+
+	public Double getGoodsBuyPrice() {
+		return goodsBuyPrice;
+	}
+
+	public void setGoodsBuyPrice(Double goodsBuyPrice) {
+		this.goodsBuyPrice = goodsBuyPrice;
+	}
+
 	public String getSendGoodsTime() {
 		return sendGoodsTime;
 	}
@@ -76,14 +92,6 @@ public class ResponseServiceOrder {
 
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
-	}
-
-	public String getGoodsPic() {
-		return goodsPic;
-	}
-
-	public void setGoodsPic(String goodsPic) {
-		this.goodsPic = goodsPic;
 	}
 
 	public Integer getOrderStatusCode() {
