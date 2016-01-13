@@ -22,9 +22,10 @@ import com.hiersun.jewelry.api.entity.response.Response2006;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+
 @Service("setGoodsMsgAppService")
-public class SetGoodsMsgAppService implements BaseService{
-	
+public class SetGoodsMsgAppService implements BaseService {
+
 	@Resource
 	DirectGoodMessageService directGoodMessageService;
 
@@ -50,7 +51,7 @@ public class SetGoodsMsgAppService implements BaseService{
 			vo.setGoodId(body.getGoodsID());
 			vo.setMessage(body.getMsgContent());
 			vo.setInitiator(body.getMsgFromUserName());
-			vo.setInitiatorId(body.getMsgFromUserID());
+			vo.setInitiatorId(userId);
 			vo.setReplyor(body.getMsgToUserName());
 			vo.setReplyorId(body.getMsgToUserID());
 			vo.setSellerMemberId(body.getGoodsUserID());
@@ -96,7 +97,7 @@ public class SetGoodsMsgAppService implements BaseService{
 			responseBody.setMsgList(resultList);
 
 			return this.packageMsgMap(responseBody, respHead);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
@@ -104,15 +105,15 @@ public class SetGoodsMsgAppService implements BaseService{
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response2006 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response2006 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

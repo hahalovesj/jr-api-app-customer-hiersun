@@ -102,6 +102,10 @@ public class MainAction{
 			if(resCode==0){
 				Map<String,Object> map = baseService.doController(reqHead,requestBodyStr,userId);
 				ResponseUtil.ResponseWriter(map, response);
+			}else{
+				ResponseHeader respHeader = new ResponseHeader(resCode);
+				ResponseBody responseBody = new ResponseBody();
+				ResponseUtil.ResponseWriter(respHeader, responseBody, response);
 			}
 		}catch(Exception e){
 			e.printStackTrace();

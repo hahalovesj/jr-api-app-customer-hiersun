@@ -22,9 +22,10 @@ import com.hiersun.jewelry.api.entity.response.Response2005;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+
 @Service("goodsMsgListAppService")
-public class GoodsMsgListAppService implements BaseService{
-	
+public class GoodsMsgListAppService implements BaseService {
+
 	@Resource
 	DirectGoodMessageService directGoodMessageService;
 
@@ -53,11 +54,18 @@ public class GoodsMsgListAppService implements BaseService{
 			respHead.setMessageID(reqHead.getMessageID());
 			respHead.setTimeStamp(new Date().getTime());
 			respHead.setTransactionType(reqHead.getTransactionType());
+			if (msgList.size() <= 0) {
+				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
+				ResponseBody responseBody = new ResponseBody();
+				return this.packageMsgMap(responseBody, respHeader);
+			}
 			// 返回的body
 			Response2005 responseBody = new Response2005();
 			responseBody.setGoodsID(goodsId);
-			List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 
+			responseBody.setGoodsUserID(msgList.get(0).getSellerMemberId());
+
+			List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 			for (DirectGoodMessageVo dvo : msgList) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				if (dvo.getInitiator() != null) {
@@ -84,7 +92,7 @@ public class GoodsMsgListAppService implements BaseService{
 
 			responseBody.setMsgList(resultList);
 			return this.packageMsgMap(responseBody, respHead);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
@@ -92,15 +100,15 @@ public class GoodsMsgListAppService implements BaseService{
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response2005 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response2005 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
