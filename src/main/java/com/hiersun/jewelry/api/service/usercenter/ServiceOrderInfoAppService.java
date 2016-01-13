@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -29,29 +30,33 @@ import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("serviceOrderInfoAppService")
-public class ServiceOrderInfoAppService implements BaseService{
+public class ServiceOrderInfoAppService implements BaseService {
+
+	private static Logger log = Logger.getLogger(ServiceOrderInfoAppService.class);
 
 	@Resource
 	private OrderService orderService;
-	
+
 	@Resource
 	private UserService userService;
-	
-	
+
 	@Override
 	public boolean ifValidateLogin() {
 		return true;
 	}
 
 	@Override
-	public Integer baseValidateMsgBody(String bodyStr,Long userId) {
+	public Integer baseValidateMsgBody(String bodyStr, Long userId) {
 		Request4011 body = JSON.parseObject(bodyStr, Request4011.class);
 		return body.volidateValue();
 	}
 
-	
 	@Override
-	public Map<String,Object> doController(RequestHeader reqHead,String bodyStr,Long userId)  throws Exception{
+	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+
+		log.info("serviceOrderInfo 	4011	接口请求消息体：" + reqHead.toString());
+		log.info("serviceOrderInfo 	4011	接口请求消息体：" + bodyStr);
+
 		try {
 			Request4011 body = JSON.parseObject(bodyStr, Request4011.class);
 			OrderVo orderVo = orderService.selectOrderDetailByNO(body.getOrderNO());
@@ -72,11 +77,11 @@ public class ServiceOrderInfoAppService implements BaseService{
 			// 如果订单状态为待配送和待发货 需要用鉴定状态去判断显示什么内容
 			if (orderVo.getStatus().intValue() == StatusMap.SERVICE_ORDER_DB_STAUE_DPS
 					|| orderVo.getStatus().intValue() == StatusMap.SERVICE_ORDER_DB_STAUE_DSH) {
-				responseServiceOrder.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_APP_MAP.get(orderVo
-						.getStype() + "_" + orderVo.getStatus() + "_" + orderVo.getJdResult()));
+				responseServiceOrder.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_APP_MAP.get(orderVo.getStype()
+						+ "_" + orderVo.getStatus() + "_" + orderVo.getJdResult()));
 			} else {
-				responseServiceOrder.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_APP_MAP.get(orderVo
-						.getStype() + "_" + orderVo.getStatus()));
+				responseServiceOrder.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_APP_MAP.get(orderVo.getStype()
+						+ "_" + orderVo.getStatus()));
 			}
 			responseServiceOrder.setOrderPrice(orderVo.getAmount().doubleValue());
 
@@ -109,21 +114,22 @@ public class ServiceOrderInfoAppService implements BaseService{
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(res, respHead);
 		} catch (Exception e) {
+			log.error("serviceOrderInfo 	4011	接口发生异常，异常信息：" + e.getMessage());
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			e.printStackTrace();
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response4011 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response4011 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

@@ -3,6 +3,9 @@ package com.hiersun.jewelry.api.service.usercenter;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -12,7 +15,10 @@ import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 import com.hiersun.jewelry.api.util.SubsystemIp;
 
+@Service("receivInfoAppService")
 public class ReceivInfoAppService implements BaseService {
+
+	private static Logger log = Logger.getLogger(ReceivInfoAppService.class);
 
 	@Override
 	public boolean ifValidateLogin() {
@@ -26,6 +32,10 @@ public class ReceivInfoAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+
+		log.info("receivInfo 	4012	接口请求消息体：" + reqHead.toString());
+		log.info("receivInfo 	4012	接口请求消息体：" + bodyStr);
+
 		try {
 			Map<String, Object> responseMsg = new HashMap<String, Object>();
 			// 返回的body
@@ -46,6 +56,7 @@ public class ReceivInfoAppService implements BaseService {
 			responseMsg.put("head", respHead);
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
+			log.error("receivInfo 	4012	接口发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseBody respBody = new ResponseBody();
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 99999);
