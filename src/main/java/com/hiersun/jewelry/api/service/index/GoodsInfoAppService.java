@@ -59,7 +59,7 @@ public class GoodsInfoAppService implements BaseService{
 			// 。。。(根据传来的值做数据查询)
 			long goodsId = body.getGoodsID();
 			List<AttachmentVo> pciList = directGoodsService.getJrdsGoodPic(goodsId, "jrds_good", null);
-			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId);
+			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId,false);
 			if (goods == null) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
 				ResponseBody responseBody = new ResponseBody();

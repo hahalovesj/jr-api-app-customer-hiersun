@@ -95,9 +95,10 @@ public class DirectBuyOrderListAppService implements BaseService {
 				responseServiceOrder.setOrderNO(orderList.get(i).getOrderNo());
 				responseServiceOrder.setOrderPrice(orderList.get(i).getOrderAmount().doubleValue());
 				responseServiceOrder.setOrderPrice(orderList.get(i).getPayAmount().doubleValue());
-				responseServiceOrder.setOrderStatusCode((int) orderList.get(i).getOrderStatus());
-				responseServiceOrder.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_DB_MAP.get(orderList.get(i)
-						.getOrderStatus()));
+				
+				
+				responseServiceOrder.setOrderStatusCode(StatusMap.DIRECT_ORDER_STAUTECODE_APP_MAP.get((int) orderList.get(i).getOrderStatus()));
+				responseServiceOrder.setOrderStatusDes(StatusMap.DIRECT_ORDER_STAUTEDES_APP_MAP.get((int) orderList.get(i).getOrderStatus()));
 				resultList.add(responseServiceOrder);
 			}
 			resp.setOrderList(resultList);

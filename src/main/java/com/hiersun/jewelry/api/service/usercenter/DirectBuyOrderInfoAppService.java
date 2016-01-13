@@ -80,10 +80,10 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			order.setGoodsBuyPrice(jrdsOrderVo.getPayAmount().doubleValue());
 			order.setFreightDesc("￥0.00元运费（平台包邮）");// 暂时写死
 			order.setOrderMsg(jrdsOrderVo.getOrderMessage());
-			order.setOrderStatusCode(jrdsOrderVo.getOrderStatus().toString());
-			order.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_DB_MAP.get(jrdsOrderVo.getOrderStatus()
-					.intValue()));
-
+			
+			order.setOrderStatusCode(StatusMap.DIRECT_ORDER_STAUTECODE_APP_MAP.get((int) jrdsOrderVo.getOrderStatus()));
+			order.setOrderStatusDes(StatusMap.DIRECT_ORDER_STAUTEDES_APP_MAP.get((int) jrdsOrderVo.getOrderStatus()));
+			
 			Map<Integer, String> map = new HashMap<Integer, String>();
 			for (JrdsOrderLog jrdsOrderLog : jrdsOrderLogs) {
 				map.put(jrdsOrderLog.getLogStatus().intValue(),

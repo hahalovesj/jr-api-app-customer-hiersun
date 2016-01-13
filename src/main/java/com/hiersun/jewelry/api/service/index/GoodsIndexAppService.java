@@ -53,7 +53,7 @@ public class GoodsIndexAppService implements BaseService {
 		try {
 			Request2003 body = JSON.parseObject(bodyStr, Request2003.class);
 			Long goodsId = body.getGoodsID();
-			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId);
+			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId,true);
 			if (goods == null) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
 				ResponseBody responseBody = new ResponseBody();

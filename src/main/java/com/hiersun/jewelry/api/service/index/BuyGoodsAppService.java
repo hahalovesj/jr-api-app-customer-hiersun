@@ -69,7 +69,7 @@ public class BuyGoodsAppService implements BaseService{
 			Request2007 body = JSON.parseObject(bodyStr, Request2007.class);
 			long goodsId = body.getGoodsID();
 			// 查询商品
-			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId);
+			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId,false);
 			if (goods == null) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
 				ResponseBody responseBody = new ResponseBody();
