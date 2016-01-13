@@ -56,7 +56,7 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 			// 根据orderNo查询订单信息（goodsid 价格等）
 			JrdsOrder jrdsOrder = directOrderService.selectOrderByOrderNo(orderNo);
 			// 根据goodsId查询商品信息（图片等）
-			JrdsGood jrdsGood = directGoodsService.getOneDirectGoods(jrdsOrder.getGoodId());
+			JrdsGood jrdsGood = directGoodsService.getOneDirectGoods(jrdsOrder.getGoodId(),false);
 			// 鉴定信息的商品原图片
 			List<OrderQualificationPicVo> OPiclist = orderService.selectOrderPic(jrdsOrder.getGoodId());
 

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -33,6 +34,8 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 @Service("goodsInfoAppService")
 public class GoodsInfoAppService implements BaseService{
 	
+	private static final Logger log = Logger.getLogger(GoodsInfoAppService.class);
+	
 	@Resource
 	DirectGoodsService directGoodsService;
 	
@@ -52,6 +55,9 @@ public class GoodsInfoAppService implements BaseService{
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+		log.info("goodsInfo	2004	接口 请求消息体："+reqHead.toString());
+		log.info("goodsInfo	2004	接口 请求消息体："+bodyStr);
+		
 		try {
 			Request2004 body = JSON.parseObject(bodyStr, Request2004.class);
 			// 请求的信息
@@ -59,7 +65,7 @@ public class GoodsInfoAppService implements BaseService{
 			// 。。。(根据传来的值做数据查询)
 			long goodsId = body.getGoodsID();
 			List<AttachmentVo> pciList = directGoodsService.getJrdsGoodPic(goodsId, "jrds_good", null);
-			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId);
+			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId,false);
 			if (goods == null) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
 				ResponseBody responseBody = new ResponseBody();
@@ -127,6 +133,7 @@ public class GoodsInfoAppService implements BaseService{
 			return this.packageMsgMap(responseBody, respHead);
 			
 		} catch (Exception e) {
+			log.error("goodsInfo 2004接口，发生异常，异常信息："+e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();

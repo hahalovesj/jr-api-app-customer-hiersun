@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -26,6 +27,8 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 @Service("goodsMsgListAppService")
 public class GoodsMsgListAppService implements BaseService {
 
+	private static final Logger log = Logger.getLogger(GoodsMsgListAppService.class);
+
 	@Resource
 	DirectGoodMessageService directGoodMessageService;
 
@@ -42,6 +45,8 @@ public class GoodsMsgListAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+		log.info("goodsMsgList	2005	接口 请求消息体：" + reqHead.toString());
+		log.info("goodsMsgList	2005	接口 请求消息体：" + bodyStr);
 		try {
 			Request2005 body = JSON.parseObject(bodyStr, Request2005.class);
 			// 请求的信息
@@ -94,6 +99,7 @@ public class GoodsMsgListAppService implements BaseService {
 			return this.packageMsgMap(responseBody, respHead);
 
 		} catch (Exception e) {
+			log.error("goodsMsgList 2005接口，发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();

@@ -17,7 +17,7 @@ public class ResponseJrdsOrder{
 	private String freightDesc;
 	private String orderMsg;
 	private String orderStatusDes;
-	private String orderStatusCode;
+	private Integer orderStatusCode;
 	private ResponseAddress address;
 
 	public String getCreateTime() {
@@ -140,11 +140,12 @@ public class ResponseJrdsOrder{
 		this.orderStatusDes = orderStatusDes;
 	}
 
-	public String getOrderStatusCode() {
+	
+	public Integer getOrderStatusCode() {
 		return orderStatusCode;
 	}
 
-	public void setOrderStatusCode(String orderStatusCode) {
+	public void setOrderStatusCode(Integer orderStatusCode) {
 		this.orderStatusCode = orderStatusCode;
 	}
 

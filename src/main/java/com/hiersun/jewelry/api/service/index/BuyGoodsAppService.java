@@ -31,12 +31,12 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 @Service("buyGoodsAppService")
 public class BuyGoodsAppService implements BaseService{
 	
-	 private static Logger log = Logger.getLogger(BuyGoodsAppService.class);
+	 private static final Logger log = Logger.getLogger(BuyGoodsAppService.class);
 	
 	@Resource
 	RedisBaseService redisBaseServiceImpl;
 	
-	@Resource
+	@Resource	
 	DirectGoodsService directGoodsService;
 	
 	@Resource
@@ -55,8 +55,8 @@ public class BuyGoodsAppService implements BaseService{
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-		
-		log.info("XXX接口 请求消息体："+bodyStr);
+		log.info("buyGoods	2007	接口 请求消息体："+reqHead.toString());
+		log.info("buyGoods	2007	接口 请求消息体："+bodyStr);
 		try {
 			String reqToken = reqHead.getToken();
 			String userid = redisBaseServiceImpl.get("api.token." + reqToken);
@@ -69,7 +69,7 @@ public class BuyGoodsAppService implements BaseService{
 			Request2007 body = JSON.parseObject(bodyStr, Request2007.class);
 			long goodsId = body.getGoodsID();
 			// 查询商品
-			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId);
+			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId,false);
 			if (goods == null) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
 				ResponseBody responseBody = new ResponseBody();
@@ -158,7 +158,7 @@ public class BuyGoodsAppService implements BaseService{
 
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
-			log.error("XXX接口，发生异常，异常信息："+e.getMessage());
+			log.error("buyGoods 2007接口，发生异常，异常信息："+e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
