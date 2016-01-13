@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -30,6 +31,8 @@ import com.hiersun.jewelry.api.util.ValiHeadUtil;
 
 @Service("indexAppService")
 public class IndexAppService implements BaseService{
+	
+	private static final Logger log = Logger.getLogger(IndexAppService.class);
 
 	@Resource
 	private UserService userService;
@@ -54,8 +57,10 @@ public class IndexAppService implements BaseService{
 	
 	@Override
 	public Map<String,Object> doController(RequestHeader reqHead,String bodyStr,Long userId)  throws Exception{
+		log.info("index	2001	接口 请求消息体："+reqHead.toString());
+		log.info("index	2001	接口 请求消息体："+bodyStr);
+		
 		try {
-
 			Request2001 body = JSON.parseObject(bodyStr, Request2001.class);
 			Integer pageNo = body.getPageNo();
 			String type = body.getType();
@@ -158,6 +163,7 @@ public class IndexAppService implements BaseService{
 
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
+			log.error("index 2001接口，发生异常，异常信息："+e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
