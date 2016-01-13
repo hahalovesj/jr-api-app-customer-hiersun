@@ -43,6 +43,11 @@ public class ResponseJrdsGood extends ResponseBody{
 	 */
 	private String goodsLogs;
 	
+	/**
+	 * 佣金
+	 */
+	private Double commissionPrice;
+	
 	public String getCreateTime() {
 		return createTime;
 	}
@@ -121,6 +126,12 @@ public class ResponseJrdsGood extends ResponseBody{
 	}
 	public void setGoodsLogs(String goodsLogs) {
 		this.goodsLogs = goodsLogs;
+	}
+	public Double getCommissionPrice() {
+		return commissionPrice;
+	}
+	public void setCommissionPrice(Double commissionPrice) {
+		this.commissionPrice = commissionPrice;
 	}
 
 	
