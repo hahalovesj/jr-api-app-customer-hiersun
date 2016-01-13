@@ -148,7 +148,7 @@ public class IndexAppService implements BaseService{
 				responseBody.setBannerList(bannerList);
 			}
 
-			responseBody.setPageNO(1);
+			responseBody.setPageNO(body.getPageNo());
 			// 是否有下一页
 			if (countNumber > nowNumber) {
 				responseBody.setIsEnd(false);

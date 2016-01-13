@@ -14,12 +14,18 @@ import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4009;
+import com.hiersun.jewelry.api.entity.response.RespUser;
+import com.hiersun.jewelry.api.entity.response.ResponseLogin;
 import com.hiersun.jewelry.api.entity.response.ResponseResetpwd;
+import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
 import com.hiersun.jewelry.api.service.utils.UserUtil;
 import com.hiersun.jewelry.api.user.domain.User;
+import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
+import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("changepwdAppService")
@@ -61,23 +67,58 @@ public class ChangepwdAppService implements BaseService {
 			// 根据userid 查询用户
 			User restUser = userService.getUserByMobile(user);
 			String mobile = restUser.getUserMobile();
-			// TODO 缓存KEY统一管理 需要抽离
-			String cacheveriCode = redisBaseServiceImpl.get("api" + acctionType + mobile);
 
-			// 如果为空，或者和缓存中的不等
+			String cacheveriCode = redisBaseServiceImpl.get("api" + acctionType + mobile);
 			if (StringUtils.isEmpty(cacheveriCode) || !cacheveriCode.equals(veriCode)) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100201);
 				ResponseBody responseBody = new ResponseBody();
 				return this.packageMsgMap(responseBody, respHeader);
 			}
-
 			restUser.setUserPassword(body.getPassword());
 			userService.modifyPassword(restUser);
-			redisBaseServiceImpl.del(UserUtil.APP_USERID_CACH_KEY_START + reqHead.getToken());
+			// 删除旧的token
+			String token = reqHead.getToken();
+			redisBaseServiceImpl.del("api.token." + token);
+			UserInfo info = new UserInfo();
+			info.setUserMobile(restUser.getMobile());
+			UserInfo resultUserInfo = userService.getUserInfoByMobile(info);
+			// 登陆成功 存token
+			String newToken = RandomStringUtil.randomString(16);
+			redisBaseServiceImpl.set("api.token." + newToken, resultUserInfo.getUserId().toString());
 			// 配置返回信息
-			ResponseResetpwd responseBody = new ResponseResetpwd();
-			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
+			ResponseLogin responseBody = new ResponseLogin();
 
+			responseBody.setMobile(resultUserInfo.getUserMobile());
+			responseBody.setToken(token);
+			RespUser resuUser = new RespUser();
+			if (resultUserInfo.getSex() == null) {
+				resuUser.setSex("男");
+			} else {
+				resuUser.setSex(resultUserInfo.getSex().equals("0") ? "女" : "男");
+			}
+			if (resultUserInfo.getNickName() != null) {
+				resuUser.setNickName(resultUserInfo.getNickName());
+			} else {
+				resuUser.setNickName(CommonUtils.mobileForNickName(resultUserInfo.getUserMobile()));
+			}
+			if (resultUserInfo.getBirthday() != null) {
+				resuUser.setBirthday(resultUserInfo.getBirthday());
+			}
+			BankCardNum bankCarNum = new BankCardNum();
+			if (resultUserInfo.getCardNo() != null) {
+				bankCarNum.setBankCardNum(resultUserInfo.getCardNo());
+			}
+			if (resultUserInfo.getBankName() != null) {
+				bankCarNum.setBankName(resultUserInfo.getBankName());
+			}
+			if (resultUserInfo.getRealName() != null) {
+				bankCarNum.setUserRealName(resultUserInfo.getRealName());
+			}
+			resuUser.setBankCardNum(bankCarNum);
+			responseBody.setUser(resuUser);
+
+			// 配置返回信息
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
 			log.error("changepwd	4009	接口发生异常，异常信息：" + e.getMessage());
@@ -88,7 +129,7 @@ public class ChangepwdAppService implements BaseService {
 		}
 	}
 
-	private Map<String, Object> packageMsgMap(ResponseResetpwd res, ResponseHeader respHead) {
+	private Map<String, Object> packageMsgMap(ResponseLogin res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

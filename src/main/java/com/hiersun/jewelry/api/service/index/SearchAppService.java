@@ -27,13 +27,14 @@ import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+
 @Service("searchAppService")
-public class SearchAppService implements BaseService{
-	
+public class SearchAppService implements BaseService {
+
 	private static final Logger log = Logger.getLogger(SearchAppService.class);
 	@Resource
 	private DirectGoodsService directGoodsService;
-	
+
 	@Resource
 	KeyWordService keyWordService;
 
@@ -50,8 +51,8 @@ public class SearchAppService implements BaseService{
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-		log.info("search	2002	接口 请求消息体："+reqHead.toString());
-		log.info("search	2002	接口 请求消息体："+bodyStr);
+		log.info("search	2002	接口 请求消息体：" + reqHead.toString());
+		log.info("search	2002	接口 请求消息体：" + bodyStr);
 		try {
 			Request2002 body = JSON.parseObject(bodyStr, Request2002.class);
 			String keyWord = body.getKeyWord();
@@ -59,19 +60,16 @@ public class SearchAppService implements BaseService{
 			String orderType = body.getOrderType();
 			Integer pageNo = body.getPageNo();
 			QueryGoodsByParamVo vo = new QueryGoodsByParamVo();
-			int nowNumber = 0;
 			if (pageNo != null) {
 				vo.setStart(pageNo * 20);
 			}
 			if (pageNo == null) {
 				vo.setStart(0);
-				nowNumber = 0;
 			}
 			vo.setEnd(20);
 			if (keyWord != null) {
 				vo.setKeyWord(keyWord);
 			}
-
 			if (orderBy != null) {
 				vo.setOrderBy(orderBy);
 			}
@@ -86,7 +84,7 @@ public class SearchAppService implements BaseService{
 			keyWordService.addSearchKeyWord(jrdsSearchKeyword);
 			// 总数
 			int countNumber = directGoodsService.getCountGoods(vo);
-
+			int nowNumber = (pageNo + 1) * 20;
 			// 返回的header
 			ResponseHeader respHead = new ResponseHeader(0);
 			respHead.setMessageID(reqHead.getMessageID());
@@ -99,16 +97,16 @@ public class SearchAppService implements BaseService{
 			for (int i = 0; i < goodList.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("goodsPicUrl", Commons.PIC_DOMAIN + goodList.get(i).getHostGragp());
-				map.put("goodsPrice", goodList.get(i).getBuyingPrice());
+				map.put("goodsPrice", goodList.get(i).getDirectPrice());
 				map.put("goodsName", goodList.get(i).getGoodName());
 				if (goodList.get(i).getGoodDesc() != null && !goodList.get(i).getGoodDesc().equals("")) {
 					map.put("goodsDesc", goodList.get(i).getGoodDesc());
 				}
 				map.put("visitTimes", goodList.get(i).getViews() == null ? 0 + "" : goodList.get(i).getViews()
 						.toString());
-				map.put("goodsMsgTimes", goodList.get(i).getMsgTimes() == null ? 0 + "" : goodList.get(i)
-						.getMsgTimes().toString());
-				map.put("createTime",DateUtil.dateToStr(goodList.get(i).getCreated(), "yyyy-MM-dd HH:mm:ss") );
+				map.put("goodsMsgTimes", goodList.get(i).getMsgTimes() == null ? 0 + "" : goodList.get(i).getMsgTimes()
+						.toString());
+				map.put("createTime", DateUtil.dateToStr(goodList.get(i).getCreated(), "yyyy-MM-dd HH:mm:ss"));
 				map.put("goodsID", goodList.get(i).getId());
 				Map<String, Object> userMap = new HashMap<String, Object>();
 				userMap.put("userID", goodList.get(i).getUser().getUserID());
@@ -126,11 +124,7 @@ public class SearchAppService implements BaseService{
 			if (goodsList != null) {
 				responseBody.setGoodsList(goodsList);
 			}
-			if (pageNo == null) {
-				responseBody.setPageNO(0);
-			} else {
-				responseBody.setPageNO(pageNo);
-			}
+			responseBody.setPageNO(pageNo);
 			responseBody.setKeyWord(body.getKeyWord());
 			// responseBody.setPageInfo(new PageInfo(1, 1, 10, 2));
 			if (countNumber > nowNumber) {
@@ -140,23 +134,24 @@ public class SearchAppService implements BaseService{
 			}
 
 			return this.packageMsgMap(responseBody, respHead);
-			
+
 		} catch (Exception e) {
-			log.error("search 2002接口，发生异常，异常信息："+e.getMessage());
+			log.error("search 2002接口，发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	private Map<String,Object> packageMsgMap(Response2002 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response2002 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

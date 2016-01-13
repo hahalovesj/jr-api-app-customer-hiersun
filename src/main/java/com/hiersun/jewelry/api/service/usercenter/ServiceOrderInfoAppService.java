@@ -69,7 +69,7 @@ public class ServiceOrderInfoAppService implements BaseService {
 			ResponseServiceOrder responseServiceOrder = new ResponseServiceOrder();
 			responseServiceOrder.setCreateTime(DateUtil.dateToStr(orderVo.getPayTime(), "yyyy-MM-dd HH:mm:ss"));
 			responseServiceOrder.setGoodsName(orderVo.getName());
-			responseServiceOrder.setGoodsPic(Commons.PIC_DOMAIN + orderVo.getFullName());
+			responseServiceOrder.setGoodsPicUrl(Commons.PIC_DOMAIN + orderVo.getFullName());
 			responseServiceOrder.setOrderID(orderVo.getId());
 			responseServiceOrder.setOrderNO(orderVo.getOrderNo());
 			responseServiceOrder.setOrderMsg(orderVo.getOrderMsg());

@@ -30,18 +30,20 @@ import com.hiersun.jewelry.api.uploadresource.domain.AttachmentVo;
 import com.hiersun.jewelry.api.user.domain.UserAllInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+
 @Service("goodsInfoAppService")
-public class GoodsInfoAppService implements BaseService{
-	
+public class GoodsInfoAppService implements BaseService {
+
 	private static final Logger log = Logger.getLogger(GoodsInfoAppService.class);
-	
+
 	@Resource
 	DirectGoodsService directGoodsService;
-	
+
 	@Resource
 	UserService userService;
-	
+
 	@Override
 	public boolean ifValidateLogin() {
 		return false;
@@ -55,9 +57,9 @@ public class GoodsInfoAppService implements BaseService{
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-		log.info("goodsInfo	2004	接口 请求消息体："+reqHead.toString());
-		log.info("goodsInfo	2004	接口 请求消息体："+bodyStr);
-		
+		log.info("goodsInfo	2004	接口 请求消息体：" + reqHead.toString());
+		log.info("goodsInfo	2004	接口 请求消息体：" + bodyStr);
+
 		try {
 			Request2004 body = JSON.parseObject(bodyStr, Request2004.class);
 			// 请求的信息
@@ -65,7 +67,7 @@ public class GoodsInfoAppService implements BaseService{
 			// 。。。(根据传来的值做数据查询)
 			long goodsId = body.getGoodsID();
 			List<AttachmentVo> pciList = directGoodsService.getJrdsGoodPic(goodsId, "jrds_good", null);
-			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId,false);
+			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId, false);
 			if (goods == null) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
 				ResponseBody responseBody = new ResponseBody();
@@ -87,6 +89,7 @@ public class GoodsInfoAppService implements BaseService{
 			resultGoods.setGoodsName(goods.getGoodName());
 			resultGoods.setVisitTimes(goods.getViews().toString());
 			resultGoods.setGoodsPrice(goods.getDirectPrice().doubleValue());
+			resultGoods.setCreateTime(DateUtil.dateToStr(goods.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 			Long seleerUserID = goods.getSellerMemberId();
 
 			UserAllInfo userInifo = userService.getUserAllInfoByID(seleerUserID);
@@ -121,34 +124,37 @@ public class GoodsInfoAppService implements BaseService{
 			// 鉴定信息
 			JrdsGoodAudit jrdsGoodAudit = directGoodsService.getGoodAudit(goods.getId());
 			Appraisal appraisal = new Appraisal();
-			appraisal.setBrand(jrdsGoodAudit.getBrand());
-			appraisal.setStyle(QualificationType.STYLE_TUPE_MAP.get(jrdsGoodAudit.getStyle()));
+			if (jrdsGoodAudit != null) {
+				appraisal.setBrand(jrdsGoodAudit.getBrand());
+				appraisal.setStyle(QualificationType.STYLE_TUPE_MAP.get(jrdsGoodAudit.getStyle()));
 
-			appraisal.setMaterial(jrdsGoodAudit.getMaterialTag());
-			appraisal.setCrowd(jrdsGoodAudit.getTagetPeople() == true ? "男士" : "女士");
-			appraisal.setWeight(goods.getWeightDesc().toString());
+				appraisal.setMaterial(jrdsGoodAudit.getMaterialTag());
+				appraisal.setCrowd(jrdsGoodAudit.getTagetPeople() == true ? "男士" : "女士");
+				appraisal.setWeight(goods.getWeightDesc().toString());
+			}
+			
 
 			responseBody.setAppraisal(appraisal);
 			responseBody.setGoods(resultGoods);
 			return this.packageMsgMap(responseBody, respHead);
-			
+
 		} catch (Exception e) {
-			log.error("goodsInfo 2004接口，发生异常，异常信息："+e.getMessage());
+			log.error("goodsInfo 2004接口，发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response2004 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response2004 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
