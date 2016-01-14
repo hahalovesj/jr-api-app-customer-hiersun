@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -30,6 +31,8 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 @Service("logisticsInfosAppService")
 public class LogisticsInfosAppService implements BaseService {
 
+	private static Logger log = Logger.getLogger(LogisticsInfosAppService.class);
+	
 	@Resource
 	DirectOrderService directOrderService;
 	@Resource
@@ -52,6 +55,10 @@ public class LogisticsInfosAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+	
+		log.info("logisticsInfos 	4014	接口请求消息体：" + reqHead.toString());
+		log.info("logisticsInfos 	4014	接口请求消息体：" + bodyStr);
+		
 		try {
 
 			Request4014 body = JSON.parseObject(bodyStr, Request4014.class);
@@ -96,6 +103,7 @@ public class LogisticsInfosAppService implements BaseService {
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
+			log.error("logisticsInfos 	4014	接口发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseBody responseBody = new ResponseBody();
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 99999);

@@ -1,5 +1,8 @@
 package com.hiersun.jewelry.api.service.usercenter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -150,14 +153,19 @@ public class DirectGoodsListAppService implements BaseService {
 			jesponseJrdsGood = new ResponseJrdsGood();
 			jesponseJrdsGood.setCreateTime(DateUtil.dateToStr(vo.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 			jesponseJrdsGood.setGoodsName(vo.getGoodName());
-			jesponseJrdsGood.setGoodsPic(Commons.PIC_DOMAIN + vo.getHostGragp());
+			jesponseJrdsGood.setGoodsPicUrl(Commons.PIC_DOMAIN + vo.getHostGragp());
 			jesponseJrdsGood.setGoodsID(vo.getId());
 			jesponseJrdsGood.setGoodsNO(vo.getGoodNo());
 			jesponseJrdsGood.setGoodsPrice(vo.getDirectPrice().doubleValue());
 			jesponseJrdsGood.setGoodsBuyPrice(vo.getBuyingPrice().doubleValue());
 			// 成交价
-			jesponseJrdsGood.setSettlement(vo.getDirectPrice().doubleValue());
-
+			BigDecimal commission = vo.getCommission()==null ? BigDecimal.ZERO :vo.getCommission();
+			BigDecimal commissionPrice = commission.multiply(vo.getDirectPrice()).setScale(2,RoundingMode.HALF_UP);
+			
+			Double settlement = vo.getDirectPrice().subtract(
+					commissionPrice
+							).doubleValue();
+			jesponseJrdsGood.setSettlement(settlement);
 			// orderStatus 为空时 证明没有产生订单，状态需要看goodStatus goodStatus为空说明还没有审核
 			Integer orderStatusCode = null;
 			if(vo.getApplicationStatus().intValue()==1){

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -28,6 +29,8 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 @Service("getDirectBuyIdentifyAppService")
 public class GetDirectBuyIdentifyAppService implements BaseService {
 
+	private static Logger log = Logger.getLogger(GetDirectBuyIdentifyAppService.class);
+	
 	@Resource
 	OrderService orderService;
 
@@ -47,6 +50,10 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+	
+		log.info("getDirectBuyIdentify 	4021	接口请求消息体：" + reqHead.toString());
+		log.info("getDirectBuyIdentify 	4021	接口请求消息体：" + bodyStr);
+		
 		try {
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
 			// 根据订单查询goodsId
@@ -110,6 +117,7 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(resp, respHeader);
 		} catch (Exception e) {
+			log.error("getDirectBuyIdentify 	4021	接口发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();

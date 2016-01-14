@@ -1,5 +1,6 @@
 package com.hiersun.jewelry.api.entity;
 
+
 public class RequestHeader extends Header {
 
 	/** 签名 */
@@ -26,7 +27,11 @@ public class RequestHeader extends Header {
 	/** 网络状态（WIFI,移动网络） */
 	private String networkStatus;
 
-	
+	/** 请求IP */
+	private String IPAddress;
+
+
+
 	@Override
 	public int volidateValue() {
 		// TODO Auto-generated method stub
@@ -95,6 +100,14 @@ public class RequestHeader extends Header {
 
 	public void setNetworkStatus(String networkStatus) {
 		this.networkStatus = networkStatus;
+	}
+
+	public String getIPAddress() {
+		return IPAddress;
+	}
+
+	public void setIPAddress(String IPAddress) {
+		this.IPAddress = IPAddress;
 	}
 
 	@Override

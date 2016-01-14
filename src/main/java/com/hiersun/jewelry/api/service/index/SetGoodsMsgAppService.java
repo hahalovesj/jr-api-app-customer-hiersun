@@ -23,11 +23,12 @@ import com.hiersun.jewelry.api.entity.response.Response2006;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+
 @Service("setGoodsMsgAppService")
-public class SetGoodsMsgAppService implements BaseService{
-	
+public class SetGoodsMsgAppService implements BaseService {
+
 	private static final Logger log = Logger.getLogger(SetGoodsMsgAppService.class);
-	
+
 	@Resource
 	DirectGoodMessageService directGoodMessageService;
 
@@ -44,8 +45,8 @@ public class SetGoodsMsgAppService implements BaseService{
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-		log.info("setGoodsMsg	2006	接口 请求消息体:	"+reqHead.toString());
-		log.info("setGoodsMsg	2006	接口 请求消息体:	"+bodyStr);
+		log.info("setGoodsMsg	2006	接口 请求消息体:	" + reqHead.toString());
+		log.info("setGoodsMsg	2006	接口 请求消息体:	" + bodyStr);
 		try {
 			Request2006 body = JSON.parseObject(bodyStr, Request2006.class);
 			long goodsId = body.getGoodsID();
@@ -55,7 +56,7 @@ public class SetGoodsMsgAppService implements BaseService{
 			vo.setGoodId(body.getGoodsID());
 			vo.setMessage(body.getMsgContent());
 			vo.setInitiator(body.getMsgFromUserName());
-			vo.setInitiatorId(body.getMsgFromUserID());
+			vo.setInitiatorId(userId);
 			vo.setReplyor(body.getMsgToUserName());
 			vo.setReplyorId(body.getMsgToUserID());
 			vo.setSellerMemberId(body.getGoodsUserID());
@@ -84,7 +85,7 @@ public class SetGoodsMsgAppService implements BaseService{
 					map.put("msgToUserName", dvo.getReplyor());
 				}
 				if (dvo.getInitiatorId() != null) {
-					map.put("msgFormUserID", dvo.getInitiatorId());
+					map.put("msgFromUserID", dvo.getInitiatorId());
 				}
 				if (dvo.getReplyorId() != null) {
 					map.put("msgToUserID", dvo.getReplyorId());
@@ -101,24 +102,24 @@ public class SetGoodsMsgAppService implements BaseService{
 			responseBody.setMsgList(resultList);
 
 			return this.packageMsgMap(responseBody, respHead);
-			
+
 		} catch (Exception e) {
-			log.error("setGoodsMsg 2006接口，发生异常，异常信息："+e.getMessage());
+			log.error("setGoodsMsg 2006接口，发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response2006 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response2006 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

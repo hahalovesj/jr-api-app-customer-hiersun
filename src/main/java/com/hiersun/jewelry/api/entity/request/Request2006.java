@@ -6,7 +6,6 @@ import com.hiersun.jewelry.api.entity.Body;
 
 public class Request2006 extends Body {
 	private Long goodsID;
-	private Long msgFromUserID;
 	private Long msgToUserID;
 	private String msgFromUserName;
 	private String msgToUserName;
@@ -19,14 +18,6 @@ public class Request2006 extends Body {
 
 	public void setGoodsUserID(Long goodsUserID) {
 		this.goodsUserID = goodsUserID;
-	}
-
-	public Long getMsgFromUserID() {
-		return msgFromUserID;
-	}
-
-	public void setMsgFromUserID(Long msgFromUserID) {
-		this.msgFromUserID = msgFromUserID;
 	}
 
 	public Long getMsgToUserID() {
@@ -79,9 +70,6 @@ public class Request2006 extends Body {
 		}
 		if (StringUtils.isEmpty(this.getGoodsUserID())) {
 			return 200603;
-		}
-		if (StringUtils.isEmpty(this.getMsgFromUserID())) {
-			return 200604;
 		}
 		if (StringUtils.isEmpty(this.getMsgFromUserName())) {
 			return 200604;

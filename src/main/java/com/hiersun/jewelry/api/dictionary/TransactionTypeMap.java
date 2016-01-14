@@ -49,16 +49,17 @@ public class TransactionTypeMap {
 		TRANSACTION_TYPE_MAP.put("getServiceIdentify", 4017);
 		TRANSACTION_TYPE_MAP.put("directBuyOrderList", 4018);
 		TRANSACTION_TYPE_MAP.put("directBuyOrderInfo", 4019);
-
+		TRANSACTION_TYPE_MAP.put("cancelDirectBuyOrder", 4020);
 		TRANSACTION_TYPE_MAP.put("getDirectBuyIdentify", 4021);
 		TRANSACTION_TYPE_MAP.put("reviewBuyOrderInfo", 4022);
-
-		TRANSACTION_TYPE_MAP.put("directBuyOrderInfo", 4027);
-		
-		TRANSACTION_TYPE_MAP.put("cancelDirectBuyOrder", 4020);
 		TRANSACTION_TYPE_MAP.put("directGoodsList", 4023);
 		TRANSACTION_TYPE_MAP.put("directGoodsDec", 4024);
-		
+		TRANSACTION_TYPE_MAP.put("cancelOrder", 4025);
+		TRANSACTION_TYPE_MAP.put("selectAudit", 4026);
+		TRANSACTION_TYPE_MAP.put("directBuyOrderInfo", 4027);
+
+		TRANSACTION_TYPE_MAP.put("updateOrderAddress", 4028);
+
 		TRANSACTION_TYPE_MAP.put("sale", 5001);
 
 	}

@@ -14,7 +14,7 @@
 http://localhost:8081/jr-apiclean/api/main?msg=
 
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"smsg","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},
-"body":{"mobile":"15652388352","acctionType":"changepwd"}}
+"body":{"mobile":"15652388352","acctionType":"reg"}}
 
 
 1002
@@ -61,6 +61,9 @@ localhost:8080/jr-apisys/api/main?msg=
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"goodsIndex",
 "sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{"goodsID ":"5"}}
+
+
+{"body":{"GoodsID":25},"head":{"imei":"867068025703744","networkOper":"1","networkStatus":"2","sign":"bc59f5aa2e28fc28a598d11e97bd306e","terminal":"Android","token":"cjzv6j1qRj3bUQCd","transactionType":"goodsInfo","ua":"MI NOTE Pro","version":"0.5.1","messageID":24,"timeStamp":1452763108876}}
 
 2004
 localhost:8080/jr-apiclean/api/main?msg=
@@ -121,8 +124,6 @@ localhost:8080/jr-apiclean/api/main?msg=
 "sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{}}
 
-
-
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"sale",
 "sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{"goodsPicList":[{
@@ -133,8 +134,6 @@ localhost:8080/jr-apiclean/api/main?msg=
 "isMain":false
 }]
 ,"weight":12,"goodsName":"mingcheng","goodsDec":"miaoshu","goodsBuyPrice":10,"unit":"k","goodsPrice":8}}
-
-
 
 
 4006
@@ -148,6 +147,7 @@ localhost:8080/jr-apiclean/api/main?msg=
 4007
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"addPayeeInfo","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"ABE0B1169BFF7EF9C903059C1B87B2C4","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{"userRealName":"123","bankName":"jiafdgnshe","bankCardNum":"1234567891234567"}}
+
 
 4009
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"changepwd","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP",
@@ -197,17 +197,20 @@ localhost:8080/jr-apiclean/api/main?msg=
 "token":"759E19C4F7E806C469BA081112120C1F",
 "transactionType":"getDirectBuyIdentify","ua":"PRO 5","version":"0.2.1"}}
 
-<<<<<<< HEAD
-=======
 {"body":{"orderNO":"zso201601081127410277"},
 "head":{"imei":"867905022662102","messageID":5,"networkOper":"4","networkStatus":"2","sign":"2fcecc0cc1c63f34d17e4e5fa0cd0c9b","terminal":"Android","timeStamp":1451354836440,
 "token":"3D54996893184EB061476D51C4AE8CBB",
 "transactionType":"directBuyOrderInfo","ua":"PRO 5","version":"0.2.1"}}
 
->>>>>>> 34b42ea85f9872a932c1540f8a432c37fc15cbeb
 4027
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"directBuyOrderInfo","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"4E0F0FFAD77F40CFF9AE829781402B63","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{"orderNo":"JSO20000"}}
+
+{"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"selectAudit","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"4E0F0FFAD77F40CFF9AE829781402B63","networkOper":"CMMCC","networkStatus":"4G"},
+"body":{"orderNo":"JSO20000"}}
+4028
+{"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"updateOrderAddress","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"PXgP0oSkcCEK14Yi","networkOper":"CMMCC","networkStatus":"4G"},
+"body":{"orderNo":"JSO10000","type":1,"addressId":2}}
 
 
 
