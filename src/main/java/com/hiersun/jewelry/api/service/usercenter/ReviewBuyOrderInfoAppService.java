@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -30,6 +31,8 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 @Service("reviewBuyOrderInfoAppService")
 public class ReviewBuyOrderInfoAppService implements BaseService {
 
+	private static Logger log = Logger.getLogger(ReviewBuyOrderInfoAppService.class);
+
 	@Resource
 	OrderService orderService;
 	@Resource
@@ -50,13 +53,17 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+
+		log.info("reviewBuyOrderInfo 	4022	接口请求消息体：" + reqHead.toString());
+		log.info("reviewBuyOrderInfo 	4022	接口请求消息体：" + bodyStr);
+
 		try {
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
 			String orderNo = body.getOrderNO();
 			// 根据orderNo查询订单信息（goodsid 价格等）
 			JrdsOrder jrdsOrder = directOrderService.selectOrderByOrderNo(orderNo);
 			// 根据goodsId查询商品信息（图片等）
-			JrdsGood jrdsGood = directGoodsService.getOneDirectGoods(jrdsOrder.getGoodId(),false);
+			JrdsGood jrdsGood = directGoodsService.getOneDirectGoods(jrdsOrder.getGoodId(), false);
 			// 鉴定信息的商品原图片
 			List<OrderQualificationPicVo> OPiclist = orderService.selectOrderPic(jrdsOrder.getGoodId());
 
@@ -96,6 +103,7 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(resp, respHead);
 		} catch (Exception e) {
+			log.error("reviewBuyOrderInfo 	4022	接口发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody resp = new ResponseBody();

@@ -153,7 +153,7 @@ public class DirectGoodsListAppService implements BaseService {
 			jesponseJrdsGood = new ResponseJrdsGood();
 			jesponseJrdsGood.setCreateTime(DateUtil.dateToStr(vo.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 			jesponseJrdsGood.setGoodsName(vo.getGoodName());
-			jesponseJrdsGood.setGoodsPic(Commons.PIC_DOMAIN + vo.getHostGragp());
+			jesponseJrdsGood.setGoodsPicUrl(Commons.PIC_DOMAIN + vo.getHostGragp());
 			jesponseJrdsGood.setGoodsID(vo.getId());
 			jesponseJrdsGood.setGoodsNO(vo.getGoodNo());
 			jesponseJrdsGood.setGoodsPrice(vo.getDirectPrice().doubleValue());

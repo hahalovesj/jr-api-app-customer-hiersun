@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -25,26 +26,30 @@ import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("serviceOrderListAppService")
-public class ServiceOrderListAppService implements BaseService{
+public class ServiceOrderListAppService implements BaseService {
+
+	private static Logger log = Logger.getLogger(ServiceOrderListAppService.class);
 
 	@Resource
 	private OrderService orderService;
-	
-	
+
 	@Override
 	public boolean ifValidateLogin() {
 		return true;
 	}
 
 	@Override
-	public Integer baseValidateMsgBody(String bodyStr,Long userId) {
+	public Integer baseValidateMsgBody(String bodyStr, Long userId) {
 		Request4010 body = JSON.parseObject(bodyStr, Request4010.class);
 		return body.volidateValue();
 	}
 
-	
 	@Override
-	public Map<String,Object> doController(RequestHeader reqHead,String bodyStr,Long userId)  throws Exception{
+	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+
+		log.info("serviceOrderList 	4010	接口请求消息体：" + reqHead.toString());
+		log.info("serviceOrderList 	4010	接口请求消息体：" + bodyStr);
+
 		try {
 			// 解析验证消息体
 			Request4010 body = JSON.parseObject(bodyStr, Request4010.class);
@@ -75,7 +80,7 @@ public class ServiceOrderListAppService implements BaseService{
 				responseServiceOrder = new ResponseServiceOrder();
 				responseServiceOrder.setCreateTime(DateUtil.dateToStr(orderVo.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 				responseServiceOrder.setGoodsName(orderVo.getName());
-				responseServiceOrder.setGoodsPic(Commons.PIC_DOMAIN + orderVo.getFullName());
+				responseServiceOrder.setGoodsPicUrl(Commons.PIC_DOMAIN + orderVo.getFullName());
 				responseServiceOrder.setOrderID(orderVo.getId());
 				responseServiceOrder.setOrderNO(orderVo.getOrderNo());
 				responseServiceOrder.setOrderMsg(orderVo.getOrderMsg());
@@ -100,24 +105,25 @@ public class ServiceOrderListAppService implements BaseService{
 			res.setOrderList(orderList);
 			res.setPageNO(pageNO);
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
-			
+
 			return this.packageMsgMap(res, respHead);
 		} catch (Exception e) {
+			log.error("serviceOrderList 	4010	接口发生异常，异常信息：" + e.getMessage());
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			e.printStackTrace();
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response4010 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response4010 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

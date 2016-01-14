@@ -2,9 +2,10 @@ package com.hiersun.jewelry.api.entity.response;
 
 import java.util.Date;
 
+import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 
-public class RespUser {
+public class RespUser  extends ResponseBody{
 	private String mobile;
 	private String nickName;
 	private String sex;
