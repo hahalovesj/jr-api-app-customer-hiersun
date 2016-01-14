@@ -42,4 +42,9 @@
 		interface="com.hiersun.jewelry.api.expressinfo.service.LogisticsTrackingInfoService" 
 		url="dubbo://192.168.4.92:20880/com.hiersun.jewelry.api.expressinfo.service.LogisticsTrackingInfoService" />
 	<!-- url="dubbo://192.168.4.92:20880/com.hiersun.jewelry.api.user.service.UserService" -->
+	
+	<dubbo:reference id="sMSMessageService"
+		interface="com.hiersun.jewelry.api.ott.service.SMSMessageService"
+		url="dubbo://192.168.30.77:20883/com.hiersun.jewelry.api.ott.service.SMSMessageService" />
+	
 </beans>
