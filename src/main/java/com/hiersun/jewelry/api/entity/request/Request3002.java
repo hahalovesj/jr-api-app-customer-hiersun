@@ -9,8 +9,8 @@ public class Request3002 extends Body{
 	private int serviceType;
 	private List<Map> goodsPicList;
 	private Long addressID;
-	private Long material;
-	private Long weight;
+	private String material;
+	private String weight;
 	private String goodsName;
 	private String goodsDec;
 	private double payFor;
@@ -39,19 +39,19 @@ public class Request3002 extends Body{
 		this.addressID = addressID;
 	}
 
-	public Long getMaterial() {
+	public String getMaterial() {
 		return material;
 	}
 
-	public void setMaterial(Long material) {
+	public void setMaterial(String material) {
 		this.material = material;
 	}
 
-	public Long getWeight() {
+	public String getWeight() {
 		return weight;
 	}
 
-	public void setWeight(Long weight) {
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 

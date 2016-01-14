@@ -103,7 +103,7 @@ public class ServiceOrderInfoAppService implements BaseService {
 					orderLog = orderLog
 							+ TradeLogDesc.SERVICEORDER_TRADELOG_MAP.get(orderVo.getStype() + "_"
 									+ jrasOrderLog.getLogStatus().intValue()) + ":"
-							+ DateUtil.dateToStr(jrasOrderLog.getCreated(), "yyyy-MM-dd HH:mm:ss") + "/r/n";
+							+ DateUtil.dateToStr(jrasOrderLog.getCreated(), "yyyy-MM-dd HH:mm:ss") + "\r\n";
 				}
 			}
 			orderLog = orderLog.length() == 0 ? "" : orderLog.substring(0, orderLog.length() - 1);
