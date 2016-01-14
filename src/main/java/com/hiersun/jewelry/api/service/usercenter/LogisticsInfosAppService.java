@@ -57,8 +57,8 @@ public class LogisticsInfosAppService implements BaseService {
 			Request4014 body = JSON.parseObject(bodyStr, Request4014.class);
 
 			ExpressInfo exInfo = null;
-			// 判断订单是直售/服务
-			if (body.getOrderNO().startsWith("zs") || body.getOrderNO().startsWith("ZS")) {
+			// 判断订单是直售30/服务31
+			if (body.getOrderNO().startsWith("30")) {
 				JrdsOrder dsOrder = directOrderService.selectOrderByOrderNo(body.getOrderNO());
 				// 获取ex表对象
 				ExpressInfo ex = new ExpressInfo();
@@ -66,7 +66,7 @@ public class LogisticsInfosAppService implements BaseService {
 				ex.setExpressMark(true);
 				ex.setOrderId(dsOrder.getId());
 				exInfo = expressInfoService.getExpressInfo(ex);
-			} else if (body.getOrderNO().startsWith("fw") || body.getOrderNO().startsWith("FW")) {
+			} else if (body.getOrderNO().startsWith("31")) {
 				JrasOrder asOrder = orderService.selectOrderByOrderNo(body.getOrderNO());
 
 				ExpressInfo ex = new ExpressInfo();
