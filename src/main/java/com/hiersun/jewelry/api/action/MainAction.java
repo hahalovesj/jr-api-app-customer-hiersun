@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hiersun.jewelry.api.util.HttpUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,9 +83,10 @@ public class MainAction{
 			String tranType = ValiHeadUtil.getTranTypeStr(newMsg);
 			// 获取请求header的实体
 			RequestHeader reqHead = ValiHeadUtil.getRequestHeader(newMsg);
+			String IPAddress = HttpUtil.getIpAddr(request);
+			reqHead.setIPAddress(IPAddress);
 			// 请求body
 			String requestBodyStr = ValiHeadUtil.getBodyStr(newMsg);
-		
 			BaseService baseService = (BaseService)SpringContextUtil.getBean(tranType+"AppService",BaseService.class);
 			//看是否需要登陆
 			Long userId = null;

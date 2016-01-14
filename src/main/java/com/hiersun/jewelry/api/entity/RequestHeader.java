@@ -27,6 +27,7 @@ public class RequestHeader extends Header {
 	/** 网络状态（WIFI,移动网络） */
 	private String networkStatus;
 
+	/** 请求IP */
 	private String IPAddress;
 
 
