@@ -11,6 +11,7 @@ import com.hiersun.jewelry.api.ott.service.WeixinPayService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -23,6 +24,7 @@ import java.util.Map;
  * @author Leon yang_xu@hiersun.com
  * @version V1.0
  */
+@Service("weixinPayAppService")
 public class WeixinPayAppService implements BaseService {
     private static final Logger log = Logger.getLogger(WeixinPayAppService.class);
 

@@ -25,9 +25,7 @@ localhost:8080/jr-apisys/api/main?msg=
 1003
 登录
 http://192.168.4.92:8082/jr-apisys/api/main?msg=
-{"body":{"jumpTransaction":"xx","mobile":"17710521723","password":"111111","pushMsgId":"1"},
-"head":
-{"imei":"352105068485888","networkOper":"4","networkStatus":"2","sign":"a64b966dc08ffef4ce0c2cbc208aea4a","terminal":"Android","transactionType":"login","ua":"SM-G9008W","version":"1.0","messageID":2,"timeStamp":1450167551181}}
+{"body":{"jumpTransaction":"xx","mobile":"17710521723","password":"111111","pushMsgId":"1"},"head":{"imei":"352105068485888","networkOper":"4","networkStatus":"2","sign":"a64b966dc08ffef4ce0c2cbc208aea4a","terminal":"Android","transactionType":"login","ua":"SM-G9008W","version":"1.0","messageID":2,"timeStamp":1450167551181}}
 
 1004
 http://192.168.4.92:8082/jr-apisys/api/main?msg={"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"logout",
@@ -124,6 +122,15 @@ localhost:8080/jr-apiclean/api/main?msg=
 "sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{}}
 
+<<<<<<< HEAD
+
+
+{"head":{"messageID":123456,"timeStamp":123,"transactionType":"putSaleGoods","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"eqpTTHNIUHfdOVlj","networkOper":"CMMCC","networkStatus":"4G"},"body":{"goodsPicList":[{"picID":806,"isMain":true}],"weight":"12KKKK","goodsName":"客户端专属测试数据","goodsDec":"客户端专属测试数据","goodsBuyPrice":10,"goodsPrice":8}}
+
+{"head":{"messageID":123456,"timeStamp":123,"transactionType":"putSaleGoods","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"eqpTTHNIUHfdOVlj","networkOper":"CMMCC","networkStatus":"4G"},"body":{"goodsPicList":[{"picID":806,"isMain":true}],"weight":"12KKKK","goodsName":"客户端专属测试数据-申静","goodsDec":"客户端专属测试数据-申静","goodsBuyPrice":10,"goodsPrice":8}}
+
+
+=======
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"sale",
 "sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{"goodsPicList":[{
@@ -136,6 +143,7 @@ localhost:8080/jr-apiclean/api/main?msg=
 ,"weight":12,"goodsName":"mingcheng","goodsDec":"miaoshu","goodsBuyPrice":10,"unit":"k","goodsPrice":8}}
 
 
+>>>>>>> 50c93ff7f5e0f383545f090bd2742c8e98897e72
 4006
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"payerInfo",
 "sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},

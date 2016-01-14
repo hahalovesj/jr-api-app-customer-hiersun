@@ -85,9 +85,25 @@ public class StationMessageAppService implements BaseService {
 				sm.setContent(messageList.get(i).getContent());
 				Cmd cmd = new Cmd();
 				cmd.setTransactionType(messageList.get(i).getTransactionType());
-				cmd.setTransactionID("" + messageList.get(i).getOrderId());
+				String[] args = messageList.get(i).getOrderNo().split(",");
+				if (args != null && args.length > 0) {
+					if (args.length == 1)
+						cmd.setArg1(args[0]);
+					else if (args.length == 2) {
+						cmd.setArg1(args[0]);
+						cmd.setArg2(args[1]);
+					} else if (args.length == 3) {
+						cmd.setArg1(args[0]);
+						cmd.setArg2(args[1]);
+						cmd.setArg3(args[2]);
+					} else if (args.length == 4) {
+						cmd.setArg1(args[0]);
+						cmd.setArg2(args[1]);
+						cmd.setArg3(args[2]);
+						cmd.setArg4(args[3]);
+					}
+				}
 				sm.setCmd(cmd);
-
 				stationMessageList.add(sm);
 			}
 
