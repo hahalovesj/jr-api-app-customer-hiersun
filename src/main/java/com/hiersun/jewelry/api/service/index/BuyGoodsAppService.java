@@ -89,7 +89,7 @@ public class BuyGoodsAppService implements BaseService{
 			// 返回的body
 			Response2007 responseBody = new Response2007();
 			responseBody.setFreight(0);
-			responseBody.setSendBy("顺丰快递");
+			responseBody.setSendBy("平台包邮");
 			long token = System.currentTimeMillis();
 			responseBody.setGoodsToken(token + "");
 			redisBaseServiceImpl.set("goodstoken" + token, 1800, token + "");

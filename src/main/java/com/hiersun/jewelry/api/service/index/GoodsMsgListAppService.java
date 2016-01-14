@@ -23,11 +23,12 @@ import com.hiersun.jewelry.api.entity.response.Response2005;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+
 @Service("goodsMsgListAppService")
-public class GoodsMsgListAppService implements BaseService{
-	
+public class GoodsMsgListAppService implements BaseService {
+
 	private static final Logger log = Logger.getLogger(GoodsMsgListAppService.class);
-	
+
 	@Resource
 	DirectGoodMessageService directGoodMessageService;
 
@@ -44,8 +45,8 @@ public class GoodsMsgListAppService implements BaseService{
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-		log.info("goodsMsgList	2005	接口 请求消息体："+reqHead.toString());
-		log.info("goodsMsgList	2005	接口 请求消息体："+bodyStr);
+		log.info("goodsMsgList	2005	接口 请求消息体：" + reqHead.toString());
+		log.info("goodsMsgList	2005	接口 请求消息体：" + bodyStr);
 		try {
 			Request2005 body = JSON.parseObject(bodyStr, Request2005.class);
 			// 请求的信息
@@ -58,11 +59,18 @@ public class GoodsMsgListAppService implements BaseService{
 			respHead.setMessageID(reqHead.getMessageID());
 			respHead.setTimeStamp(new Date().getTime());
 			respHead.setTransactionType(reqHead.getTransactionType());
+			if (msgList.size() <= 0) {
+				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
+				ResponseBody responseBody = new ResponseBody();
+				return this.packageMsgMap(responseBody, respHeader);
+			}
 			// 返回的body
 			Response2005 responseBody = new Response2005();
 			responseBody.setGoodsID(goodsId);
-			List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 
+			responseBody.setGoodsUserID(msgList.get(0).getSellerMemberId());
+
+			List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 			for (DirectGoodMessageVo dvo : msgList) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				if (dvo.getInitiator() != null) {
@@ -89,24 +97,24 @@ public class GoodsMsgListAppService implements BaseService{
 
 			responseBody.setMsgList(resultList);
 			return this.packageMsgMap(responseBody, respHead);
-			
+
 		} catch (Exception e) {
-			log.error("goodsMsgList 2005接口，发生异常，异常信息："+e.getMessage());
+			log.error("goodsMsgList 2005接口，发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response2005 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response2005 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

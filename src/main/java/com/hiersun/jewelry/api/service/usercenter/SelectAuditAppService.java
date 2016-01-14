@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -22,6 +23,8 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 @Service("selectAuditAppService")
 public class SelectAuditAppService implements BaseService {
 
+	private static Logger log = Logger.getLogger(ReviewBuyOrderInfoAppService.class);
+	
 	@Resource
 	OrderService orderService;
 	@Resource
@@ -40,6 +43,10 @@ public class SelectAuditAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+		
+		log.info("selectAudit 	4026	接口请求消息体：" + reqHead.toString());
+		log.info("selectAudit 	4026	接口请求消息体：" + bodyStr);
+		
 		try {
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
 			String orderNo = body.getOrderNO();
@@ -59,6 +66,7 @@ public class SelectAuditAppService implements BaseService {
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(resp, respHead);
 		} catch (Exception e) {
+			log.error("selectAudit 	4026	接口发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody resp = new ResponseBody();
