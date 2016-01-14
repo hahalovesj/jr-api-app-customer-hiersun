@@ -53,8 +53,14 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 
 			JrMemberInfoVo jrMemberInfoVo = new JrMemberInfoVo();
 			jrMemberInfoVo.setUserId(userId);
-			jrMemberInfoVo.setNickName(body.getNickName());
-			jrMemberInfoVo.setSex(body.getSex());
+			
+			if (!StringUtils.isEmpty(body.getNickName())) {
+				jrMemberInfoVo.setNickName(body.getNickName());
+			}
+			if (!StringUtils.isEmpty(body.getSex())) {
+				jrMemberInfoVo.setSex(body.getSex());
+			}
+
 			userService.updateUserInfo(jrMemberInfoVo);
 
 			UserInfo userInfo = new UserInfo();
@@ -62,18 +68,18 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 
 			UserInfo user = userService.getUserInfoByMobile(userInfo);
 			Response4008 res = new Response4008();
-			if(user == null){
+			if (user == null) {
 				ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 200102);
 				return this.packageMsgMap(res, respHead);
 			}
-			
+
 			RespUser result = new RespUser();
 			result.setNickName(user.getNickName());
 			result.setMobile(user.getUserMobile());
 			if (StringUtils.isEmpty(user.getSex())) {
 				result.setSex("男");
 			} else {
-				result.setSex(user.getSex().equals("0") ? "女" : "男");
+				result.setSex(user.getSex());
 			}
 
 			BankCardNum bank = new BankCardNum();
@@ -82,7 +88,7 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 			bank.setUserRealName(user.getRealName());
 			result.setBankCardNum(bank);
 			res.setUser(result);
-			
+
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(res, respHead);
 		} catch (Exception e) {
