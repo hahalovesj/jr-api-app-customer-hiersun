@@ -10,6 +10,7 @@ import com.hiersun.jewelry.api.entity.ResponseBody;
  */
 public class ResponseWeixinPay extends ResponseBody {
 
+    private String appId;
     private String partnerId;
     private String prepayId;
     private String nonceStr;
@@ -54,5 +55,13 @@ public class ResponseWeixinPay extends ResponseBody {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 }

@@ -26,6 +26,7 @@ import java.util.Map;
 public class WeixinPayAppService implements BaseService {
     private static final Logger log = Logger.getLogger(WeixinPayAppService.class);
 
+    private static final String APP_ID = "wx54fdac58be580e83";
     @Resource
     private WeixinPayService weixinPayService;
 
@@ -60,6 +61,7 @@ public class WeixinPayAppService implements BaseService {
             responseWeixinPay.setTimeStamp(weixinPayInfoVo.getTimeStamp());
             responseWeixinPay.setNonceStr(weixinPayInfoVo.getNonceStr());
             responseWeixinPay.setPrepayId(weixinPayInfoVo.getPrepayId());
+            responseWeixinPay.setAppId(APP_ID);
             ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
             return this.packageMsgMap(responseWeixinPay, respHeader);
         } catch (Exception e) {
