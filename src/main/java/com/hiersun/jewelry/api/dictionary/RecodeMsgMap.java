@@ -31,7 +31,7 @@ public class RecodeMsgMap {
 
 		RECODEMSGMAP.put(200100, "页码不能为空");
 		RECODEMSGMAP.put(200101, "请求类型不能为空");
-		RECODEMSGMAP.put(200102, "请求的数据空");
+		RECODEMSGMAP.put(200102, "请求的数据为空");
 		RECODEMSGMAP.put(200601, "留言内容不能为空");
 		RECODEMSGMAP.put(200602, "商品不能为空");
 		RECODEMSGMAP.put(200603, "商品所属人不能为空");
