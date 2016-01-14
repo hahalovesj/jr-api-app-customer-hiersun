@@ -40,6 +40,16 @@
 	<!-- url="dubbo://127.0.0.1s:20880/com.hiersun.jewelry.api.user.service.UserService" -->
 	<dubbo:reference id="LogisticsTrackingInfoService" 
 		interface="com.hiersun.jewelry.api.expressinfo.service.LogisticsTrackingInfoService" 
+<<<<<<< HEAD
+		url="dubbo://192.168.4.92:20880/com.hiersun.jewelry.api.expressinfo.service.LogisticsTrackingInfoService" />
+	<!-- url="dubbo://192.168.4.92:20880/com.hiersun.jewelry.api.user.service.UserService" -->
+	
+	<dubbo:reference id="sMSMessageService"
+		interface="com.hiersun.jewelry.api.ott.service.SMSMessageService"
+		url="dubbo://192.168.30.77:20883/com.hiersun.jewelry.api.ott.service.SMSMessageService" />
+	
+=======
 		url="dubbo://127.0.0.1:20880/com.hiersun.jewelry.api.expressinfo.service.LogisticsTrackingInfoService" />
 	<!-- url="dubbo://127.0.0.1:20880/com.hiersun.jewelry.api.user.service.UserService" -->
+>>>>>>> a9e39a90aa9effcea8b2c6630cc25bd159882c71
 </beans>

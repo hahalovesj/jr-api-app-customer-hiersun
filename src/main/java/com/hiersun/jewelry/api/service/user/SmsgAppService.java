@@ -13,6 +13,7 @@ import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.RequestSmsg;
 import com.hiersun.jewelry.api.entity.response.ResponseSmsg;
+import com.hiersun.jewelry.api.ott.service.SMSMessageService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
 import com.hiersun.jewelry.api.user.service.UserService;
@@ -22,7 +23,9 @@ import com.hiersun.jewelry.api.util.Trunc;
 
 @Service("smsgAppService")
 public class SmsgAppService implements BaseService{
-
+	@Resource
+	private SMSMessageService sMSMessageService;
+	
 	@Resource
 	private UserService userService;
 	
@@ -71,7 +74,13 @@ public class SmsgAppService implements BaseService{
 			// 放入缓存中
 			redisBaseServiceImpl.set("api" + acctionType + mobile, 1 * 60 * 60 * 24 * 7, veriNumber.toString());
 			// 发送短信
-			DoSmsUtil.doSms(veriNumber, mobile, acctionType);
+			//DoSmsUtil.doSms(veriNumber, mobile, acctionType);
+			//String content = "您好，您的6位验证码为：" + veriNumber + "【二手珠宝】";
+			String appName = "二手珠宝";
+			String content = "内容";
+			String scenario = acctionType;
+			sMSMessageService.sendMessage(content, appName, mobile, scenario);
+			
 			// 配置返回信息
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 
