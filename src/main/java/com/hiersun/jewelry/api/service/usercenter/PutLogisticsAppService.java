@@ -65,12 +65,15 @@ public class PutLogisticsAppService implements BaseService {
 			evo.setEcName(body.getCompanyName());
 			evo.setEcCode(Byte.valueOf(body.getCompanyCode()));
 			evo.setExpressNo(body.getNumbers());
-			if (body.getOrderNO().startsWith("zs") || body.getOrderNO().startsWith("ZS")) {
+			if(body.getReturnAddressId()!=null){
+				evo.setRerturnAddressId(body.getReturnAddressId());
+			}
+			if (body.getOrderNO().startsWith("30")) {
 				JrdsOrder dsOrder = directOrderService.selectOrderByOrderNo(body.getOrderNO());
 				evo.setOrderId(dsOrder.getId());
 				// 保存物流信息
 				expressInfoService.saveExpressJrds(evo);
-			} else if (body.getOrderNO().startsWith("fw") || body.getOrderNO().startsWith("FW")) {
+			} else if (body.getOrderNO().startsWith("31")) {
 				JrasOrder asOrder = orderService.selectOrderByOrderNo(body.getOrderNO());
 				evo.setOrderId(asOrder.getId());
 				// 保存服务物流信息

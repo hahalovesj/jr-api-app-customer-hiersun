@@ -12,6 +12,7 @@ public class Request4013 extends Body {
 	private String companyCode;
 	//快递单号
 	private String numbers;
+	
 	/**回寄地址ID*/
 	private Long returnAddressId;
 	
