@@ -11,6 +11,15 @@ public class Response2008 extends ResponseBody {
 	private Double goodsPrice;
 	private String orderNO;
 	private String goodsDesc;
+	private Double orderPrice;
+
+	public Double getOrderPrice() {
+		return orderPrice;
+	}
+
+	public void setOrderPrice(Double orderPrice) {
+		this.orderPrice = orderPrice;
+	}
 
 	public String getGoodsDesc() {
 		return goodsDesc;

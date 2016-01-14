@@ -129,10 +129,13 @@ public class GoodsInfoAppService implements BaseService {
 				appraisal.setStyle(QualificationType.STYLE_TUPE_MAP.get(jrdsGoodAudit.getStyle()));
 
 				appraisal.setMaterial(jrdsGoodAudit.getMaterialTag());
-				appraisal.setCrowd(jrdsGoodAudit.getTagetPeople() == true ? "男士" : "女士");
+				if (jrdsGoodAudit.getTagetPeople() != null) {
+					appraisal.setCrowd(jrdsGoodAudit.getTagetPeople() == true ? "男士" : "女士");
+				} else {
+					appraisal.setCrowd("男士");
+				}
 				appraisal.setWeight(goods.getWeightDesc().toString());
 			}
-			
 
 			responseBody.setAppraisal(appraisal);
 			responseBody.setGoods(resultGoods);

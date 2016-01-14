@@ -68,6 +68,12 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			// 基本信息
 			JrdsOrderVo jrdsOrderVo = directOrderService.selectDirectOrder(orderNo);
 
+			if (jrdsOrderVo == null) {
+				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
+				ResponseBody responseBody = new ResponseBody();
+				return this.packageMsgMap(responseBody, respHeader);
+			}
+
 			List<JrdsOrderLog> jrdsOrderLogs = directOrderService.getJrdsOrderLogByOrderId(jrdsOrderVo.getId());
 			Response4019 response4019 = new Response4019();
 
@@ -76,14 +82,19 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			order.setGoodsPic(jrdsOrderVo.getGoodsPic());
 			order.setOrderID(jrdsOrderVo.getId());
 			order.setOrderNO(jrdsOrderVo.getOrderNo());
-			order.setOrderPrice(jrdsOrderVo.getOrderAmount().doubleValue());
-			order.setGoodsBuyPrice(jrdsOrderVo.getPayAmount().doubleValue());
+			if (jrdsOrderVo.getOrderAmount() != null) {
+				order.setOrderPrice(jrdsOrderVo.getOrderAmount().doubleValue());
+			}
+			if(jrdsOrderVo.getPayAmount() != null){
+				order.setGoodsBuyPrice(jrdsOrderVo.getPayAmount().doubleValue());
+			}
+			
 			order.setFreightDesc("￥0.00元运费（平台包邮）");// 暂时写死
 			order.setOrderMsg(jrdsOrderVo.getOrderMessage());
-			
+
 			order.setOrderStatusCode(StatusMap.DIRECT_ORDER_STAUTECODE_APP_MAP.get((int) jrdsOrderVo.getOrderStatus()));
 			order.setOrderStatusDes(StatusMap.DIRECT_ORDER_STAUTEDES_APP_MAP.get((int) jrdsOrderVo.getOrderStatus()));
-			
+
 			Map<Integer, String> map = new HashMap<Integer, String>();
 			for (JrdsOrderLog jrdsOrderLog : jrdsOrderLogs) {
 				map.put(jrdsOrderLog.getLogStatus().intValue(),

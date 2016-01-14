@@ -13,6 +13,17 @@ public class Request4013 extends Body {
 	//快递单号
 	private String numbers;
 	
+	/**回寄地址ID*/
+	private Long returnAddressId;
+	
+	public Long getReturnAddressId() {
+		return returnAddressId;
+	}
+
+	public void setReturnAddressId(Long returnAddressId) {
+		this.returnAddressId = returnAddressId;
+	}
+
 	/*** 订单编号 ***/
 	private String orderNO;
 	

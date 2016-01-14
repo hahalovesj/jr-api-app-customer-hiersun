@@ -58,7 +58,8 @@ public class TransactionTypeMap {
 		TRANSACTION_TYPE_MAP.put("selectAudit", 4026);
 		TRANSACTION_TYPE_MAP.put("directBuyOrderInfo", 4027);
 
-		
+		TRANSACTION_TYPE_MAP.put("updateOrderAddress", 4028);
+
 		TRANSACTION_TYPE_MAP.put("sale", 5001);
 
 	}

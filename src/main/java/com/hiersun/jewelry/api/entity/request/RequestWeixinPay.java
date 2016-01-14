@@ -10,38 +10,49 @@ import com.hiersun.jewelry.api.entity.Body;
  */
 public class RequestWeixinPay extends Body {
 
-    private String orderNo;
+    private String orderNO;
+    private String orderName;
+    private String orderDes;
+    private double orderPrice;
 
-    private String goodInfo;
-
-    private String totalFee;
-
+    /**
+     * 验证参数
+     * @return
+     */
     @Override
     public int volidateValue() {
         return 0;
     }
 
-    public String getOrderNo() {
-        return orderNo;
+    public String getOrderName() {
+        return orderName;
     }
 
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
+    public void setOrderName(String orderName) {
+        this.orderName = orderName;
     }
 
-    public String getGoodInfo() {
-        return goodInfo;
+    public String getOrderDes() {
+        return orderDes;
     }
 
-    public void setGoodInfo(String goodInfo) {
-        this.goodInfo = goodInfo;
+    public void setOrderDes(String orderDes) {
+        this.orderDes = orderDes;
     }
 
-    public String getTotalFee() {
-        return totalFee;
+    public double getOrderPrice() {
+        return orderPrice;
     }
 
-    public void setTotalFee(String totalFee) {
-        this.totalFee = totalFee;
+    public void setOrderPrice(double orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
+    public String getOrderNO() {
+        return orderNO;
+    }
+
+    public void setOrderNO(String orderNO) {
+        this.orderNO = orderNO;
     }
 }

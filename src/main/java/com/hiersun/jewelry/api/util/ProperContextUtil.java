@@ -2,20 +2,23 @@ package com.hiersun.jewelry.api.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
+
+import javax.ws.rs.client.Client;
 
 public class ProperContextUtil {
 
 	public static Properties getProper(String porperName) {
 		Properties properties = new Properties();
-		
+
 		return null;
 	}
 
 	public String getValue(String key) {
 
 		Properties properties = new Properties();
-		InputStream inputStream = getClass().getResourceAsStream("/menu.properties");
+		InputStream inputStream = getClass().getResourceAsStream(("/menu.properties"));
 		try {
 			properties.load(inputStream);
 		} catch (IOException e) {
@@ -27,17 +30,16 @@ public class ProperContextUtil {
 
 	public String getValue(String properName, String key) {
 		String url = "context/" + properName;
-		InputStream ipIn = null;
+		InputStreamReader ipIn = null;
 		String value = "";
 		Properties ip;
 		try {
 			ip = new Properties();
-			ipIn = getClass().getClassLoader().getResourceAsStream(url);
+			ipIn = new InputStreamReader(Client.class.getClassLoader().getResourceAsStream(url), "UTF-8");
+
 			if (ipIn != null) {
 				ip.load(ipIn);
 				value = ip.getProperty(key);
-			} else {
-				System.out.println("没有" + properName);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
