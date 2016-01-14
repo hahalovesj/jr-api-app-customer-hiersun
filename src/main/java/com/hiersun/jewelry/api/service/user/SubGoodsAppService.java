@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.direct.domain.JrdsOrderInfoByCreatVo;
@@ -23,34 +24,33 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("subGoodsAppService")
 public class SubGoodsAppService implements BaseService {
-	
+
 	private static Logger log = Logger.getLogger(SubGoodsAppService.class);
-	
+
 	@Resource
 	RedisBaseService redisBaseServiceImpl;
-	
+
 	@Resource
 	DirectOrderService directOrderService;
-	
+
 	@Override
 	public boolean ifValidateLogin() {
 		return true;
 	}
 
 	@Override
-	public Integer baseValidateMsgBody(String bodyStr,Long userId) {
+	public Integer baseValidateMsgBody(String bodyStr, Long userId) {
 		Request2008 body = JSON.parseObject(bodyStr, Request2008.class);
 		return body.volidateValue();
 	}
 
-	
 	@Override
-	public Map<String,Object> doController(RequestHeader reqHead, String bodyStr,Long userId)  throws Exception{
+	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
 		log.info("正在处理提交订单接口subGoods(2008),Header=" + reqHead.toString());
 		log.info("正在处理提交订单接口subGoods(2008),Body=" + bodyStr);
 		try {
 			Request2008 body = JSON.parseObject(bodyStr, Request2008.class);
-			
+
 			String goodsToken = body.getGoodsToken();
 			String cacheToken = redisBaseServiceImpl.get("goodstoken" + goodsToken);
 			if (!cacheToken.equals(goodsToken.trim())) {
@@ -69,16 +69,15 @@ public class SubGoodsAppService implements BaseService {
 
 			JrdsOrderInfoByCreatVo resultVo = directOrderService.createDirectOrder(vo);
 			redisBaseServiceImpl.decr("goodstoken" + goodsToken);
-			
+
 			// 返回的header
 			ResponseHeader respHead = new ResponseHeader(0);
 			respHead.setMessageID(reqHead.getMessageID());
 			respHead.setTimeStamp(new Date().getTime());
 			respHead.setTransactionType(reqHead.getTransactionType());
-			
+
 			// 返回的body
 			Response2008 responseBody = new Response2008();
-
 			responseBody.setGoodsID(resultVo.getGoodsID());
 			responseBody.setGoodsName(resultVo.getOutputGoodsName());
 			responseBody.setGoodsPrice(resultVo.getOutputGoodsPrice().doubleValue());
@@ -96,15 +95,15 @@ public class SubGoodsAppService implements BaseService {
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response2008 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response2008 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
 
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
