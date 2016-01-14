@@ -66,6 +66,8 @@ public class RecodeMsgMap {
 		
 		RECODEMSGMAP.put(402701, "售后订单不存在");
 		
+		RECODEMSGMAP.put(402801, "订单类别不能为空");
+		
 		RECODEMSGMAP.put(402001, "直售订单号不能为空");
 		RECODEMSGMAP.put(402002, "直售操作异常");
 		
