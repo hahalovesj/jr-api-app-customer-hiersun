@@ -80,9 +80,10 @@ public class SubGoodsAppService implements BaseService {
 			Response2008 responseBody = new Response2008();
 			responseBody.setGoodsID(resultVo.getGoodsID());
 			responseBody.setGoodsName(resultVo.getOutputGoodsName());
-			responseBody.setGoodsPrice(resultVo.getOutputGoodsPrice().doubleValue());
+//			responseBody.setGoodsPrice(resultVo.getOutputGoodsPrice().doubleValue());
 			responseBody.setOrderNO(resultVo.getOutputOrderNO());
 			responseBody.setGoodsDesc(resultVo.getOutputGoodsDesc());
+			responseBody.setOrderPrice(resultVo.getOutputGoodsPrice().doubleValue());
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
 			for (int i = 0; i < e.getStackTrace().length; i++) {
