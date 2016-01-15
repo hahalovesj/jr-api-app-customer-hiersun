@@ -12,9 +12,28 @@ public class Response4017 extends ResponseBody {
 
 	private String certificateType;
 
-	private List<Map<String, String>> certificatePicList;
+	// private List<Map<String, String>> certificatePicList;
+	private String certificatePicUrl;
+
+	private String desc;
 
 	private String beanInfo;
+
+	public String getCertificatePicUrl() {
+		return certificatePicUrl;
+	}
+
+	public void setCertificatePicUrl(String certificatePicUrl) {
+		this.certificatePicUrl = certificatePicUrl;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 
 	public String getBeanInfo() {
 		return beanInfo;
@@ -46,14 +65,6 @@ public class Response4017 extends ResponseBody {
 
 	public void setCertificateType(String certificateType) {
 		this.certificateType = certificateType;
-	}
-
-	public List<Map<String, String>> getCertificatePicList() {
-		return certificatePicList;
-	}
-
-	public void setCertificatePicList(List<Map<String, String>> certificatePicList) {
-		this.certificatePicList = certificatePicList;
 	}
 
 }

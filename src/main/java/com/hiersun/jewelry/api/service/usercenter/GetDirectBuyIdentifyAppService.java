@@ -11,8 +11,11 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
+import com.hiersun.jewelry.api.direct.pojo.JrdsOrder;
 import com.hiersun.jewelry.api.direct.service.DirectGoodsService;
+import com.hiersun.jewelry.api.direct.service.DirectOrderService;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -30,12 +33,15 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 public class GetDirectBuyIdentifyAppService implements BaseService {
 
 	private static Logger log = Logger.getLogger(GetDirectBuyIdentifyAppService.class);
-	
+
 	@Resource
 	OrderService orderService;
 
 	@Resource
 	DirectGoodsService directGoodsService;
+
+	@Resource
+	DirectOrderService directOrderService;
 
 	@Override
 	public boolean ifValidateLogin() {
@@ -50,17 +56,24 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-	
-		log.info("getDirectBuyIdentify 	4021	接口请求消息体：" + reqHead.toString());
+
 		log.info("getDirectBuyIdentify 	4021	接口请求消息体：" + bodyStr);
-		
+		log.info("getDirectBuyIdentify 	4021	接口请求消息体：" + reqHead.toString());
+
 		try {
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
 			// 根据订单查询goodsId
-			long goodsId = orderService.selectGoodIdByOrderNO(body.getOrderNO());
+			JrdsOrder jrdsOrder = directOrderService.selectOrderByOrderNo(body.getOrderNO());
+
+			if (jrdsOrder == null) {
+				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
+				ResponseBody responseBody = new ResponseBody();
+				return this.packageMsgMap(responseBody, respHeader);
+			}
+
 			Map<String, Object> paramMap = new HashMap<String, Object>();
 			// 鉴定结果
-			paramMap.put("goodsId", goodsId);
+			paramMap.put("goodsId", jrdsOrder.getGoodId());
 			// 增值业务
 			paramMap.put("businessType", 2);
 			JrasGoodQualification qual = orderService.selectQualification(paramMap);
@@ -71,7 +84,7 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 			}
 			Long id = qual.getId();
 			// 商品确认信息
-			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(goodsId);
+			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(jrdsOrder.getGoodId());
 			// 商品实物信息
 			List<AttachmentVo> pciList = directGoodsService.getJrdsGoodPic(jrasGoodInfoConfirm.getId(),
 					"jras_good_info_confirm", "jrdsconfirm");
@@ -79,16 +92,16 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 			List<Map<String, String>> resultO = new ArrayList<Map<String, String>>();
 			Map<String, String> resultOM = new HashMap<String, String>();
 			for (int i = 0; i < pciList.size(); i++) {
-				resultOM.put("picUrl", pciList.get(i).getFullName());
+				resultOM.put("picUrl", Commons.PIC_DOMAIN + pciList.get(i).getFullName());
 				resultOM.put("picDesc", pciList.get(i).getAttrDesc());
 				resultO.add(resultOM);
 			}
 
 			Response4017 resp = new Response4017();
-			List<Map<String, String>> resultQ = null;
 			// 证书类型
 			if (qual.getCertificationType() != 0) {
-				resp.setCertificateType(QualificationType.QUALIFICATION_TYPE.get(qual.getCertificationType()));
+				String str = QualificationType.QUALIFICATION_TYPE.get(qual.getCertificationType().intValue());
+				resp.setCertificateType(str);
 				// 鉴定结果图片
 				// 增值服务的查询条件
 				// 表名：（table_name）jras_good_qualification
@@ -98,18 +111,11 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 				paramMapQ.put("file_type", "jrdsappraisal");
 				paramMapQ.put("data_id", id);
 				List<QualificationPicVo> QPicList = orderService.selectQualificationPicList(paramMapQ);
-
-				// 返回
-				resultQ = new ArrayList<Map<String, String>>();
-				Map<String, String> resultQM = new HashMap<String, String>();
-				for (int i = 0; i < QPicList.size(); i++) {
-					resultQM.put("Pic", QPicList.get(i).getPicUrl());
-					resultQ.add(resultQM);
-				}
-				resp.setCertificatePicList(resultQ);
+				resp.setDesc(qual.getRemark());
+				resp.setCertificatePicUrl(Commons.PIC_DOMAIN + QPicList.get(0).getPicUrl());
 			}
 
-			byte mNumber = jrasGoodInfoConfirm.getMatchedDegree();
+			Integer mNumber = jrasGoodInfoConfirm.getMatchedDegree().intValue();
 			resp.setBeanInfo(QualificationType.MATCHED_DEGREE.get(mNumber));
 			resp.setIdentifyResult(jrasGoodInfoConfirm.getSpecify());
 			resp.setPicList(resultO);

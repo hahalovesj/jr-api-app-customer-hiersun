@@ -2,7 +2,6 @@ package com.hiersun.jewelry.api.service.usercenter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -168,14 +167,20 @@ public class DirectGoodsListAppService implements BaseService {
 			jesponseJrdsGood.setSettlement(settlement);
 			// orderStatus 为空时 证明没有产生订单，状态需要看goodStatus goodStatus为空说明还没有审核
 			Integer orderStatusCode = null;
-			if(vo.getApplicationStatus().intValue()==1){
-				orderStatusCode = -3;//待审核
-			}else if(vo.getApplicationStatus().intValue()==2){
-				orderStatusCode = -2;//审核未通过
-			}else{
+			if(vo.getApplicationStatus() == null){
 				//有订单号的话	就用订单的状态，没有订单的话为-1 售卖中
 				orderStatusCode = vo.getOrderStatus() != null ? vo.getOrderStatus().intValue() : -1;
+			}else{
+				if(vo.getApplicationStatus().intValue()==1){
+					orderStatusCode = -3;//待审核
+				}else if(vo.getApplicationStatus().intValue()==2){
+					orderStatusCode = -2;//审核未通过
+				}else{
+					//有订单号的话	就用订单的状态，没有订单的话为-1 售卖中
+					orderStatusCode = vo.getOrderStatus() != null ? vo.getOrderStatus().intValue() : -1;
+				}
 			}
+			
 			
 			jesponseJrdsGood.setOrderStatusCode(StatusMap.DIRECT_GOODS_STAUTECODE_APP_MAP.get(orderStatusCode));
 			jesponseJrdsGood.setOrderStatusDes(StatusMap.DIRECT_GOODS_STAUTEDES_APP_MAP.get(orderStatusCode));
