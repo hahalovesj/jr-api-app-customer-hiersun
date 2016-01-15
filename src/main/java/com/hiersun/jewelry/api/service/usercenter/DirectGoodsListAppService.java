@@ -164,7 +164,7 @@ public class DirectGoodsListAppService implements BaseService {
 			Double settlement = vo.getDirectPrice().subtract(
 					commissionPrice
 							).doubleValue();
-			jesponseJrdsGood.setSettlement(settlement);
+			jesponseJrdsGood.setSettlementPrice(settlement);
 			// orderStatus 为空时 证明没有产生订单，状态需要看goodStatus goodStatus为空说明还没有审核
 			Integer orderStatusCode = null;
 			if(vo.getApplicationStatus() == null){
