@@ -30,7 +30,7 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 public class GetDirectBuyIdentifyAppService implements BaseService {
 
 	private static Logger log = Logger.getLogger(GetDirectBuyIdentifyAppService.class);
-	
+
 	@Resource
 	OrderService orderService;
 
@@ -50,14 +50,21 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-	
-		log.info("getDirectBuyIdentify 	4021	接口请求消息体：" + reqHead.toString());
+
 		log.info("getDirectBuyIdentify 	4021	接口请求消息体：" + bodyStr);
-		
+		log.info("getDirectBuyIdentify 	4021	接口请求消息体：" + reqHead.toString());
+
 		try {
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
 			// 根据订单查询goodsId
-			long goodsId = orderService.selectGoodIdByOrderNO(body.getOrderNO());
+			Long goodsId = orderService.selectGoodIdByOrderNO(body.getOrderNO());
+
+			if (goodsId == null) {
+				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
+				ResponseBody responseBody = new ResponseBody();
+				return this.packageMsgMap(responseBody, respHeader);
+			}
+
 			Map<String, Object> paramMap = new HashMap<String, Object>();
 			// 鉴定结果
 			paramMap.put("goodsId", goodsId);
