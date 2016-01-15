@@ -7,17 +7,21 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4007;
+import com.hiersun.jewelry.api.entity.response.RespUser;
 import com.hiersun.jewelry.api.entity.response.Response4007;
+import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.user.domain.MemberBankVo;
 import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
+import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("addPayeeInfoAppService")
@@ -58,16 +62,36 @@ public class AddPayeeInfoAppService implements BaseService {
 			userInfo.setUserId(userId);
 
 			UserInfo user = userService.getUserInfoByMobile(userInfo);
-			user.setRealName(body.getUserRealName());
-			user.setCardNo(body.getBankCardNum());
-			user.setBankName(body.getBankName());
+			// user.setRealName(body.getUserRealName());
+			// user.setCardNo(body.getBankCardNum());
+			// user.setBankName(body.getBankName());
+
+			RespUser respUser = new RespUser();
+			BankCardNum bank = new BankCardNum();
+			bank.setBankCardNum(user.getCardNo());
+			bank.setBankName(user.getBankName());
+			bank.setUserRealName(user.getRealName());
+			respUser.setBankCardNum(bank);
+			respUser.setNickName(user.getNickName());
+
+			if (StringUtils.isEmpty(user.getSex())) {
+				respUser.setSex("男");
+			} else {
+				respUser.setSex(user.getSex());
+			}
+			respUser.setBirthday(DateUtil.dateTypeToString(user.getBirthday(), "yyyy-MM-dd HH:mm:ss"));
+
+			respUser.setMobile(user.getUserMobile());
+
+			// respUser.setBankCardNum(bankCardNum);
 
 			Response4007 res = new Response4007();
-			res.setUserInfo(user);
+
+			res.setUser(respUser);
 
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 
-			return this.packageMsgMap(res, respHead);
+			return this.packageMsgMap(respUser, respHead);
 		} catch (Exception e) {
 			log.error("addPayeeInfo	3006	 接口发生异常，异常信息：" + e.getMessage());
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
@@ -77,7 +101,7 @@ public class AddPayeeInfoAppService implements BaseService {
 		}
 	}
 
-	private Map<String, Object> packageMsgMap(Response4007 res, ResponseHeader respHead) {
+	private Map<String, Object> packageMsgMap(RespUser res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
