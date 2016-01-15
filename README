@@ -176,7 +176,7 @@ localhost:8080/jr-apiclean/api/main?msg=
 
 4013
 {"body":{"companyCode":"1","numbers":"112721520397","orderNO":"311603303398"},
-"head":{"imei":"868014025350796","networkOper":"4","networkStatus":"2","sign":"c37349df948e7231906ffdb9e7f97e38","terminal":"Android","token":"Pcm2xizYtdjgc1I9","transactionType":"putLogistics","ua":"HUAWEI GRA-UL10","version":"0.5.2","messageID":49,"timeStamp":1452838047733}}
+"head":{"imei":"868014025350796","networkOper":"4","networkStatus":"2","sign":"c37349df948e7231906ffdb9e7f97e38","terminal":"Android","token":"PXgP0oSkcCEK14Yi","transactionType":"putLogistics","ua":"HUAWEI GRA-UL10","version":"0.5.2","messageID":49,"timeStamp":1452838047733}}
 
 
 4014

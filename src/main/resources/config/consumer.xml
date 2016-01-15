@@ -44,6 +44,6 @@
 		interface="com.hiersun.jewelry.api.ott.service.SMSMessageService"
 		url="dubbo://192.168.4.93:20883/com.hiersun.jewelry.api.ott.service.SMSMessageService" />
 	<dubbo:reference id="weixinPayService"
-					 interface="com.hiersun.jewelry.api.ott.service.WeixinPayService"
-					 url="dubbo://192.168.4.93:20883/com.hiersun.jewelry.api.ott.service.WeixinPayService" />
+		interface="com.hiersun.jewelry.api.ott.service.WeixinPayService"
+		url="dubbo://192.168.4.93:20883/com.hiersun.jewelry.api.ott.service.WeixinPayService" />
 </beans>
