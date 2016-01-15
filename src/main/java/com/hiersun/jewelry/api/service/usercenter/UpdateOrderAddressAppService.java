@@ -48,21 +48,23 @@ public class UpdateOrderAddressAppService implements BaseService {
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
 		log.info("updateOrderAddress  	4028	接口请求消息体：" + reqHead.toString());
 		log.info("updateOrderAddress  	4028	接口请求消息体：" + bodyStr);
+		
+		JrdsOrder jrdsOrder = null;
+		JrasOrder jrasOrder =null;
 		try {
 			Request4028 body = JSON.parseObject(bodyStr, Request4028.class);
 			// 地址ID是否为空 为空直接返回true 不为空 需要更新订单的addressID
-			JrdsOrder jrdsOrder = directOrderService.selectOrderByOrderNo(body.getOrderNo());
-
+			//JrdsOrder jrdsOrder = directOrderService.selectOrderByOrderNo(body.getOrderNo());
+			jrdsOrder = directOrderService.selectOrderByOrderNo(body.getOrderNo());
 			if (body.getType() == 1 && body.getAddressId() != null) {
-
 				jrdsOrder.setAddressId(body.getAddressId());
 				expressInfoService.updateJrdsOrderAddress(jrdsOrder);
 			} else if(body.getType() == 1 && body.getAddressId() == null){
 				expressInfoService.updateJrdsOrderAddress(jrdsOrder);
 			}
 
-			JrasOrder jrasOrder = orderService.selectOrderByOrderNo(body.getOrderNo());
-
+			//JrasOrder jrasOrder = orderService.selectOrderByOrderNo(body.getOrderNo());
+			jrasOrder = orderService.selectOrderByOrderNo(body.getOrderNo());
 			if (body.getType() == 0 && body.getAddressId() != null) {
 				jrasOrder.setAddressId(body.getAddressId());
 				expressInfoService.updateJrasOrderAddress(jrasOrder);

@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.direct.domain.JrdsOrderInfoByCreatVo;
@@ -79,10 +78,10 @@ public class SubGoodsAppService implements BaseService {
 			// 返回的body
 			Response2008 responseBody = new Response2008();
 			responseBody.setGoodsID(resultVo.getGoodsID());
-			responseBody.setGoodsName(resultVo.getOutputGoodsName());
+			responseBody.setOrderName(resultVo.getOutputGoodsName());
 //			responseBody.setGoodsPrice(resultVo.getOutputGoodsPrice().doubleValue());
 			responseBody.setOrderNO(resultVo.getOutputOrderNO());
-			responseBody.setGoodsDesc(resultVo.getOutputGoodsDesc());
+			responseBody.setOrderDesc(resultVo.getOutputGoodsDesc());
 			responseBody.setOrderPrice(resultVo.getOutputGoodsPrice().doubleValue());
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {

@@ -6,15 +6,15 @@ public class Request4001 extends Body {
 	
 	private Integer pageNo;
 	
-	private Long memberId;
+	private Long memberID;
 	
-	
-	public Long getMemberId() {
-		return memberId;
+
+	public Long getMemberID() {
+		return memberID;
 	}
 
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
+	public void setMemberID(Long memberID) {
+		this.memberID = memberID;
 	}
 
 	public Integer getPageNo() {

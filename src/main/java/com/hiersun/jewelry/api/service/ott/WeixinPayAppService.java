@@ -57,15 +57,22 @@ public class WeixinPayAppService implements BaseService {
             String goodInfo = body.getOrderName();
             BigDecimal total = new BigDecimal(totalFee);
             WeixinPayInfoVo weixinPayInfoVo = weixinPayService.getWeixinParams(goodInfo, goodDesc, orderNo, total.multiply(new BigDecimal("100")).intValue(), reqHead.getIPAddress(), "APP");
-            ResponseWeixinPay responseWeixinPay = new ResponseWeixinPay();
-            responseWeixinPay.setPartnerId(weixinPayInfoVo.getPartnerId());
-            responseWeixinPay.setSign(weixinPayInfoVo.getSign());
-            responseWeixinPay.setTimeStamp(weixinPayInfoVo.getTimeStamp());
-            responseWeixinPay.setNonceStr(weixinPayInfoVo.getNonceStr());
-            responseWeixinPay.setPrepayId(weixinPayInfoVo.getPrepayId());
-            responseWeixinPay.setAppId(APP_ID);
-            ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
-            return this.packageMsgMap(responseWeixinPay, respHeader);
+            if(weixinPayInfoVo != null){
+                ResponseWeixinPay responseWeixinPay = new ResponseWeixinPay();
+                responseWeixinPay.setPartnerId(weixinPayInfoVo.getPartnerId());
+                responseWeixinPay.setSign(weixinPayInfoVo.getSign());
+                responseWeixinPay.setTimeStamp(weixinPayInfoVo.getTimeStamp());
+                responseWeixinPay.setNonceStr(weixinPayInfoVo.getNonceStr());
+                responseWeixinPay.setPrepayId(weixinPayInfoVo.getPrepayId());
+                responseWeixinPay.setAppId(APP_ID);
+                ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
+                return this.packageMsgMap(responseWeixinPay, respHeader);
+            }else{
+                log.info("weixinpay 接口发生错误：微信通信或统一下单业务进行失败！");
+                ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99998);
+                ResponseBody responseBody = new ResponseBody();
+                return this.packageMsgMap(responseBody, respHeader);
+            }
         } catch (Exception e) {
             log.error("weixinpay 接口发生异常，异常信息：" + e.getMessage());
             e.printStackTrace();

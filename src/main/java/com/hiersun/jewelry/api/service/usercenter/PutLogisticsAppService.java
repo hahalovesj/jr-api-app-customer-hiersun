@@ -57,12 +57,13 @@ public class PutLogisticsAppService implements BaseService {
 
 		log.info("putLogistics 	4013	接口请求消息体：" + reqHead.toString());
 		log.info("putLogistics 	4013	接口请求消息体：" + bodyStr);
-
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("1", "顺丰速运");
 		try {
 			Request4013 body = JSON.parseObject(bodyStr, Request4013.class);
 
 			ExpressVo evo = new ExpressVo();
-			evo.setEcName(body.getCompanyName());
+			evo.setEcName(map.get(body.getCompanyCode()));
 			evo.setEcCode(Byte.valueOf(body.getCompanyCode()));
 			evo.setExpressNo(body.getNumbers());
 			if(body.getReturnAddressId()!=null){
@@ -71,11 +72,14 @@ public class PutLogisticsAppService implements BaseService {
 			if (body.getOrderNO().startsWith("30")) {
 				JrdsOrder dsOrder = directOrderService.selectOrderByOrderNo(body.getOrderNO());
 				evo.setOrderId(dsOrder.getId());
+				evo.setJrdsOrder(dsOrder);
+				
 				// 保存物流信息
 				expressInfoService.saveExpressJrds(evo);
 			} else if (body.getOrderNO().startsWith("31")) {
 				JrasOrder asOrder = orderService.selectOrderByOrderNo(body.getOrderNO());
 				evo.setOrderId(asOrder.getId());
+				evo.setJrasOrder(asOrder);
 				// 保存服务物流信息
 				expressInfoService.saveExpress(evo);
 			}
