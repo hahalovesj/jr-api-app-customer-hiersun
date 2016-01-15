@@ -109,7 +109,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		jesponseJrdsGood.setGoodsNO(vo.getGoodNo());
 		jesponseJrdsGood.setGoodsPrice(vo.getDirectPrice().doubleValue());
 		jesponseJrdsGood.setGoodsBuyPrice(vo.getBuyingPrice().doubleValue());
-		
+		jesponseJrdsGood.setOrderMsg(vo.getOrderMsg());
 		// 成交价
 		BigDecimal commission = vo.getCommission()==null ? BigDecimal.ZERO :vo.getCommission();
 		BigDecimal commissionPrice = commission.multiply(vo.getDirectPrice()).setScale(2,RoundingMode.HALF_UP);
@@ -118,7 +118,6 @@ public class DirectGoodsDecAppService implements BaseService {
 						).doubleValue();
 		jesponseJrdsGood.setSettlementPrice(settlement);
 		jesponseJrdsGood.setCommissionPrice(commissionPrice.doubleValue());
-		jesponseJrdsGood.setOrderMsg(vo.getOrderMsg());
 		
 		// orderStatus 为空时 证明没有产生订单，状态需要看goodStatus goodStatus为空说明还没有审核
 		Integer orderStatusCode = null;

@@ -16,11 +16,9 @@ import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4009;
 import com.hiersun.jewelry.api.entity.response.RespUser;
 import com.hiersun.jewelry.api.entity.response.ResponseLogin;
-import com.hiersun.jewelry.api.entity.response.ResponseResetpwd;
 import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
-import com.hiersun.jewelry.api.service.utils.UserUtil;
 import com.hiersun.jewelry.api.user.domain.User;
 import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
@@ -80,7 +78,7 @@ public class ChangepwdAppService implements BaseService {
 			String token = reqHead.getToken();
 			redisBaseServiceImpl.del("api.token." + token);
 			UserInfo info = new UserInfo();
-			info.setUserMobile(restUser.getMobile());
+			info.setUserMobile(restUser.getUserMobile());
 			UserInfo resultUserInfo = userService.getUserInfoByMobile(info);
 			// 登陆成功 存token
 			String newToken = RandomStringUtil.randomString(16);
@@ -89,7 +87,7 @@ public class ChangepwdAppService implements BaseService {
 			ResponseLogin responseBody = new ResponseLogin();
 
 			responseBody.setMobile(resultUserInfo.getUserMobile());
-			responseBody.setToken(token);
+			responseBody.setToken(newToken);
 			RespUser resuUser = new RespUser();
 			if (resultUserInfo.getSex() == null) {
 				resuUser.setSex("男");
