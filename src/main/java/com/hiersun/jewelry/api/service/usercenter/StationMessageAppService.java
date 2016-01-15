@@ -60,7 +60,9 @@ public class StationMessageAppService implements BaseService {
 			JrMemberCentreMessageVo jmcmvo = new JrMemberCentreMessageVo();
 			jmcmvo.setStart(pageNo * PageSize);
 			jmcmvo.setEnd(PageSize);
-			jmcmvo.setMemberId(body.getMemberId());
+			// 测试用
+//			jmcmvo.setMemberId(2L);
+			jmcmvo.setMemberId(userId);
 			List<JrMemberCentreMessage> messageList = memberCentreMessageService.getMessageListByMember(jmcmvo);
 
 			// 总数

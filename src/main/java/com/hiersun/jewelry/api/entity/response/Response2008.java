@@ -7,11 +7,29 @@ public class Response2008 extends ResponseBody {
 	private Long userID;
 	private String mobile;
 	private Long goodsID;
-	private String goodsName;
+	private String orderName;
 	private Double goodsPrice;
 	private String orderNO;
-	private String goodsDesc;
+	private String orderDesc;
 	private Double orderPrice;
+
+	public void setOrderName(String orderName){
+		this.orderName = orderName;
+	}
+	
+	public String getOrderName(){
+		return orderName;
+	}
+	
+	
+	
+	public String getOrderDesc() {
+		return orderDesc;
+	}
+
+	public void setOrderDesc(String orderDesc) {
+		this.orderDesc = orderDesc;
+	}
 
 	public Double getOrderPrice() {
 		return orderPrice;
@@ -21,13 +39,6 @@ public class Response2008 extends ResponseBody {
 		this.orderPrice = orderPrice;
 	}
 
-	public String getGoodsDesc() {
-		return goodsDesc;
-	}
-
-	public void setGoodsDesc(String goodsDesc) {
-		this.goodsDesc = goodsDesc;
-	}
 
 	public String getOrderNO() {
 		return orderNO;
@@ -37,13 +48,6 @@ public class Response2008 extends ResponseBody {
 		this.orderNO = orderNO;
 	}
 
-	public String getGoodsName() {
-		return goodsName;
-	}
-
-	public void setGoodsName(String goodsName) {
-		this.goodsName = goodsName;
-	}
 
 	public Double getGoodsPrice() {
 		return goodsPrice;
