@@ -174,6 +174,11 @@ localhost:8080/jr-apiclean/api/main?msg=
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"feedback","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"ABE0B1169BFF7EF9C903059C1B87B2C4","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{"feedbackContent":"打算打打死大沙发发生发去啊实打实大全武器我 王企鹅的期望驱蚊器"}}
 
+4013
+{"body":{"companyCode":"1","numbers":"112721520397","orderNO":"311603303398"},
+"head":{"imei":"868014025350796","networkOper":"4","networkStatus":"2","sign":"c37349df948e7231906ffdb9e7f97e38","terminal":"Android","token":"Pcm2xizYtdjgc1I9","transactionType":"putLogistics","ua":"HUAWEI GRA-UL10","version":"0.5.2","messageID":49,"timeStamp":1452838047733}}
+
+
 4014
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"logisticsInfos","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{}}
