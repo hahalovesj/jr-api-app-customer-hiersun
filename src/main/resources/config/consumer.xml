@@ -31,10 +31,10 @@
 	<dubbo:reference id="DirectOrderService"
 		interface="com.hiersun.jewelry.api.direct.service.DirectOrderService"
 		url="dubbo://127.0.0.1:20880/com.hiersun.jewelry.api.direct.service.DirectOrderService" />
-	<dubbo:reference id="ExpressInfoService"
+	<dubbo:reference id="expressInfoService"
 		interface="com.hiersun.jewelry.api.expressinfo.service.ExpressInfoService"
 		url="dubbo://127.0.0.1:20880/com.hiersun.jewelry.api.expressinfo.service.ExpressInfoService" />
-	<dubbo:reference id="MemberCentreMessageService"
+	<dubbo:reference id="memberCentreMessageService"
 		interface="com.hiersun.jewelry.api.user.service.MemberCentreMessageService"
 		url="dubbo://127.0.0.1:20880/com.hiersun.jewelry.api.user.service.MemberCentreMessageService" />
 	<dubbo:reference id="LogisticsTrackingInfoService"

@@ -61,6 +61,11 @@ public class DirectGoodsDecAppService implements BaseService {
 			// 查询good对象 辅助以订单和审核相关信息
 			QueryGoodsByParamVo queryGoodsByParamVo = directGoodsService
 					.getGoodsInfoByGoodNo(body.getGoodsNO(), userId);
+			if(queryGoodsByParamVo == null){
+				ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 200102);
+				ResponseBody resbody = new ResponseBody();
+				return this.packageMsgMap(resbody, respHead);
+			}
 			// 打包返回信息
 			ResponseJrdsGood responseJrdsGood = this.packageResponseJrdsGood(queryGoodsByParamVo);
 			// 商品交易日志信息
@@ -104,15 +109,17 @@ public class DirectGoodsDecAppService implements BaseService {
 		jesponseJrdsGood.setGoodsNO(vo.getGoodNo());
 		jesponseJrdsGood.setGoodsPrice(vo.getDirectPrice().doubleValue());
 		jesponseJrdsGood.setGoodsBuyPrice(vo.getBuyingPrice().doubleValue());
+		
 		// 成交价
 		BigDecimal commission = vo.getCommission()==null ? BigDecimal.ZERO :vo.getCommission();
 		BigDecimal commissionPrice = commission.multiply(vo.getDirectPrice()).setScale(2,RoundingMode.HALF_UP);
 		Double settlement = vo.getDirectPrice().subtract(
 				commissionPrice
 						).doubleValue();
-		jesponseJrdsGood.setSettlement(settlement);
+		jesponseJrdsGood.setSettlementPrice(settlement);
 		jesponseJrdsGood.setCommissionPrice(commissionPrice.doubleValue());
 		jesponseJrdsGood.setOrderMsg(vo.getOrderMsg());
+		
 		// orderStatus 为空时 证明没有产生订单，状态需要看goodStatus goodStatus为空说明还没有审核
 		Integer orderStatusCode = null;
 		if(vo.getApplicationStatus().intValue()==1){

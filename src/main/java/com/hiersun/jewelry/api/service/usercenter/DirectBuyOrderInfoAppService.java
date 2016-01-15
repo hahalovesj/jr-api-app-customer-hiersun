@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.constant.StatusMap;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
+import com.hiersun.jewelry.api.direct.domain.JrAfterSalesAuditVo;
 import com.hiersun.jewelry.api.direct.domain.JrdsOrderVo;
 import com.hiersun.jewelry.api.direct.pojo.JrdsOrderLog;
 import com.hiersun.jewelry.api.direct.service.DirectOrderService;
@@ -46,7 +47,6 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 
 	@Override
 	public boolean ifValidateLogin() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -67,7 +67,10 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			String orderNo = body.getOrderNO();
 			// 基本信息
 			JrdsOrderVo jrdsOrderVo = directOrderService.selectDirectOrder(orderNo);
-
+			JrAfterSalesAuditVo jrSalesVo = directOrderService.selectAfterByOrderId(orderNo);
+			//是否可以申请售后
+			Boolean isAfter = jrSalesVo==null?true:false;
+			
 			if (jrdsOrderVo == null) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
 				ResponseBody responseBody = new ResponseBody();
@@ -91,7 +94,11 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			
 			order.setFreightDesc("￥0.00元运费（平台包邮）");// 暂时写死
 			order.setOrderMsg(jrdsOrderVo.getOrderMessage());
-
+			//如果为可申请售后 且已经完成交易 才可以进行售后申请
+			if(isAfter&&StatusMap.DIRECT_ORDER_DB_STAUE_YWC==jrdsOrderVo.getOrderStatus().intValue()){
+				isAfter = true;
+			}
+			order.setIsAfter(isAfter);
 			order.setOrderStatusCode(StatusMap.DIRECT_ORDER_STAUTECODE_APP_MAP.get((int) jrdsOrderVo.getOrderStatus()));
 			order.setOrderStatusDes(StatusMap.DIRECT_ORDER_STAUTEDES_APP_MAP.get((int) jrdsOrderVo.getOrderStatus()));
 
