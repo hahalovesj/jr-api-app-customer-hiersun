@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.direct.service.DirectGoodsService;
 import com.hiersun.jewelry.api.entity.RequestHeader;
@@ -81,7 +82,7 @@ public class GetServiceIdentifyAppService implements BaseService {
 			List<Map<String, String>> resultO = new ArrayList<Map<String, String>>();
 			Map<String, String> resultOM = new HashMap<String, String>();
 			for (int i = 0; i < pciList.size(); i++) {
-				resultOM.put("picUrl", pciList.get(i).getFullName());
+				resultOM.put("picUrl",Commons.PIC_DOMAIN + pciList.get(i).getFullName());
 				resultOM.put("picDesc", pciList.get(i).getAttrDesc());
 				resultO.add(resultOM);
 			}
@@ -103,18 +104,11 @@ public class GetServiceIdentifyAppService implements BaseService {
 				paramMapQ.put("file_type", "jrasappraisal");
 				paramMapQ.put("data_id", id);
 				List<QualificationPicVo> QPicList = orderService.selectQualificationPicList(paramMapQ);
-
-				// 返回
-				resultQ = new ArrayList<Map<String, String>>();
-				Map<String, String> resultQM = new HashMap<String, String>();
-				for (int i = 0; i < QPicList.size(); i++) {
-					resultQM.put("Pic", QPicList.get(i).getPicUrl());
-					resultQ.add(resultQM);
-				}
-				resp.setCertificatePicList(resultQ);
+				
+				resp.setCertificatePicUrl(Commons.PIC_DOMAIN + QPicList.get(0).getPicUrl());
 			}
 
-			byte mNumber = jrasGoodInfoConfirm.getMatchedDegree();
+			Integer mNumber = jrasGoodInfoConfirm.getMatchedDegree().intValue();
 			resp.setBeanInfo(QualificationType.MATCHED_DEGREE.get(mNumber));
 			resp.setIdentifyResult(jrasGoodInfoConfirm.getSpecify());
 			resp.setPicList(resultO);
