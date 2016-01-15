@@ -19,6 +19,17 @@ public class ResponseJrdsOrder{
 	private String orderStatusDes;
 	private Integer orderStatusCode;
 	private ResponseAddress address;
+	private Boolean isAfter;
+	
+	
+
+	public Boolean getIsAfter() {
+		return isAfter;
+	}
+
+	public void setIsAfter(Boolean isAfter) {
+		this.isAfter = isAfter;
+	}
 
 	public String getCreateTime() {
 		return createTime;
