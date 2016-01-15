@@ -130,7 +130,7 @@ public class GoodsInfoAppService implements BaseService {
 
 				appraisal.setMaterial(jrdsGoodAudit.getMaterialTag());
 				if (jrdsGoodAudit.getTagetPeople() != null) {
-					appraisal.setCrowd(jrdsGoodAudit.getTagetPeople() == true ? "男士" : "女士");
+					appraisal.setCrowd(jrdsGoodAudit.getTagetPeople() == true ? "女士" : "男士");
 				} else {
 					appraisal.setCrowd("男士");
 				}

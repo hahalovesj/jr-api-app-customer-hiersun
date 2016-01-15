@@ -23,6 +23,7 @@ import com.hiersun.jewelry.api.user.domain.User;
 import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
@@ -100,7 +101,7 @@ public class ChangepwdAppService implements BaseService {
 				resuUser.setNickName(CommonUtils.mobileForNickName(resultUserInfo.getUserMobile()));
 			}
 			if (resultUserInfo.getBirthday() != null) {
-				resuUser.setBirthday(resultUserInfo.getBirthday());
+				resuUser.setBirthday(DateUtil.dateTypeToString(resultUserInfo.getBirthday(), "yyyy-MM-dd HH:mm:ss"));
 			}
 			BankCardNum bankCarNum = new BankCardNum();
 			if (resultUserInfo.getCardNo() != null) {

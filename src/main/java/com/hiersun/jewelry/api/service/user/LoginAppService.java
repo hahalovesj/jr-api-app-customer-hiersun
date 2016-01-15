@@ -14,12 +14,15 @@ import com.hiersun.jewelry.api.service.utils.UserUtil;
 import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -95,7 +98,7 @@ public class LoginAppService implements BaseService {
                 user.setNickName(CommonUtils.mobileForNickName(body.getMobile()));
             }
             if (resultUserInfo.getBirthday() != null) {
-                user.setBirthday(resultUserInfo.getBirthday());
+                user.setBirthday(DateUtil.dateTypeToString(resultUserInfo.getBirthday(), "yyyy-MM-dd HH:mm:ss"));
             }
             BankCardNum bankCarNum = new BankCardNum();
             if (resultUserInfo.getCardNo() != null) {

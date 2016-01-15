@@ -1,18 +1,17 @@
 package com.hiersun.jewelry.api.entity.response;
 
 import com.hiersun.jewelry.api.entity.ResponseBody;
-import com.hiersun.jewelry.api.user.domain.UserInfo;
 
 public class Response4007 extends ResponseBody {
 
-	private UserInfo userInfo;
+	private RespUser user;
 
-	public UserInfo getUserInfo() {
-		return userInfo;
+	public RespUser getUser() {
+		return user;
 	}
 
-	public void setUserInfo(UserInfo userInfo) {
-		this.userInfo = userInfo;
+	public void setUser(RespUser user) {
+		this.user = user;
 	}
 
 }
