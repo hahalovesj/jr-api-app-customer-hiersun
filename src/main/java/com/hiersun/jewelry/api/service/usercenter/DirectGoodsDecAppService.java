@@ -61,6 +61,11 @@ public class DirectGoodsDecAppService implements BaseService {
 			// 查询good对象 辅助以订单和审核相关信息
 			QueryGoodsByParamVo queryGoodsByParamVo = directGoodsService
 					.getGoodsInfoByGoodNo(body.getGoodsNO(), userId);
+			if(queryGoodsByParamVo == null){
+				ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 200102);
+				ResponseBody resbody = new ResponseBody();
+				return this.packageMsgMap(resbody, respHead);
+			}
 			// 打包返回信息
 			ResponseJrdsGood responseJrdsGood = this.packageResponseJrdsGood(queryGoodsByParamVo);
 			// 商品交易日志信息
