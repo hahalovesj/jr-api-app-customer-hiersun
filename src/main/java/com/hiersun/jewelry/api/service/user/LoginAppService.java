@@ -68,7 +68,7 @@ public class LoginAppService implements BaseService {
                 ResponseBody responseBody = new ResponseBody();
                 return this.packageMsgMap(responseBody, respHeader);
             }
-            if (!userInfo.getPassword().equals(body.getPassword())) {
+            if (!userInfo.getPassword().toUpperCase().equals(body.getPassword().toUpperCase())) {
                 ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100304);
                 ResponseBody responseBody = new ResponseBody();
                 return this.packageMsgMap(responseBody, respHeader);

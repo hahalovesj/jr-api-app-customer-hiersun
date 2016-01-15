@@ -100,7 +100,7 @@ public class GoodsInfoAppService implements BaseService {
 				if (userInifo.getJrMemberInfo().getNickName() != null) {
 					user.setNickName(userInifo.getJrMemberInfo().getNickName());
 				} else {
-					user.setNickName(CommonUtils.mobileForNickName(userInifo.getJrMemberAccount().getUserMobile()));
+					user.setMobile(CommonUtils.mobileForNickName(userInifo.getJrMemberAccount().getUserMobile()));
 				}
 			}
 			user.setIcon(Commons.HEAD_IOC);
