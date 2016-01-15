@@ -84,13 +84,13 @@ localhost:8080/jr-apiclean/api/main?msg=
 localhost:8080/jr-apiclean/api/main?msg=
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"buyGoods",
 "sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},
-"body":{"goodsID ":"19"}}
+"body":{"goodsID ":"1"}}
 
 2008
 localhost:8080/jr-apiclean/api/main?msg=
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"subGoods",
 "sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"DDBE577FFF6C66AE036DA00EFD3BC978","networkOper":"CMMCC","networkStatus":"4G"},
-"body":{"goodsID ":"1","freight":"0","sendBy":"1","consumerMsg":"xxx","addressID":"1","goodsToken":"1450879361664"}}
+"body":{"goodsID ":"1","freight":"0","sendBy":"1","consumerMsg":"xxx","addressID":"1","goodsToken":"1452828548963"}}
 
 添加收货地址
 localhost:8081/jr-apisys/api/main?msg=
