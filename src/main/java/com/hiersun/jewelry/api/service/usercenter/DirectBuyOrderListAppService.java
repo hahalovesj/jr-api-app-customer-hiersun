@@ -96,7 +96,12 @@ public class DirectBuyOrderListAppService implements BaseService {
 				responseServiceOrder.setOrderPrice(orderList.get(i).getOrderAmount().doubleValue());
 //				responseServiceOrder.setOrderPrice(orderList.get(i).getPayAmount().doubleValue());
 				responseServiceOrder.setGoodsBuyPrice(orderList.get(i).getGoodsPrice().doubleValue());
-				
+				Boolean isAfter = orderList.get(i).getAftersaleuId()==null?true:false;
+				//如果为可申请售后 且已经完成交易 才可以进行售后申请
+				if(isAfter&&StatusMap.DIRECT_ORDER_DB_STAUE_YWC==orderList.get(i).getOrderStatus().intValue()){
+					isAfter = true;
+				}
+				responseServiceOrder.setIsAfter(isAfter);
 				responseServiceOrder.setOrderStatusCode(StatusMap.DIRECT_ORDER_STAUTECODE_APP_MAP.get((int) orderList.get(i).getOrderStatus()));
 				responseServiceOrder.setOrderStatusDes(StatusMap.DIRECT_ORDER_STAUTEDES_APP_MAP.get((int) orderList.get(i).getOrderStatus()));
 				resultList.add(responseServiceOrder);

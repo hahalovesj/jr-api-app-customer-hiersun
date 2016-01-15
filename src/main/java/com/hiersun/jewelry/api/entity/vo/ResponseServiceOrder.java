@@ -13,6 +13,7 @@ public class ResponseServiceOrder {
 	private Integer orderStatusCode;
 	private String sendGoodsTime;
 	private Double goodsBuyPrice;
+	private Boolean isAfter;
 
 	public String getGoodsPicUrl() {
 		return goodsPicUrl;
@@ -101,5 +102,15 @@ public class ResponseServiceOrder {
 	public void setOrderStatusCode(Integer orderStatusCode) {
 		this.orderStatusCode = orderStatusCode;
 	}
+
+	public Boolean getIsAfter() {
+		return isAfter;
+	}
+
+	public void setIsAfter(Boolean isAfter) {
+		this.isAfter = isAfter;
+	}
+	
+	
 
 }
