@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.constant.StatusMap;
 import com.hiersun.jewelry.api.dictionary.Commons;
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.direct.domain.QueryGoodsByParamVo;
 import com.hiersun.jewelry.api.direct.pojo.JrdsOrderLog;
 import com.hiersun.jewelry.api.direct.service.DirectGoodsService;
@@ -23,6 +24,7 @@ import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4024;
 import com.hiersun.jewelry.api.entity.response.Response4024;
+import com.hiersun.jewelry.api.entity.vo.Qualification;
 import com.hiersun.jewelry.api.entity.vo.ResponseJrdsGood;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.DateUtil;
@@ -164,7 +166,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		if (queryGoodsByParamVo.getPayType() != null) {
 			return returnStrBuffer.toString();
 		} else {
-			returnStrBuffer.append("支付方式:").append(queryGoodsByParamVo.getPayType() == 1 ? "微信支付" : "支付宝")
+			returnStrBuffer.append("支付方式:").append(QualificationType.PAY_TYPE_MAP.get(queryGoodsByParamVo.getPayType()))
 					.append("\r\n");
 
 			returnStrBuffer.append("支付时间：").append(logMap.get(1)).append("\r\n");
