@@ -44,7 +44,7 @@ public class LogisticsInfosAppService implements BaseService {
 
 	@Override
 	public boolean ifValidateLogin() {
-		return false;
+		return true;
 	}
 
 	@Override
