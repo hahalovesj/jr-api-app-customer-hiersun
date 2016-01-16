@@ -146,18 +146,18 @@ public class ValiHeadUtil {
 		String sign = MD5.MD5Encode(reqHead.getMessageID() + reqHead.getTransactionType() + reqHead.getTimeStamp()
 				+ reqHead.getToken() + msg);
 
-		// if (!sign.equals(reqHead.getSign().trim())) {
-		// // sign 校验不通过
-		// responseHeader.setTimeStamp(DateUtil.getTimeStamp());
-		// responseHeader.setResCode(900006);
-		// responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900006));
-		//
-		// Map<String, Object> responseMsg = new HashMap<String, Object>();
-		// responseMsg.put("head", responseHeader);
-		// responseMsg.put("body", null);
-		// response.getWriter().print(JSON.toJSONString(responseMsg));
-		// return false;
-		// }
+//		if (!sign.toUpperCase().trim().equals(reqHead.getSign().toUpperCase().trim())) {
+//			// sign 校验不通过
+//			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
+//			responseHeader.setResCode(900006);
+//			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900006));
+//
+//			Map<String, Object> responseMsg = new HashMap<String, Object>();
+//			responseMsg.put("head", responseHeader);
+//			responseMsg.put("body", null);
+//			response.getWriter().print(JSON.toJSONString(responseMsg));
+//			return false;
+//		}
 		return true;
 	}
 
