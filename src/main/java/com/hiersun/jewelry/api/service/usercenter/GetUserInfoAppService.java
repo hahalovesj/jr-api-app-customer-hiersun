@@ -63,6 +63,7 @@ public class GetUserInfoAppService implements BaseService{
 			} else {
 				result.setSex(user.getSex());
 			}
+			result.setTokne(reqHead.getToken());
 
 			BankCardNum bank = new BankCardNum();
 			bank.setBankCardNum(user.getCardNo());
