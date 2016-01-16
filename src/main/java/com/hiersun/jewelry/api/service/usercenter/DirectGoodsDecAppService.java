@@ -110,6 +110,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		jesponseJrdsGood.setGoodsPrice(vo.getDirectPrice().doubleValue());
 		jesponseJrdsGood.setGoodsBuyPrice(vo.getBuyingPrice().doubleValue());
 		jesponseJrdsGood.setOrderMsg(vo.getOrderMsg());
+		jesponseJrdsGood.setOrderNO(vo.getOrderNo());
 		// 成交价
 		BigDecimal commission = vo.getCommission()==null ? BigDecimal.ZERO :vo.getCommission();
 		BigDecimal commissionPrice = commission.multiply(vo.getDirectPrice()).setScale(2,RoundingMode.HALF_UP);
