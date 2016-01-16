@@ -12,6 +12,16 @@ public class RespUser extends ResponseBody {
 	private String birthday;
 	private BankCardNum bankCardNum;
 
+	private String tokne;
+
+	public String getTokne() {
+		return tokne;
+	}
+
+	public void setTokne(String tokne) {
+		this.tokne = tokne;
+	}
+
 	public String getMobile() {
 		return mobile;
 	}

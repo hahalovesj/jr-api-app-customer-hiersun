@@ -53,7 +53,7 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 
 			JrMemberInfoVo jrMemberInfoVo = new JrMemberInfoVo();
 			jrMemberInfoVo.setUserId(userId);
-			
+
 			if (!StringUtils.isEmpty(body.getNickName())) {
 				jrMemberInfoVo.setNickName(body.getNickName());
 			}
@@ -81,7 +81,7 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 			} else {
 				result.setSex(user.getSex());
 			}
-
+			result.setTokne(reqHead.getToken());
 			BankCardNum bank = new BankCardNum();
 			bank.setBankCardNum(user.getCardNo());
 			bank.setBankName(user.getBankName());
