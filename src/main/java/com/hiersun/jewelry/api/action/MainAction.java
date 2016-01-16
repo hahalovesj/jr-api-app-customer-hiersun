@@ -1,12 +1,12 @@
 package com.hiersun.jewelry.api.action;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hiersun.jewelry.api.util.HttpUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,12 +22,15 @@ import com.hiersun.jewelry.api.homescreen.service.KeyWordService;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
+import com.hiersun.jewelry.api.service.TripartiteService;
 import com.hiersun.jewelry.api.service.utils.UserUtil;
 import com.hiersun.jewelry.api.user.service.MemberCentreMessageService;
 import com.hiersun.jewelry.api.user.service.UserService;
+import com.hiersun.jewelry.api.util.HttpUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 import com.hiersun.jewelry.api.util.SpringContextUtil;
 import com.hiersun.jewelry.api.util.ValiHeadUtil;
+import com.hiersun.jewelry.api.vo.PayMentVo;
 
 @Controller
 @RequestMapping("/api")
@@ -58,8 +61,27 @@ public class MainAction{
 	ExpressInfoService expressInfoService;
 
 	@Resource
+	TripartiteService tripartiteService;
+	@Resource
 	MemberCentreMessageService memberCentreMessageService;
 
+	@RequestMapping(value = "/test", method = { RequestMethod.POST, RequestMethod.GET })
+	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String orderNo = request.getParameter("orderNo");
+		String payType = request.getParameter("payType");
+		if(orderNo == null || orderNo.equals("")){
+			response.getWriter().print("fail orderNo is Null");
+		}else{
+			PayMentVo vo = new PayMentVo();
+			vo.setMoney(BigDecimal.ONE);
+			vo.setOrderNo(orderNo);
+			vo.setPayMsg("自动生成");
+			vo.setPayStatus(1);
+			vo.setPayType(Integer.parseInt(payType));
+			tripartiteService.payment(vo);
+			response.getWriter().print("Success");
+		}
+	}
 
 	@RequestMapping(value = "/admin", method = { RequestMethod.POST, RequestMethod.GET })
 	public void admin(HttpServletRequest request, HttpServletResponse response) throws Exception {
