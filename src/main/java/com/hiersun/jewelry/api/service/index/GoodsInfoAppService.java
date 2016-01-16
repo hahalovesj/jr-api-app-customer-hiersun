@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.Commons;
@@ -126,9 +127,12 @@ public class GoodsInfoAppService implements BaseService {
 			Appraisal appraisal = new Appraisal();
 			if (jrdsGoodAudit != null) {
 				appraisal.setBrand(jrdsGoodAudit.getBrand());
-				appraisal.setStyle(QualificationType.STYLE_TUPE_MAP.get(jrdsGoodAudit.getStyle()));
-
-				appraisal.setMaterial(jrdsGoodAudit.getMaterialTag());
+				appraisal.setStyle(QualificationType.STYLE_TUPE_MAP.get(jrdsGoodAudit.getStyle().intValue()));
+				int materialTag = 0;
+				if (StringUtils.isEmpty(jrdsGoodAudit.getMaterialTag())) {
+					materialTag = Integer.parseInt(jrdsGoodAudit.getMaterialTag());
+				}
+				appraisal.setMaterial(QualificationType.MATERIAL_TYPE.get(materialTag));
 				if (jrdsGoodAudit.getTagetPeople() != null) {
 					appraisal.setCrowd(jrdsGoodAudit.getTagetPeople() == true ? "女士" : "男士");
 				} else {
