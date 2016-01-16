@@ -6,12 +6,15 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 
 public class ResponseUtil {
+	private static Logger log = Logger.getLogger(ResponseUtil.class);
 	/**
 	 * 配置公用的返回header
 	 * 
@@ -35,7 +38,9 @@ public class ResponseUtil {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", responseBody);
 		responseMsg.put("head", respHead);
-		response.getWriter().print(JSON.toJSONString(responseMsg));
+		String returnString = JSON.toJSONString(responseMsg);
+		log.info("return JSON:"+responseMsg);
+		response.getWriter().print(returnString);
 	}
 	
 	/**
