@@ -146,18 +146,18 @@ public class ValiHeadUtil {
 		String sign = MD5.MD5Encode(reqHead.getMessageID() + reqHead.getTransactionType() + reqHead.getTimeStamp()
 				+ reqHead.getToken() + msg);
 
-//		if (!sign.equals(reqHead.getSign().trim())) {
-//			// sign 校验不通过
-//			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
-//			responseHeader.setResCode(900006);
-//			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900006));
-//
-//			Map<String, Object> responseMsg = new HashMap<String, Object>();
-//			responseMsg.put("head", responseHeader);
-//			responseMsg.put("body", null);
-//			response.getWriter().print(JSON.toJSONString(responseMsg));
-//			return false;
-//		}
+		// if (!sign.equals(reqHead.getSign().trim())) {
+		// // sign 校验不通过
+		// responseHeader.setTimeStamp(DateUtil.getTimeStamp());
+		// responseHeader.setResCode(900006);
+		// responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900006));
+		//
+		// Map<String, Object> responseMsg = new HashMap<String, Object>();
+		// responseMsg.put("head", responseHeader);
+		// responseMsg.put("body", null);
+		// response.getWriter().print(JSON.toJSONString(responseMsg));
+		// return false;
+		// }
 		return true;
 	}
 
@@ -236,11 +236,12 @@ public class ValiHeadUtil {
 		VersionInfo info = new VersionInfo();
 		ProperContextUtil proper = new ProperContextUtil();
 		String properName = "version.properties";
+		String force = proper.getValue(properName, "force");
 		if (terminal.toUpperCase().equals(proper.getValue(properName, "ios"))) {
 			// IOS版本号
 			if (!version.equals(proper.getValue(properName, "ios.version"))) {
 				info.setDownUrl(proper.getValue(properName, "ios.versionUrl"));
-				info.setForce(false);
+				info.setForce(force.equals("true") ? true : false);
 				info.setVersion(proper.getValue(properName, "ios.version"));
 				info.setVersionDes(proper.getValue(properName, "versionDes"));
 			}
@@ -248,7 +249,7 @@ public class ValiHeadUtil {
 			// 安卓的版本号
 			if (!version.equals(proper.getValue(properName, "andrion.version"))) {
 				info.setDownUrl(proper.getValue(properName, "andrion.versionUrl"));
-				info.setForce(false);
+				info.setForce(force.equals("true") ? true : false);
 				info.setVersion(proper.getValue(properName, "andrion.version"));
 				info.setVersionDes(proper.getValue(properName, "versinDes"));
 			}

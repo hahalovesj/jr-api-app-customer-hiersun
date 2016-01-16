@@ -106,7 +106,7 @@ public class DirectGoodsListAppService implements BaseService {
 			queryGoodsByParamVo.setSellerMemberId(userId);
 			queryGoodsByParamVo.setStatusList(statusArray);
 			conunt = directGoodsService.getGoodsCountByToHandle(queryGoodsByParamVo);
-		}else {// 其他
+		} else {// 其他
 				// 将客户端传入的状态翻译成数据库状态
 			Integer[] statusArray = StatusMap.DIRECT_SALE_STAUTECODE_MAP.get(goodsTypeCode);
 			QueryGoodsByParamVo queryGoodsByParamVo = new QueryGoodsByParamVo();
@@ -125,13 +125,13 @@ public class DirectGoodsListAppService implements BaseService {
 			goodsList = directGoodsService.getGoodsListByAuditStatus(userId, pageIndex, pageSize);
 		} else if (goodsTypeCode == 1) {// 售卖中
 			goodsList = directGoodsService.getGoodsListBySale(userId, pageIndex, pageSize);
-		}else if (goodsTypeCode == 4) {// 待收货
+		} else if (goodsTypeCode == 4) {// 待收货
 			Integer[] statusArray = StatusMap.DIRECT_SALE_STAUTECODE_MAP.get(goodsTypeCode);
 			QueryGoodsByParamVo queryGoodsByParamVo = new QueryGoodsByParamVo();
 			queryGoodsByParamVo.setSellerMemberId(userId);
 			queryGoodsByParamVo.setStatusList(statusArray);
 			goodsList = directGoodsService.getGoodsListByToHandle(queryGoodsByParamVo, pageIndex, pageSize);
-		}else {// 其他
+		} else {// 其他
 				// 将客户端传入的状态翻译成数据库状态
 			Integer[] statusArray = StatusMap.DIRECT_SALE_STAUTECODE_MAP.get(goodsTypeCode);
 			QueryGoodsByParamVo queryGoodsByParamVo = new QueryGoodsByParamVo();
@@ -157,31 +157,29 @@ public class DirectGoodsListAppService implements BaseService {
 			jesponseJrdsGood.setGoodsNO(vo.getGoodNo());
 			jesponseJrdsGood.setGoodsPrice(vo.getDirectPrice().doubleValue());
 			jesponseJrdsGood.setGoodsBuyPrice(vo.getBuyingPrice().doubleValue());
+			jesponseJrdsGood.setOrderNO(vo.getOrderNo());
 			// 成交价
-			BigDecimal commission = vo.getCommission()==null ? BigDecimal.ZERO :vo.getCommission();
-			BigDecimal commissionPrice = commission.multiply(vo.getDirectPrice()).setScale(2,RoundingMode.HALF_UP);
-			
-			Double settlement = vo.getDirectPrice().subtract(
-					commissionPrice
-							).doubleValue();
+			BigDecimal commission = vo.getCommission() == null ? BigDecimal.ZERO : vo.getCommission();
+			BigDecimal commissionPrice = commission.multiply(vo.getDirectPrice()).setScale(2, RoundingMode.HALF_UP);
+
+			Double settlement = vo.getDirectPrice().subtract(commissionPrice).doubleValue();
 			jesponseJrdsGood.setSettlementPrice(settlement);
 			// orderStatus 为空时 证明没有产生订单，状态需要看goodStatus goodStatus为空说明还没有审核
 			Integer orderStatusCode = null;
-			if(vo.getApplicationStatus() == null){
-				//有订单号的话	就用订单的状态，没有订单的话为-1 售卖中
+			if (vo.getApplicationStatus() == null) {
+				// 有订单号的话 就用订单的状态，没有订单的话为-1 售卖中
 				orderStatusCode = vo.getOrderStatus() != null ? vo.getOrderStatus().intValue() : -1;
-			}else{
-				if(vo.getApplicationStatus().intValue()==1){
-					orderStatusCode = -3;//待审核
-				}else if(vo.getApplicationStatus().intValue()==2){
-					orderStatusCode = -2;//审核未通过
-				}else{
-					//有订单号的话	就用订单的状态，没有订单的话为-1 售卖中
+			} else {
+				if (vo.getApplicationStatus().intValue() == 1) {
+					orderStatusCode = -3;// 待审核
+				} else if (vo.getApplicationStatus().intValue() == 2) {
+					orderStatusCode = -2;// 审核未通过
+				} else {
+					// 有订单号的话 就用订单的状态，没有订单的话为-1 售卖中
 					orderStatusCode = vo.getOrderStatus() != null ? vo.getOrderStatus().intValue() : -1;
 				}
 			}
-			
-			
+
 			jesponseJrdsGood.setOrderStatusCode(StatusMap.DIRECT_GOODS_STAUTECODE_APP_MAP.get(orderStatusCode));
 			jesponseJrdsGood.setOrderStatusDes(StatusMap.DIRECT_GOODS_STAUTEDES_APP_MAP.get(orderStatusCode));
 

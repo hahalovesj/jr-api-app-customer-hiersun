@@ -68,6 +68,16 @@ public class ResponseJrdsGood extends ResponseBody {
 	 */
 	private String confirmedTime;
 
+	private String orderNO;
+	
+	public String getOrderNO() {
+		return orderNO;
+	}
+
+	public void setOrderNO(String orderNO) {
+		this.orderNO = orderNO;
+	}
+
 	public String getPayTime() {
 		return payTime;
 	}
