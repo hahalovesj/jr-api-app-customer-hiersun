@@ -41,6 +41,7 @@ public class MainAction{
 
 	@Resource
 	UserService userService;
+	
 
 	@Resource
 	OrderService orderService;
