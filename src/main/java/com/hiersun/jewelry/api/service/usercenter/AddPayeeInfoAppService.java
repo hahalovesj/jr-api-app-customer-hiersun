@@ -80,7 +80,7 @@ public class AddPayeeInfoAppService implements BaseService {
 			} else {
 				respUser.setSex(QualificationType.SEX_MAP.get(user.getSex()));
 			}
-			respUser.setBirthday(DateUtil.dateTypeToString(user.getBirthday(), "yyyy-MM-dd HH:mm:ss"));
+			//respUser.setBirthday(DateUtil.dateTypeToString(user.getBirthday(), "yyyy-MM-dd"));
 
 			respUser.setMobile(user.getUserMobile());
 
