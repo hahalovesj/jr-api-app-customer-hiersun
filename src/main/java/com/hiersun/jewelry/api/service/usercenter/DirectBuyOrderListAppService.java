@@ -28,7 +28,7 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 public class DirectBuyOrderListAppService implements BaseService {
 
 	private static Logger log = Logger.getLogger(DirectBuyOrderListAppService.class);
-	
+
 	@Resource
 	DirectOrderService directOrderService;
 
@@ -48,7 +48,7 @@ public class DirectBuyOrderListAppService implements BaseService {
 
 		log.info("directBuyOrderList 	4018	接口请求消息体：" + reqHead.toString());
 		log.info("directBuyOrderList 	4018	接口请求消息体：" + bodyStr);
-		
+
 		try {
 			Request4018 body = JSON.parseObject(bodyStr, Request4018.class);
 			int orderTypeCode = body.getOrderTypeCode();
@@ -93,17 +93,23 @@ public class DirectBuyOrderListAppService implements BaseService {
 				responseServiceOrder.setGoodsPicUrl(orderList.get(i).getGoodsPic());
 				responseServiceOrder.setOrderID(orderList.get(i).getId());
 				responseServiceOrder.setOrderNO(orderList.get(i).getOrderNo());
-				responseServiceOrder.setOrderPrice(orderList.get(i).getOrderAmount().doubleValue());
-//				responseServiceOrder.setOrderPrice(orderList.get(i).getPayAmount().doubleValue());
-				responseServiceOrder.setGoodsBuyPrice(orderList.get(i).getGoodsPrice().doubleValue());
-				Boolean isAfter = orderList.get(i).getAftersaleuId()==null?true:false;
-				//如果为可申请售后 且已经完成交易 才可以进行售后申请
-				if(isAfter&&StatusMap.DIRECT_ORDER_DB_STAUE_YWC==orderList.get(i).getOrderStatus().intValue()){
+				if (orderList.get(i).getOrderAmount() != null) {
+					responseServiceOrder.setOrderPrice(orderList.get(i).getOrderAmount().doubleValue());
+				}
+				// responseServiceOrder.setOrderPrice(orderList.get(i).getPayAmount().doubleValue());
+				if (orderList.get(i).getGoodsPrice() != null) {
+					responseServiceOrder.setGoodsBuyPrice(orderList.get(i).getGoodsPrice().doubleValue());
+				}
+				Boolean isAfter = orderList.get(i).getAftersaleuId() == null ? true : false;
+				// 如果为可申请售后 且已经完成交易 才可以进行售后申请
+				if (isAfter && StatusMap.DIRECT_ORDER_DB_STAUE_YWC == orderList.get(i).getOrderStatus().intValue()) {
 					isAfter = true;
 				}
 				responseServiceOrder.setIsAfter(isAfter);
-				responseServiceOrder.setOrderStatusCode(StatusMap.DIRECT_ORDER_STAUTECODE_APP_MAP.get((int) orderList.get(i).getOrderStatus()));
-				responseServiceOrder.setOrderStatusDes(StatusMap.DIRECT_ORDER_STAUTEDES_APP_MAP.get((int) orderList.get(i).getOrderStatus()));
+				responseServiceOrder.setOrderStatusCode(StatusMap.DIRECT_ORDER_STAUTECODE_APP_MAP.get((int) orderList
+						.get(i).getOrderStatus()));
+				responseServiceOrder.setOrderStatusDes(StatusMap.DIRECT_ORDER_STAUTEDES_APP_MAP.get((int) orderList
+						.get(i).getOrderStatus()));
 				resultList.add(responseServiceOrder);
 			}
 			resp.setOrderList(resultList);
