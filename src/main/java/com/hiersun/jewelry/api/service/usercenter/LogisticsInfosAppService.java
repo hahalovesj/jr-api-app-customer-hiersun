@@ -78,8 +78,14 @@ public class LogisticsInfosAppService implements BaseService {
 
 				ExpressInfo ex = new ExpressInfo();
 				ex.setBusinessType(Byte.valueOf("1"));
-				// 订单状态>7邮出，<=7邮入
-				ex.setExpressMark(asOrder.getStatus().intValue() > 7 ? true : false);//1是邮出，0是邮入
+				//2,4,6,7 邮入 其他 邮出
+				if(asOrder.getStatus().intValue() == 2 || asOrder.getStatus().intValue() == 4|| 
+						asOrder.getStatus().intValue() == 6 || asOrder.getStatus().intValue() == 7 ){
+					ex.setExpressMark(false);//1是邮出，0是邮入
+				}else{
+					ex.setExpressMark(true);//1是邮出，0是邮入
+				}
+				//ex.setExpressMark(asOrder.getStatus().intValue() > 7 ? true : false);//1是邮出，0是邮入
 				ex.setOrderId(asOrder.getId());
 				exInfo = expressInfoService.getExpressInfo(ex);
 			}
