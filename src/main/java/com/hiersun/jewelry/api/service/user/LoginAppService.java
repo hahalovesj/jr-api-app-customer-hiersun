@@ -1,6 +1,15 @@
 package com.hiersun.jewelry.api.service.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.CatchKey;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -10,21 +19,12 @@ import com.hiersun.jewelry.api.entity.response.ResponseLogin;
 import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
-import com.hiersun.jewelry.api.service.utils.UserUtil;
 import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
-
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by lijunteng on 16/1/11.
@@ -79,7 +79,7 @@ public class LoginAppService implements BaseService {
 
             // 登陆成功 存token
             String token = RandomStringUtil.randomString(16);
-            redisBaseServiceImpl.set(UserUtil.APP_USERID_CACH_KEY_START + token, userInfo.getUserId().toString());
+            redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + token, userInfo.getUserId().toString());
             // 配置返回信息
             ResponseLogin responseBody = new ResponseLogin();
 

@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.CatchKey;
 import com.hiersun.jewelry.api.direct.domain.JrdsOrderInfoByCreatVo;
 import com.hiersun.jewelry.api.direct.service.DirectOrderService;
 import com.hiersun.jewelry.api.entity.RequestHeader;
@@ -51,7 +52,7 @@ public class SubGoodsAppService implements BaseService {
 			Request2008 body = JSON.parseObject(bodyStr, Request2008.class);
 
 			String goodsToken = body.getGoodsToken();
-			String cacheToken = redisBaseServiceImpl.get("goodstoken" + goodsToken);
+			String cacheToken = redisBaseServiceImpl.get(CatchKey.APP_GOOD_TOKEN + goodsToken);
 			if (!cacheToken.equals(goodsToken.trim())) {
 				log.error("提交订单接口subGoods(2008),goodsToken不正确,goodsToken=" + goodsToken + ",cacheToken=" + cacheToken);
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200801);
@@ -67,7 +68,7 @@ public class SubGoodsAppService implements BaseService {
 			vo.setBuyerID(userId);
 
 			JrdsOrderInfoByCreatVo resultVo = directOrderService.createDirectOrder(vo);
-			redisBaseServiceImpl.decr("goodstoken" + goodsToken);
+			redisBaseServiceImpl.del(CatchKey.APP_GOOD_TOKEN + goodsToken);
 
 			// 返回的header
 			ResponseHeader respHead = new ResponseHeader(0);

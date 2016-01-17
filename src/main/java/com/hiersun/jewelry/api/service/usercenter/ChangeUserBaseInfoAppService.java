@@ -85,7 +85,7 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 			} else {
 				result.setSex(QualificationType.SEX_MAP.get(user.getSex()));
 			}
-			result.setTokne(reqHead.getToken());
+			result.setToken(reqHead.getToken());
 			BankCardNum bank = new BankCardNum();
 			bank.setBankCardNum(user.getCardNo());
 			bank.setBankName(user.getBankName());

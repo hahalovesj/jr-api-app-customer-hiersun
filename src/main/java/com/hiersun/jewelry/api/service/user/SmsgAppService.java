@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.CatchKey;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -72,7 +73,7 @@ public class SmsgAppService implements BaseService{
 			}
 
 			// 放入缓存中
-			redisBaseServiceImpl.set("api" + acctionType + mobile, 1 * 60 * 60 * 24 * 7, veriNumber.toString());
+			redisBaseServiceImpl.set(CatchKey.APP_MSG_KEY + acctionType + mobile, 1 * 60 * 60 * 24 * 7, veriNumber.toString());
 			// 发送短信
 			//DoSmsUtil.doSms(veriNumber, mobile, acctionType);
 			String content = "您好，您的6位验证码为：" + veriNumber + "【二手珠宝】";
