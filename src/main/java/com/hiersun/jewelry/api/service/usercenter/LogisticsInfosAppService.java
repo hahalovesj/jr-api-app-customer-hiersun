@@ -88,15 +88,16 @@ public class LogisticsInfosAppService implements BaseService {
 			Response4014 responseBody = new Response4014();
 			// 根据物流信息对象查询该物流的跟踪信息
 			List<LogisticsTrackingInfo> list = logisticsTrackingInfoService.queryTrackingInfoList(exInfo);
-
 			List<LogisticsInfo> infoList = new ArrayList<LogisticsInfo>();
-			// 拼装app数据
-			for (int i = 0; i < list.size(); i++) {
-				LogisticsInfo li = new LogisticsInfo();
-				li.setDes(list.get(i).getContent());
-				li.setTime(list.get(i).getFormatTime());
-				li.setIsEnd(list.get(i).getState().intValue() == 3 ? true : false);
-				infoList.add(li);
+			if(list!=null){
+				// 拼装app数据
+				for (int i = 0; i < list.size(); i++) {
+					LogisticsInfo li = new LogisticsInfo();
+					li.setDes(list.get(i).getContent());
+					li.setTime(list.get(i).getFormatTime());
+					li.setIsEnd(list.get(i).getState().intValue() == 3 ? true : false);
+					infoList.add(li);
+				}
 			}
 			responseBody.setInfoList(infoList);
 			// 配置返回信息
