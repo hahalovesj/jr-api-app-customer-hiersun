@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.CatchKey;
 import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.direct.pojo.JrdsGood;
 import com.hiersun.jewelry.api.direct.service.DirectGoodsService;
@@ -90,9 +91,9 @@ public class BuyGoodsAppService implements BaseService{
 			Response2007 responseBody = new Response2007();
 			responseBody.setFreight(0);
 			responseBody.setSendBy("平台包邮");
-			long token = System.currentTimeMillis();
-			responseBody.setGoodsToken(token + "");
-			redisBaseServiceImpl.set("goodstoken" + token, 1800, token + "");
+			String token = goodsId+"_"+System.currentTimeMillis();
+			responseBody.setGoodsToken(token);
+			redisBaseServiceImpl.set(CatchKey.APP_GOOD_TOKEN + token, 1800, token);
 			Goods resultGoods = new Goods();
 			resultGoods.setGoodsDesc(goods.getGoodDesc());
 			resultGoods.setGoodsID(goods.getId());

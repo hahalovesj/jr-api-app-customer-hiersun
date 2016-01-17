@@ -1,17 +1,20 @@
 package com.hiersun.jewelry.api.service.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+
+import com.hiersun.jewelry.api.dictionary.CatchKey;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by lijunteng on 16/1/11.
@@ -41,7 +44,7 @@ public class LogoutAppService implements BaseService {
         log.info("logout 1004 用户注销请求消息体: " + bodyStr);
         try {
             String token = reqHead.getToken();
-            boolean isDel = redisBaseServiceImpl.del("api.token." + token);
+            boolean isDel = redisBaseServiceImpl.del(CatchKey.APP_USERID_CACH_KEY_START + token);
             if (!isDel) {
                 ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
                 ResponseBody responseBody = new ResponseBody();

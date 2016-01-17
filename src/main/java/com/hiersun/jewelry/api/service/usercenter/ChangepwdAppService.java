@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.CatchKey;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
@@ -68,7 +69,7 @@ public class ChangepwdAppService implements BaseService {
 			User restUser = userService.getUserByMobile(user);
 			String mobile = restUser.getUserMobile();
 
-			String cacheveriCode = redisBaseServiceImpl.get("api" + acctionType + mobile);
+			String cacheveriCode = redisBaseServiceImpl.get(CatchKey.API + acctionType + mobile);
 			if (StringUtils.isEmpty(cacheveriCode) || !cacheveriCode.equals(veriCode)) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100201);
 				ResponseBody responseBody = new ResponseBody();
@@ -78,13 +79,13 @@ public class ChangepwdAppService implements BaseService {
 			userService.modifyPassword(restUser);
 			// 删除旧的token
 			String token = reqHead.getToken();
-			redisBaseServiceImpl.del("api.token." + token);
+			redisBaseServiceImpl.del(CatchKey.APP_USERID_CACH_KEY_START + token);
 			UserInfo info = new UserInfo();
 			info.setUserMobile(restUser.getUserMobile());
 			UserInfo resultUserInfo = userService.getUserInfoByMobile(info);
 			// 登陆成功 存token
 			String newToken = RandomStringUtil.randomString(16);
-			redisBaseServiceImpl.set("api.token." + newToken, resultUserInfo.getUserId().toString());
+			redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + newToken, resultUserInfo.getUserId().toString());
 			// 配置返回信息
 			ResponseLogin responseBody = new ResponseLogin();
 

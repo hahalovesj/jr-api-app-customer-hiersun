@@ -12,14 +12,16 @@ public class RespUser extends ResponseBody {
 	private String birthday;
 	private BankCardNum bankCardNum;
 
-	private String tokne;
+	private String token;
 
-	public String getTokne() {
-		return tokne;
+	
+
+	public String getToken() {
+		return token;
 	}
 
-	public void setTokne(String tokne) {
-		this.tokne = tokne;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public String getMobile() {
