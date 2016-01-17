@@ -24,7 +24,6 @@ import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4024;
 import com.hiersun.jewelry.api.entity.response.Response4024;
-import com.hiersun.jewelry.api.entity.vo.Qualification;
 import com.hiersun.jewelry.api.entity.vo.ResponseJrdsGood;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.DateUtil;

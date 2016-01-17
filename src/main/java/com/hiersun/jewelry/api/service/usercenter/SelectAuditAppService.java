@@ -9,12 +9,15 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.direct.domain.JrdsGoodsPutawayVo;
+import com.hiersun.jewelry.api.direct.pojo.JrdsGood;
 import com.hiersun.jewelry.api.direct.pojo.JrdsGoodAudit;
 import com.hiersun.jewelry.api.direct.service.DirectGoodsService;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4017;
+import com.hiersun.jewelry.api.entity.request.Request4026;
 import com.hiersun.jewelry.api.entity.response.Response4026;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;
 import com.hiersun.jewelry.api.service.BaseService;
@@ -48,17 +51,22 @@ public class SelectAuditAppService implements BaseService {
 		log.info("selectAudit 	4026	接口请求消息体：" + bodyStr);
 		
 		try {
-			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
-			String orderNo = body.getOrderNO();
+			Request4026 body = JSON.parseObject(bodyStr, Request4026.class);
+			String goodsNo = body.getGoodsNO();
 			// 根据订单查询goodsId
-			Long goodsId = orderService.selectGoodIdByOrderNO(orderNo);
-			if (goodsId == null) {
+			
+			JrdsGoodsPutawayVo jgpvo = new JrdsGoodsPutawayVo();
+			jgpvo.setGoodNo(goodsNo);
+			// 根据商品编号查询商品详情
+			JrdsGood jg = directGoodsService.getJrdsGoodId(jgpvo);
+			if(jg == null ){
 				ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 99999);
 				ResponseBody resp = new ResponseBody();
 				return this.packageMsgMap(resp, respHead);
 			}
+//			Long goodsId = orderService.selectGoodIdByOrderNO(orderNo);
 			// 鉴定信息
-			JrdsGoodAudit jrdsGoodAudit = directGoodsService.getGoodAudit(goodsId);
+			JrdsGoodAudit jrdsGoodAudit = directGoodsService.getGoodAudit(jg.getId());
 			Response4026 resp = new Response4026();
 			resp.setAuditExplain(jrdsGoodAudit.getCommentInfo());
 			resp.setAuditResult(jrdsGoodAudit.getResult() == true ? "同意直售" : "不予直售");
