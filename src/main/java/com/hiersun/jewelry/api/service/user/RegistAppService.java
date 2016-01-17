@@ -1,6 +1,7 @@
 package com.hiersun.jewelry.api.service.user;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.CatchKey;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -13,10 +14,12 @@ import com.hiersun.jewelry.api.user.domain.User;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,7 +94,7 @@ public class RegistAppService implements BaseService {
             // 注册成功，删除缓存的验证码
             redisBaseServiceImpl.del("api" + acctionType + mobile);
             // 存token
-            redisBaseServiceImpl.set(UserUtil.APP_USERID_CACH_KEY_START + token, userId.toString());
+            redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + token, userId.toString());
 
             // 配置返回信息
             ResponseRegist responseBody = new ResponseRegist();

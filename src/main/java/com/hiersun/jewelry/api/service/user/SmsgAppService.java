@@ -17,7 +17,6 @@ import com.hiersun.jewelry.api.ott.service.SMSMessageService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
 import com.hiersun.jewelry.api.user.service.UserService;
-import com.hiersun.jewelry.api.util.DoSmsUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 import com.hiersun.jewelry.api.util.Trunc;
 

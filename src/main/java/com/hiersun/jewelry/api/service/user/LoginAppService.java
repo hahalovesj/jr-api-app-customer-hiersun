@@ -1,6 +1,7 @@
 package com.hiersun.jewelry.api.service.user;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.CatchKey;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -79,7 +80,7 @@ public class LoginAppService implements BaseService {
 
             // 登陆成功 存token
             String token = RandomStringUtil.randomString(16);
-            redisBaseServiceImpl.set(UserUtil.APP_USERID_CACH_KEY_START + token, userInfo.getUserId().toString());
+            redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + token, userInfo.getUserId().toString());
             // 配置返回信息
             ResponseLogin responseBody = new ResponseLogin();
 
