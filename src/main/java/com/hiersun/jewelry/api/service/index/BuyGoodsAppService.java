@@ -59,13 +59,6 @@ public class BuyGoodsAppService implements BaseService{
 		log.info("buyGoods	2007	接口 请求消息体："+reqHead.toString());
 		log.info("buyGoods	2007	接口 请求消息体："+bodyStr);
 		try {
-			String reqToken = reqHead.getToken();
-			String userid = redisBaseServiceImpl.get("api.token." + reqToken);
-			if (userid == null || userid.trim().length() < 1) {
-				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 900010);
-				ResponseBody responseBody = new ResponseBody();
-				return this.packageMsgMap(responseBody, respHeader);
-			}
 
 			Request2007 body = JSON.parseObject(bodyStr, Request2007.class);
 			long goodsId = body.getGoodsID();
@@ -78,7 +71,7 @@ public class BuyGoodsAppService implements BaseService{
 			}
 
 			AddressVo vo = new AddressVo();
-			vo.setUserId(Long.parseLong(userid));
+			vo.setUserId(userId);
 			// 查询地址
 			List<AddressVo> addrList = userService.getListAddressVo(vo);
 
