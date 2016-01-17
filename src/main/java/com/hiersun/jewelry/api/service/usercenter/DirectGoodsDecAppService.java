@@ -151,7 +151,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			returnStrBuffer.append("审核时间:")
 					.append(DateUtil.dateToStr(queryGoodsByParamVo.getAuditTime(), "yyyy-MM-dd HH:mm:ss"))
-					.append("\r\n\r\n\r\n");
+					.append("\r\n\r\n");
 		}
 
 		if (queryGoodsByParamVo.getOrderNo() == null) {
