@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -50,7 +51,10 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 
 		try {
 			Request4008 body = JSON.parseObject(bodyStr, Request4008.class);
-
+			Map<String,String> map = new HashMap<String, String>();
+			map.put("女", "0");
+			map.put("男", "1");
+			
 			JrMemberInfoVo jrMemberInfoVo = new JrMemberInfoVo();
 			jrMemberInfoVo.setUserId(userId);
 
@@ -58,7 +62,7 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 				jrMemberInfoVo.setNickName(body.getNickName());
 			}
 			if (!StringUtils.isEmpty(body.getSex())) {
-				jrMemberInfoVo.setSex(body.getSex());
+				jrMemberInfoVo.setSex(map.get(body.getSex()));
 			}
 
 			userService.updateUserInfo(jrMemberInfoVo);
@@ -79,7 +83,7 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 			if (StringUtils.isEmpty(user.getSex())) {
 				result.setSex("男");
 			} else {
-				result.setSex(user.getSex());
+				result.setSex(QualificationType.SEX_MAP.get(user.getSex()));
 			}
 			result.setTokne(reqHead.getToken());
 			BankCardNum bank = new BankCardNum();

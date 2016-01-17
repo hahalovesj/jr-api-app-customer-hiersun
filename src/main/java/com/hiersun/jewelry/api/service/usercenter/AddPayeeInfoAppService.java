@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -77,7 +78,7 @@ public class AddPayeeInfoAppService implements BaseService {
 			if (StringUtils.isEmpty(user.getSex())) {
 				respUser.setSex("男");
 			} else {
-				respUser.setSex(user.getSex());
+				respUser.setSex(QualificationType.SEX_MAP.get(user.getSex()));
 			}
 			respUser.setBirthday(DateUtil.dateTypeToString(user.getBirthday(), "yyyy-MM-dd HH:mm:ss"));
 

@@ -13,6 +13,8 @@ public class QualificationType {
 	public static Map<Integer, String> STYLE_TUPE_MAP = new HashMap<Integer, String>();
 	
 	public static Map<Integer, String>  MATERIAL_TYPE = new HashMap<Integer, String>();
+	
+	public static Map<String, String> SEX_MAP = new HashMap<String, String>();
 
 	static {
 		// 证书类型
@@ -49,6 +51,7 @@ public class QualificationType {
 		MATERIAL_TYPE.put(5, "红宝石");
 		MATERIAL_TYPE.put(6, "蓝宝石");
 		
-		
+		SEX_MAP.put("0", "女");
+		SEX_MAP.put("1", "男");
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -93,7 +94,7 @@ public class ChangepwdAppService implements BaseService {
 			if (resultUserInfo.getSex() == null) {
 				resuUser.setSex("男");
 			} else {
-				resuUser.setSex(resultUserInfo.getSex().equals("0") ? "女" : "男");
+				resuUser.setSex(QualificationType.SEX_MAP.get(resultUserInfo.getSex()));
 			}
 			if (resultUserInfo.getNickName() != null) {
 				resuUser.setNickName(resultUserInfo.getNickName());

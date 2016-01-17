@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -61,7 +62,7 @@ public class GetUserInfoAppService implements BaseService{
 			if (StringUtils.isEmpty(user.getSex())) {
 				result.setSex("男");
 			} else {
-				result.setSex(user.getSex());
+				result.setSex(QualificationType.SEX_MAP.get(user.getSex()));
 			}
 			result.setTokne(reqHead.getToken());
 
