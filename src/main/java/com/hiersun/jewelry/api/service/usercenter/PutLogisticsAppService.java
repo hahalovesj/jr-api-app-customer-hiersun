@@ -72,6 +72,7 @@ public class PutLogisticsAppService implements BaseService {
 			if (body.getOrderNO().startsWith("30")) {
 				JrdsOrder dsOrder = directOrderService.selectOrderByOrderNo(body.getOrderNO());
 				evo.setOrderId(dsOrder.getId());
+				evo.setBusinessType(Byte.valueOf("2"));//直售的业务类型为2
 				evo.setJrdsOrder(dsOrder);
 				
 				// 保存物流信息
@@ -80,6 +81,7 @@ public class PutLogisticsAppService implements BaseService {
 				JrasOrder asOrder = orderService.selectOrderByOrderNo(body.getOrderNO());
 				evo.setOrderId(asOrder.getId());
 				evo.setJrasOrder(asOrder);
+				evo.setBusinessType(Byte.valueOf("1"));//服务的业务类型为1
 				// 保存服务物流信息
 				expressInfoService.saveExpress(evo);
 			}
