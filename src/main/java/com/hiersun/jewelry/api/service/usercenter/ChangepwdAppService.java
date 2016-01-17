@@ -69,7 +69,7 @@ public class ChangepwdAppService implements BaseService {
 			User restUser = userService.getUserByMobile(user);
 			String mobile = restUser.getUserMobile();
 
-			String cacheveriCode = redisBaseServiceImpl.get(CatchKey.API + acctionType + mobile);
+			String cacheveriCode = redisBaseServiceImpl.get(CatchKey.APP_MSG_KEY + acctionType + mobile);
 			if (StringUtils.isEmpty(cacheveriCode) || !cacheveriCode.equals(veriCode)) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100201);
 				ResponseBody responseBody = new ResponseBody();

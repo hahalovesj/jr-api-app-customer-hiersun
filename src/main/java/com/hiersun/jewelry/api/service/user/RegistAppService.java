@@ -61,7 +61,7 @@ public class RegistAppService implements BaseService {
 			String mobile = body.getMobile();
 			String acctionType = body.getsMsgAcctionType();
 			// 对比验证码
-			String cacheNumber = redisBaseServiceImpl.get(CatchKey.API + acctionType + mobile);
+			String cacheNumber = redisBaseServiceImpl.get(CatchKey.APP_MSG_KEY + acctionType + mobile);
 			if (cacheNumber == null || cacheNumber.trim().length() < 1) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100201);
 				ResponseBody responseBody = new ResponseBody();
