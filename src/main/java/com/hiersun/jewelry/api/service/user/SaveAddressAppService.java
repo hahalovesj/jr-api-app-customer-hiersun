@@ -2,6 +2,7 @@ package com.hiersun.jewelry.api.service.user;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -54,7 +55,14 @@ public class SaveAddressAppService implements BaseService {
 		try {
 			Request2009 body = JSON.parseObject(bodyStr, Request2009.class);
 			String type = body.getType();
-
+			AddressVo addressVo = new AddressVo();
+			addressVo.setUserId(userId);
+			List<AddressVo> addrList = userService.getListAddressVo(addressVo);
+			if(addrList.size()>=10){
+				ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 200901);
+				ResponseBody responseBody = new ResponseBody();
+				return this.packageMsgMap(responseBody, respHead);
+			}
 			AddressVo addrVo = new AddressVo();
 			addrVo.setArea(body.getArea());
 			addrVo.setDetailedAddress(body.getDetailedAddress());
