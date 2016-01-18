@@ -92,8 +92,8 @@ public class GoodsMsgListAppService implements BaseService {
 					map.put("msgTime", DateUtil.dateToStr(dvo.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 				}
 				
-				map.put("bigIcon", dvo.getBigIcon());
-				map.put("smallIcon", dvo.getSmallIcon());
+				map.put("bigIcon", Commons.PIC_DOMAIN + dvo.getBigIcon());
+				map.put("smallIcon", Commons.PIC_DOMAIN + dvo.getSmallIcon());
 				resultList.add(map);
 			}
 

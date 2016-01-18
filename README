@@ -20,6 +20,8 @@ http://localhost:8081/jr-apiclean/api/main?msg=
 "body":{"mobile":"15652388352","acctionType":"reg"}}
 
 
+76W1uNZNGSgbDEic
+
 1002
 localhost:8080/jr-apisys/api/main?msg=
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"regist",

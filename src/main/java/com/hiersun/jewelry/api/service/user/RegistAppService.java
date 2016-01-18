@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.CatchKey;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
@@ -52,6 +53,7 @@ public class RegistAppService implements BaseService {
 
 		RequestRegist body = JSON.parseObject(bodyStr, RequestRegist.class);
 		return body.volidateValue();
+		// return 0;
 	}
 
 	@Override
@@ -118,8 +120,8 @@ public class RegistAppService implements BaseService {
 			RespUser respUser = new RespUser();
 			respUser.setMobile(body.getMobile());
 			respUser.setToken(token);
-			respUser.setBigIcon(resultUserInfo.getBigIcon());
-			respUser.setSmallIcon(resultUserInfo.getSmallIcon());
+			respUser.setBigIcon(Commons.PIC_DOMAIN + resultUserInfo.getBigIcon());
+			respUser.setSmallIcon(Commons.PIC_DOMAIN + resultUserInfo.getSmallIcon());
 			if (resultUserInfo.getSex() == null) {
 				respUser.setSex(QualificationType.SEX_MAP.get("0"));
 			} else {
@@ -128,7 +130,7 @@ public class RegistAppService implements BaseService {
 			if (resultUserInfo.getNickName() != null) {
 				respUser.setNickName(resultUserInfo.getNickName());
 			} else {
-				user.setNickName(CommonUtils.mobileForNickName(body.getMobile()));
+				respUser.setNickName(CommonUtils.mobileForNickName(body.getMobile()));
 			}
 			if (resultUserInfo.getBirthday() != null) {
 				respUser.setBirthday(DateUtil.dateTypeToString(resultUserInfo.getBirthday(), "yyyy-MM-dd HH:mm:ss"));

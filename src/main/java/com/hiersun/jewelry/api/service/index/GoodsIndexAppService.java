@@ -102,8 +102,8 @@ public class GoodsIndexAppService implements BaseService {
 				// user.setIcon(picDoMain +
 				// "apiupload/uploadFile/bd6661231506e0fe52c15a3a77ecc1e7.jpg");
 				// user.setIcon(Commons.HEAD_IOC);
-				user.setBigIcon(jrMInfo.getBigIcon());
-				user.setSmallIcon(jrMInfo.getSmallIcon());
+				user.setBigIcon(Commons.PIC_DOMAIN + jrMInfo.getBigIcon());
+				user.setSmallIcon(Commons.PIC_DOMAIN + jrMInfo.getSmallIcon());
 				
 				resultGoods.setUser(user);
 			} else {

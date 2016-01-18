@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.CatchKey;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
@@ -95,8 +96,8 @@ public class ChangepwdAppService implements BaseService {
 			RespUser resuUser = new RespUser();
 			resuUser.setToken(newToken);
 			resuUser.setMobile(resultUserInfo.getUserMobile());
-			resuUser.setBigIcon(resultUserInfo.getBigIcon());
-			resuUser.setSmallIcon(resultUserInfo.getSmallIcon());
+			resuUser.setBigIcon(Commons.PIC_DOMAIN + resultUserInfo.getBigIcon());
+			resuUser.setSmallIcon(Commons.PIC_DOMAIN + resultUserInfo.getSmallIcon());
 			
 			if (resultUserInfo.getSex() == null) {
 				resuUser.setSex(QualificationType.SEX_MAP.get("0"));
