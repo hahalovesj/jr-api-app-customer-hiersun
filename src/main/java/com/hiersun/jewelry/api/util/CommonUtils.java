@@ -37,7 +37,7 @@ public class CommonUtils {
 	}
 
 	/**
-	 * 获取男女头像    0是女 1是男
+	 * 获取男女头像 0是女 1是男
 	 */
 	public static Map<String, String> getIco(int i) {
 		if (i > 1) {

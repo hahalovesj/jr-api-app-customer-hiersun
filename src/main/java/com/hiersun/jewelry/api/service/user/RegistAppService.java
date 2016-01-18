@@ -20,6 +20,7 @@ import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
 import com.hiersun.jewelry.api.user.domain.User;
 import com.hiersun.jewelry.api.user.service.UserService;
+import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
@@ -87,12 +88,13 @@ public class RegistAppService implements BaseService {
 			user.setImie(reqHead.getImei());
 			user.setPushId(body.getPushMsgID());
 
-			int randomKey = (int) com.hiersun.jewelry.api.util.Trunc.getRandomForRange(1, 10);
-			String bigWoman = IcoDictionary.BIG_WOMAN_PHOTO.get(randomKey);
-			String smaltWoman = IcoDictionary.SMAIL_WOMAN_PHOTO.get(randomKey);
-			user.setBigIcon(bigWoman);
-			user.setSmallIcon(smaltWoman);
-			
+			Map<String,String> icoMap = CommonUtils.getIco(0);
+
+			// 默认女头像和女性别
+			user.setBigIcon(icoMap.get("big"));
+			user.setSmallIcon(icoMap.get("small"));
+			user.setSex(0);
+
 			userId = userService.regist(user);
 			String token = RandomStringUtil.randomString(16);
 
