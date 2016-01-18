@@ -28,7 +28,8 @@ public class RecodeMsgMap {
 		RECODEMSGMAP.put(100201, "验证码错误");
 		RECODEMSGMAP.put(100202, "用户创建失败");
 		RECODEMSGMAP.put(100304, "密码不正确");
-
+		
+		RECODEMSGMAP.put(100305, "用户不可用");
 		RECODEMSGMAP.put(200100, "页码不能为空");
 		RECODEMSGMAP.put(200101, "请求类型不能为空");
 		RECODEMSGMAP.put(200102, "请求的数据为空");
