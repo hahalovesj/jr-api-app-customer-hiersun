@@ -96,7 +96,7 @@ public class LoginAppService implements BaseService {
 			user.setMobile(userInfo.getUserMobile());
 			user.setToken(token);
 			user.setBigIcon(Commons.PIC_DOMAIN + resultUserInfo.getBigIcon());
-			user.setSmallIcon(Commons.PIC_DOMAIN + resultUserInfo.getSmallIcon());
+			user.setSmallIcon(Commons.PIC_DOMAIN +resultUserInfo.getSmallIcon());
 			if (resultUserInfo.getSex() == null) {
 				user.setSex(QualificationType.SEX_MAP.get("0"));
 			} else {

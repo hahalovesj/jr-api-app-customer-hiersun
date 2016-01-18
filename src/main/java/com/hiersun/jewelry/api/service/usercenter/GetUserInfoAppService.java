@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
@@ -19,16 +20,18 @@ import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
+import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("getUserInfoAppService")
-public class GetUserInfoAppService implements BaseService{
-	
+public class GetUserInfoAppService implements BaseService {
+
 	private static final Logger log = Logger.getLogger(GetUserInfoAppService.class);
-	
+
 	@Resource
 	private UserService userService;
-	
+
 	@Override
 	public boolean ifValidateLogin() {
 		return true;
@@ -41,11 +44,11 @@ public class GetUserInfoAppService implements BaseService{
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-		
+
 		log.info("getUserInfoAppService	4003	请求信息：" + reqHead.toString());
 		log.info("getUserInfoAppService	4003 	请求信息：" + bodyStr);
-		
-		try{
+
+		try {
 			UserInfo userInfo = new UserInfo();
 			userInfo.setUserId(userId);
 
@@ -56,26 +59,40 @@ public class GetUserInfoAppService implements BaseService{
 				return this.packageMsgMap(res, respHead);
 			}
 
-			RespUser result = new RespUser();
-			result.setNickName(user.getNickName());
-			result.setMobile(user.getUserMobile());
-			if (StringUtils.isEmpty(user.getSex())) {
-				result.setSex(QualificationType.SEX_MAP.get("0"));
+			RespUser respUser = new RespUser();
+			respUser.setMobile(userInfo.getUserMobile());
+			respUser.setToken(reqHead.getToken());
+			respUser.setBigIcon(Commons.PIC_DOMAIN + user.getBigIcon());
+			respUser.setSmallIcon(Commons.PIC_DOMAIN + user.getSmallIcon());
+			if (user.getSex() == null) {
+				respUser.setSex(QualificationType.SEX_MAP.get("0"));
 			} else {
-				result.setSex(QualificationType.SEX_MAP.get(user.getSex()));
+				respUser.setSex(user.getSex().equals("0") ? "女" : "男");
 			}
-			result.setToken(reqHead.getToken());
-
-			BankCardNum bank = new BankCardNum();
-			bank.setBankCardNum(user.getCardNo());
-			bank.setBankName(user.getBankName());
-			bank.setUserRealName(user.getRealName());
-			result.setBankCardNum(bank);
-			res.setUser(result);
+			if (user.getNickName() != null) {
+				respUser.setNickName(user.getNickName());
+			} else {
+				respUser.setNickName(CommonUtils.mobileForNickName(user.getUserMobile()));
+			}
+			if (user.getBirthday() != null) {
+				respUser.setBirthday(DateUtil.dateTypeToString(user.getBirthday(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			BankCardNum bankCarNum = new BankCardNum();
+			if (user.getCardNo() != null) {
+				bankCarNum.setBankCardNum(user.getCardNo());
+			}
+			if (user.getBankName() != null) {
+				bankCarNum.setBankName(user.getBankName());
+			}
+			if (user.getRealName() != null) {
+				bankCarNum.setUserRealName(user.getRealName());
+			}
+			respUser.setBankCardNum(bankCarNum);
+			res.setUser(respUser);
 
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(res, respHead);
-			
+
 		} catch (Exception e) {
 			log.error("getUserInfoAppService	4003	接口发生异常，异常信息：" + e.getMessage());
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
@@ -84,6 +101,7 @@ public class GetUserInfoAppService implements BaseService{
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
+
 	private Map<String, Object> packageMsgMap(Response4003 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
