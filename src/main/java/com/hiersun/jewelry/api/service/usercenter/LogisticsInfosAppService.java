@@ -85,26 +85,34 @@ public class LogisticsInfosAppService implements BaseService {
 				}else{
 					ex.setExpressMark(true);//1是邮出，0是邮入
 				}
+				if(asOrder.getIsDelivery()==null || asOrder.getIsDelivery().intValue()==0){
+					exInfo = null;
+				}else{
+					ex.setOrderId(asOrder.getId());
+					exInfo = expressInfoService.getExpressInfo(ex);
+				}
 				//ex.setExpressMark(asOrder.getStatus().intValue() > 7 ? true : false);//1是邮出，0是邮入
-				ex.setOrderId(asOrder.getId());
-				exInfo = expressInfoService.getExpressInfo(ex);
+				
 			}
 
 			// 返回的body
 			Response4014 responseBody = new Response4014();
-			// 根据物流信息对象查询该物流的跟踪信息
-			List<LogisticsTrackingInfo> list = logisticsTrackingInfoService.queryTrackingInfoList(exInfo);
 			List<LogisticsInfo> infoList = new ArrayList<LogisticsInfo>();
-			if(list!=null){
-				// 拼装app数据
-				for (int i = 0; i < list.size(); i++) {
-					LogisticsInfo li = new LogisticsInfo();
-					li.setDes(list.get(i).getContent());
-					li.setTime(list.get(i).getFormatTime());
-					li.setIsEnd(list.get(i).getState().intValue() == 3 ? true : false);
-					infoList.add(li);
+			if(exInfo!=null){
+				// 根据物流信息对象查询该物流的跟踪信息
+				List<LogisticsTrackingInfo> list = logisticsTrackingInfoService.queryTrackingInfoList(exInfo);
+				if(list!=null){
+					// 拼装app数据
+					for (int i = 0; i < list.size(); i++) {
+						LogisticsInfo li = new LogisticsInfo();
+						li.setDes(list.get(i).getContent());
+						li.setTime(list.get(i).getFormatTime());
+						li.setIsEnd(list.get(i).getState().intValue() == 3 ? true : false);
+						infoList.add(li);
+					}
 				}
 			}
+		
 			responseBody.setInfoList(infoList);
 			// 配置返回信息
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
