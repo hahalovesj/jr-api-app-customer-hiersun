@@ -91,11 +91,11 @@ public class LoginAppService implements BaseService {
 			ResponseLogin responseBody = new ResponseLogin();
 
 			responseBody.setJumpTransaction(body.getJumpTransaction());
-			responseBody.setMobile(userInfo.getUserMobile());
-			responseBody.setToken(token);
 			RespUser user = new RespUser();
-//			 user.setMobile(userInfo.getUserMobile());
-//			 user.setToken(token);
+			user.setMobile(userInfo.getUserMobile());
+			user.setToken(token);
+			user.setBigIcon(resultUserInfo.getBigIcon());
+			user.setSmallIcon(resultUserInfo.getSmallIcon());
 			if (resultUserInfo.getSex() == null) {
 				user.setSex(QualificationType.SEX_MAP.get("0"));
 			} else {

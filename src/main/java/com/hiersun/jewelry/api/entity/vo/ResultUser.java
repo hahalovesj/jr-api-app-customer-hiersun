@@ -5,6 +5,24 @@ public class ResultUser {
 	private String mobile;
 	private String nickName;
 	private String icon;
+	private String bigIcon;
+	private String smallIcon;
+
+	public String getBigIcon() {
+		return bigIcon;
+	}
+
+	public void setBigIcon(String bigIcon) {
+		this.bigIcon = bigIcon;
+	}
+
+	public String getSmallIcon() {
+		return smallIcon;
+	}
+
+	public void setSmallIcon(String smallIcon) {
+		this.smallIcon = smallIcon;
+	}
 
 	public ResultUser() {
 	}

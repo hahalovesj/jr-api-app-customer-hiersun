@@ -123,7 +123,8 @@ public class IndexAppService implements BaseService{
 				} else {
 					userMap.put("nickName", CommonUtils.mobileForNickName(goodList.get(i).getUser().getMobile()));
 				}
-				userMap.put("icon", Commons.HEAD_IOC);
+				userMap.put("bigIcon", goodList.get(i).getUser().getBigIcon());
+				userMap.put("smallIcon", goodList.get(i).getUser().getSmallIcon());
 
 				map.put("user", userMap);
 				goodsList.add(map);
