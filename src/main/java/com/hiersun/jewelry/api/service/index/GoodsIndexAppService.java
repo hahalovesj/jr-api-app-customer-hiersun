@@ -29,14 +29,15 @@ import com.hiersun.jewelry.api.user.pojo.JrMemberInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+
 @Service("goodsIndexAppService")
 public class GoodsIndexAppService implements BaseService {
-	
+
 	private static final Logger log = Logger.getLogger(GoodsIndexAppService.class);
-	
+
 	@Resource
 	private DirectGoodsService directGoodsService;
-	
+
 	@Resource
 	UserService userService;
 
@@ -53,16 +54,16 @@ public class GoodsIndexAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-		log.info("goodsIndex	2003	接口 请求消息体："+reqHead.toString());
-		log.info("goodsIndex	2003	接口 请求消息体："+bodyStr);
+		log.info("goodsIndex	2003	接口 请求消息体：" + reqHead.toString());
+		log.info("goodsIndex	2003	接口 请求消息体：" + bodyStr);
 		try {
 			Request2003 body = JSON.parseObject(bodyStr, Request2003.class);
 			Long goodsId = body.getGoodsID();
-			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId,true);
+			JrdsGood goods = directGoodsService.getOneDirectGoods(goodsId, true);
 			if (goods == null) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
 				ResponseBody responseBody = new ResponseBody();
-				
+
 				return this.packageMsgMap(responseBody, respHeader);
 			}
 			Response2003 responseBody = new Response2003();
@@ -94,8 +95,7 @@ public class GoodsIndexAppService implements BaseService {
 					if (jrMInfo.getNickName() != null) {
 						user.setNickName(jrMInfo.getNickName());
 					} else {
-						user.setNickName(account == null ? "" : CommonUtils.mobileForNickName(account
-								.getUserMobile()));
+						user.setNickName(account == null ? "" : CommonUtils.mobileForNickName(account.getUserMobile()));
 					}
 				}
 
@@ -120,23 +120,23 @@ public class GoodsIndexAppService implements BaseService {
 			responseBody.setGoods(resultGoods);
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
-			log.error("goodsIndex 2003接口，发生异常，异常信息："+e.getMessage());
+			log.error("goodsIndex 2003接口，发生异常，异常信息：" + e.getMessage());
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			e.printStackTrace();
 			return this.packageMsgMap(responseBody, respHeader);
-			
+
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response2003 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response2003 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

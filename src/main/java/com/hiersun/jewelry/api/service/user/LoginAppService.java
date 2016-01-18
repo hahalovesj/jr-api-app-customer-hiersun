@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.CatchKey;
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -88,7 +89,7 @@ public class LoginAppService implements BaseService {
             responseBody.setToken(token);
             RespUser user = new RespUser();
             if (resultUserInfo.getSex() == null) {
-                user.setSex("男");
+                user.setSex(QualificationType.SEX_MAP.get("0"));
             } else {
                 user.setSex(resultUserInfo.getSex().equals("0") ? "女" : "男");
             }

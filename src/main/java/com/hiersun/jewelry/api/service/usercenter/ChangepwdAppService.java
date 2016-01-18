@@ -93,7 +93,7 @@ public class ChangepwdAppService implements BaseService {
 			responseBody.setToken(newToken);
 			RespUser resuUser = new RespUser();
 			if (resultUserInfo.getSex() == null) {
-				resuUser.setSex("男");
+				resuUser.setSex(QualificationType.SEX_MAP.get("0"));
 			} else {
 				resuUser.setSex(QualificationType.SEX_MAP.get(resultUserInfo.getSex()));
 			}
