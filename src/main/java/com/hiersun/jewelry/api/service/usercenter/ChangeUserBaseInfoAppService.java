@@ -65,9 +65,10 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 				jrMemberInfoVo.setNickName(body.getNickName());
 			}
 			if (!StringUtils.isEmpty(body.getSex())) {
-				jrMemberInfoVo.setSex(map.get(body.getSex()));
-				
 				Map<String,String > mmap = CommonUtils.getIco(Integer.parseInt(map.get(body.getSex())));
+				
+				
+				
 				jrMemberInfoVo.setBigIcon(mmap.get("big"));
 				jrMemberInfoVo.setSmallIcon(mmap.get("small"));
 			}
