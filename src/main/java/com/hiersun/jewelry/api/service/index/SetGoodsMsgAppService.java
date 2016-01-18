@@ -96,8 +96,8 @@ public class SetGoodsMsgAppService implements BaseService {
 				if (dvo.getCreated() != null) {
 					map.put("msgTime", DateUtil.dateToStr(dvo.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 				}
-				map.put("bigIcon",Commons.PIC_DOMAIN +  dvo.getBigIcon());
-				map.put("smallIcon", Commons.PIC_DOMAIN + dvo.getSmallIcon());
+				// map.put("bigIcon",Commons.PIC_DOMAIN + dvo.getBigIcon());
+				map.put("icon", Commons.PIC_DOMAIN + dvo.getSmallIcon());
 
 				resultList.add(map);
 			}
