@@ -85,7 +85,7 @@ public class PutSaleGoodsAppService implements BaseService {
 			respHead.setTransactionType(reqHead.getTransactionType());
 
 			Response5001 responseBody = new Response5001();
-			responseBody.setOrderNO(resultInfo.getOutputGoodsNO());
+			responseBody.setGoodsNO(resultInfo.getOutputGoodsNO());
 			responseBody.setGoodsID(resultInfo.getOutputGoodsID());
 
 			return this.packageMsgMap(responseBody, respHead);

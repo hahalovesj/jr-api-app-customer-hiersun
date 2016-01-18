@@ -1,7 +1,7 @@
 package com.hiersun.jewelry.api.entity.response;
 
 public class Response5001 {
-	private String orderNO;
+	private String goodsNO;
 	private long goodsID;
 
 	public long getGoodsID() {
@@ -12,12 +12,12 @@ public class Response5001 {
 		this.goodsID = goodsID;
 	}
 
-	public String getOrderNO() {
-		return orderNO;
+	public String getGoodsNO() {
+		return goodsNO;
 	}
 
-	public void setOrderNO(String orderNO) {
-		this.orderNO = orderNO;
+	public void setGoodsNO(String goodsNO) {
+		this.goodsNO = goodsNO;
 	}
 
 }

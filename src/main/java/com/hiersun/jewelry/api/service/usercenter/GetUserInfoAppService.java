@@ -60,7 +60,7 @@ public class GetUserInfoAppService implements BaseService{
 			result.setNickName(user.getNickName());
 			result.setMobile(user.getUserMobile());
 			if (StringUtils.isEmpty(user.getSex())) {
-				result.setSex("男");
+				result.setSex(QualificationType.SEX_MAP.get("0"));
 			} else {
 				result.setSex(QualificationType.SEX_MAP.get(user.getSex()));
 			}
