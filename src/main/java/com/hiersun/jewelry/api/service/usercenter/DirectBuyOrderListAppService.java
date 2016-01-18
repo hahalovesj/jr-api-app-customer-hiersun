@@ -53,7 +53,7 @@ public class DirectBuyOrderListAppService implements BaseService {
 		try {
 			Request4018 body = JSON.parseObject(bodyStr, Request4018.class);
 			int orderTypeCode = body.getOrderTypeCode();
-			Integer[] status = StatusMap.SERVICE_ORDER_STAUTECODE_MAP.get(orderTypeCode);
+			Integer[] status = StatusMap.DIRECT_ORDER_STAUTECODE_MAP.get(orderTypeCode);
 			Map<String, Object> paramMap = new HashMap<String, Object>();
 			paramMap.put("status", status);
 			paramMap.put("buyerMemeberId", userId);
