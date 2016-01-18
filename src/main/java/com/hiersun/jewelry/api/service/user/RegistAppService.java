@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.CatchKey;
+import com.hiersun.jewelry.api.dictionary.IcoDictionary;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -45,7 +46,6 @@ public class RegistAppService implements BaseService {
 
 		RequestRegist body = JSON.parseObject(bodyStr, RequestRegist.class);
 		return body.volidateValue();
-
 	}
 
 	@Override
@@ -87,6 +87,12 @@ public class RegistAppService implements BaseService {
 			user.setImie(reqHead.getImei());
 			user.setPushId(body.getPushMsgID());
 
+			int randomKey = (int) com.hiersun.jewelry.api.util.Trunc.getRandomForRange(1, 10);
+			String bigWoman = IcoDictionary.BIG_WOMAN_PHOTO.get(randomKey);
+			String smaltWoman = IcoDictionary.SMAIL_WOMAN_PHOTO.get(randomKey);
+			user.setBigIcon(bigWoman);
+			user.setSmallIcon(smaltWoman);
+			
 			userId = userService.regist(user);
 			String token = RandomStringUtil.randomString(16);
 
