@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.constant.StatusMap;
 import com.hiersun.jewelry.api.dictionary.Commons;
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.direct.domain.QueryGoodsByParamVo;
 import com.hiersun.jewelry.api.direct.pojo.JrdsOrderLog;
 import com.hiersun.jewelry.api.direct.service.DirectGoodsService;
@@ -61,6 +62,11 @@ public class DirectGoodsDecAppService implements BaseService {
 			// 查询good对象 辅助以订单和审核相关信息
 			QueryGoodsByParamVo queryGoodsByParamVo = directGoodsService
 					.getGoodsInfoByGoodNo(body.getGoodsNO(), userId);
+			if(queryGoodsByParamVo == null){
+				ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 200102);
+				ResponseBody resbody = new ResponseBody();
+				return this.packageMsgMap(resbody, respHead);
+			}
 			// 打包返回信息
 			ResponseJrdsGood responseJrdsGood = this.packageResponseJrdsGood(queryGoodsByParamVo);
 			// 商品交易日志信息
@@ -104,15 +110,17 @@ public class DirectGoodsDecAppService implements BaseService {
 		jesponseJrdsGood.setGoodsNO(vo.getGoodNo());
 		jesponseJrdsGood.setGoodsPrice(vo.getDirectPrice().doubleValue());
 		jesponseJrdsGood.setGoodsBuyPrice(vo.getBuyingPrice().doubleValue());
+		jesponseJrdsGood.setOrderMsg(vo.getOrderMsg());
+		jesponseJrdsGood.setOrderNO(vo.getOrderNo());
 		// 成交价
 		BigDecimal commission = vo.getCommission()==null ? BigDecimal.ZERO :vo.getCommission();
 		BigDecimal commissionPrice = commission.multiply(vo.getDirectPrice()).setScale(2,RoundingMode.HALF_UP);
 		Double settlement = vo.getDirectPrice().subtract(
 				commissionPrice
 						).doubleValue();
-		jesponseJrdsGood.setSettlement(settlement);
+		jesponseJrdsGood.setSettlementPrice(settlement);
 		jesponseJrdsGood.setCommissionPrice(commissionPrice.doubleValue());
-		jesponseJrdsGood.setOrderMsg(vo.getOrderMsg());
+		
 		// orderStatus 为空时 证明没有产生订单，状态需要看goodStatus goodStatus为空说明还没有审核
 		Integer orderStatusCode = null;
 		if(vo.getApplicationStatus().intValue()==1){
@@ -136,13 +144,13 @@ public class DirectGoodsDecAppService implements BaseService {
 
 		StringBuffer returnStrBuffer = new StringBuffer();
 
-		returnStrBuffer.append("申请编号:").append(queryGoodsByParamVo.getApplicationNo()).append("\r\n");
+		returnStrBuffer.append("申请编号:").append(queryGoodsByParamVo.getApplicationNo()).append("\r\n\r\n");
 		if (queryGoodsByParamVo.getApplicationStatus().intValue() == 1) {
 			return returnStrBuffer.toString();
 		} else {
 			returnStrBuffer.append("审核时间:")
 					.append(DateUtil.dateToStr(queryGoodsByParamVo.getAuditTime(), "yyyy-MM-dd HH:mm:ss"))
-					.append("\r\n");
+					.append("\r\n\r\n");
 		}
 
 		if (queryGoodsByParamVo.getOrderNo() == null) {
@@ -150,31 +158,31 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			returnStrBuffer.append("订单编号:")
 					.append(DateUtil.dateToStr(queryGoodsByParamVo.getAuditTime(), "yyyy-MM-dd HH:mm:ss"))
-					.append("\r\n");
+					.append("\r\n\r\n");
 
-			returnStrBuffer.append("下单时间:").append(logMap.get(0)).append("\r\n");
+			returnStrBuffer.append("下单时间:").append(logMap.get(0)).append("\r\n\r\n");
 		}
 
 		if (queryGoodsByParamVo.getPayType() != null) {
 			return returnStrBuffer.toString();
 		} else {
-			returnStrBuffer.append("支付方式:").append(queryGoodsByParamVo.getPayType() == 1 ? "微信支付" : "支付宝")
-					.append("\r\n");
+			returnStrBuffer.append("支付方式:").append(QualificationType.PAY_TYPE_MAP.get(queryGoodsByParamVo.getPayType()))
+					.append("\r\n\r\n");
 
-			returnStrBuffer.append("支付时间：").append(logMap.get(1)).append("\r\n");
+			returnStrBuffer.append("支付时间：").append(logMap.get(1)).append("\r\n\r\n");
 		}
 
 		if (queryGoodsByParamVo.getOrderStatus().intValue() < 2) {
 			return returnStrBuffer.toString();
 		} else {
-			returnStrBuffer.append("发货到平台:").append(logMap.get(2)).append("\r\n");
+			returnStrBuffer.append("发货到平台:").append(logMap.get(2)).append("\r\n\r\n");
 		}
 
 		if (queryGoodsByParamVo.getOrderStatus().intValue() < 3) {
 			return returnStrBuffer.toString();
 		} else {
 			returnStrBuffer.append("鉴定时间:").append(logMap.get(3) != null ? logMap.get(3) : logMap.get(4))
-					.append("\r\n");
+					.append("\r\n\r\n");
 		}
 
 		if (queryGoodsByParamVo.getOrderStatus().intValue() < 5) {
@@ -182,7 +190,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			// 需要确认的才做确认记录
 			if (logMap.get(5) != null) {
-				returnStrBuffer.append("再次确认时间").append(logMap.get(5)).append("\r\n");
+				returnStrBuffer.append("再次确认时间").append(logMap.get(5)).append("\r\n\r\n");
 			}
 		}
 
@@ -191,7 +199,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			// 需要确认的才做确认记录
 			if (logMap.get(9) != null) {
-				returnStrBuffer.append("发货到买家时间").append(logMap.get(9)).append("\r\n");
+				returnStrBuffer.append("发货到买家时间").append(logMap.get(9)).append("\r\n\r\n");
 			}
 		}
 
@@ -200,7 +208,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			// 需要确认的才做确认记录
 			if (logMap.get(10) != null) {
-				returnStrBuffer.append("发货到买家时间").append(logMap.get(10)).append("\r\n");
+				returnStrBuffer.append("发货到买家时间").append(logMap.get(10)).append("\r\n\r\n");
 			}
 		}
 

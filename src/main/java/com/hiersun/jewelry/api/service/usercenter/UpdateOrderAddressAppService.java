@@ -66,6 +66,7 @@ public class UpdateOrderAddressAppService implements BaseService {
 			//JrasOrder jrasOrder = orderService.selectOrderByOrderNo(body.getOrderNo());
 			jrasOrder = orderService.selectOrderByOrderNo(body.getOrderNo());
 			if (body.getType() == 0 && body.getAddressId() != null) {
+			
 				jrasOrder.setAddressId(body.getAddressId());
 				expressInfoService.updateJrasOrderAddress(jrasOrder);
 			} else if(body.getType() == 0 && body.getAddressId() == null){

@@ -19,7 +19,7 @@ public class CheckBankCard {
 		    程序输出：成功 
     */  
 	public static void main(String[] args) {
-		System.out.println(checkBankCard("6222022703003016869"));
+		System.out.println(checkBankCard("622"));
 	}
 
 	 /**

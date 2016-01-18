@@ -78,7 +78,7 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 			paramMap.put("businessType", 2);
 			JrasGoodQualification qual = orderService.selectQualification(paramMap);
 			if (qual == null) {
-				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
+				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
 				ResponseBody responseBody = new ResponseBody();
 				return this.packageMsgMap(responseBody, respHeader);
 			}

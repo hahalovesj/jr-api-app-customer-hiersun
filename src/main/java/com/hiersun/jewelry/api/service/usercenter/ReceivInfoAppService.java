@@ -50,8 +50,9 @@ public class ReceivInfoAppService implements BaseService {
 			Company company = new Company();
 			company.setCompanyName("顺丰快递公司");
 			company.setCompanyCode("1");
-			companyList.add(company);
-			responseBody.setCompanyList(companyList);
+			//companyList.add(company);/
+			responseBody.setCompany(company);
+			//responseBody.setCompanyList(companyList);
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			responseMsg.put("body", responseBody);
 			responseMsg.put("head", respHead);

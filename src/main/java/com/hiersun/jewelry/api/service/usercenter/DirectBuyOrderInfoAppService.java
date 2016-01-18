@@ -68,9 +68,9 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			// 基本信息
 			JrdsOrderVo jrdsOrderVo = directOrderService.selectDirectOrder(orderNo);
 			JrAfterSalesAuditVo jrSalesVo = directOrderService.selectAfterByOrderId(orderNo);
-			//是否可以申请售后
-			Boolean isAfter = jrSalesVo==null?true:false;
-			
+			// 是否可以申请售后
+			Boolean isAfter = jrSalesVo == null ? true : false;
+
 			if (jrdsOrderVo == null) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
 				ResponseBody responseBody = new ResponseBody();
@@ -85,17 +85,18 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			order.setGoodsPic(jrdsOrderVo.getGoodsPic());
 			order.setOrderID(jrdsOrderVo.getId());
 			order.setOrderNO(jrdsOrderVo.getOrderNo());
+//			order.setGoodsBuyPrice(jrdsOrderVo.getPayAmount().doubleValue());
 			if (jrdsOrderVo.getOrderAmount() != null) {
 				order.setOrderPrice(jrdsOrderVo.getOrderAmount().doubleValue());
 			}
-			if(jrdsOrderVo.getPayAmount() != null){
+			if (jrdsOrderVo.getPayAmount() != null) {
 				order.setGoodsBuyPrice(jrdsOrderVo.getPayAmount().doubleValue());
 			}
-			
+
 			order.setFreightDesc("￥0.00元运费（平台包邮）");// 暂时写死
 			order.setOrderMsg(jrdsOrderVo.getOrderMessage());
-			//如果为可申请售后 且已经完成交易 才可以进行售后申请
-			if(isAfter&&StatusMap.DIRECT_ORDER_DB_STAUE_YWC==jrdsOrderVo.getOrderStatus().intValue()){
+			// 如果为可申请售后 且已经完成交易 才可以进行售后申请
+			if (isAfter && StatusMap.DIRECT_ORDER_DB_STAUE_YWC == jrdsOrderVo.getOrderStatus().intValue()) {
 				isAfter = true;
 			}
 			order.setIsAfter(isAfter);

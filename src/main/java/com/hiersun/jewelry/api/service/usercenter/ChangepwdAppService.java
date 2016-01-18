@@ -10,21 +10,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.CatchKey;
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4009;
 import com.hiersun.jewelry.api.entity.response.RespUser;
 import com.hiersun.jewelry.api.entity.response.ResponseLogin;
-import com.hiersun.jewelry.api.entity.response.ResponseResetpwd;
 import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
-import com.hiersun.jewelry.api.service.utils.UserUtil;
 import com.hiersun.jewelry.api.user.domain.User;
 import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
@@ -68,7 +69,7 @@ public class ChangepwdAppService implements BaseService {
 			User restUser = userService.getUserByMobile(user);
 			String mobile = restUser.getUserMobile();
 
-			String cacheveriCode = redisBaseServiceImpl.get("api" + acctionType + mobile);
+			String cacheveriCode = redisBaseServiceImpl.get(CatchKey.APP_MSG_KEY + acctionType + mobile);
 			if (StringUtils.isEmpty(cacheveriCode) || !cacheveriCode.equals(veriCode)) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 100201);
 				ResponseBody responseBody = new ResponseBody();
@@ -78,23 +79,23 @@ public class ChangepwdAppService implements BaseService {
 			userService.modifyPassword(restUser);
 			// 删除旧的token
 			String token = reqHead.getToken();
-			redisBaseServiceImpl.del("api.token." + token);
+			redisBaseServiceImpl.del(CatchKey.APP_USERID_CACH_KEY_START + token);
 			UserInfo info = new UserInfo();
-			info.setUserMobile(restUser.getMobile());
+			info.setUserMobile(restUser.getUserMobile());
 			UserInfo resultUserInfo = userService.getUserInfoByMobile(info);
 			// 登陆成功 存token
 			String newToken = RandomStringUtil.randomString(16);
-			redisBaseServiceImpl.set("api.token." + newToken, resultUserInfo.getUserId().toString());
+			redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + newToken, resultUserInfo.getUserId().toString());
 			// 配置返回信息
 			ResponseLogin responseBody = new ResponseLogin();
 
 			responseBody.setMobile(resultUserInfo.getUserMobile());
-			responseBody.setToken(token);
+			responseBody.setToken(newToken);
 			RespUser resuUser = new RespUser();
 			if (resultUserInfo.getSex() == null) {
 				resuUser.setSex("男");
 			} else {
-				resuUser.setSex(resultUserInfo.getSex().equals("0") ? "女" : "男");
+				resuUser.setSex(QualificationType.SEX_MAP.get(resultUserInfo.getSex()));
 			}
 			if (resultUserInfo.getNickName() != null) {
 				resuUser.setNickName(resultUserInfo.getNickName());
@@ -102,7 +103,7 @@ public class ChangepwdAppService implements BaseService {
 				resuUser.setNickName(CommonUtils.mobileForNickName(resultUserInfo.getUserMobile()));
 			}
 			if (resultUserInfo.getBirthday() != null) {
-				resuUser.setBirthday(resultUserInfo.getBirthday());
+				resuUser.setBirthday(DateUtil.dateTypeToString(resultUserInfo.getBirthday(), "yyyy-MM-dd HH:mm:ss"));
 			}
 			BankCardNum bankCarNum = new BankCardNum();
 			if (resultUserInfo.getCardNo() != null) {

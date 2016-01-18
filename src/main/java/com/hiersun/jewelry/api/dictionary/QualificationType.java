@@ -11,6 +11,10 @@ public class QualificationType {
 	public static Map<Integer, String> PAY_TYPE_MAP = new HashMap<Integer, String>();
 
 	public static Map<Integer, String> STYLE_TUPE_MAP = new HashMap<Integer, String>();
+	
+	public static Map<Integer, String>  MATERIAL_TYPE = new HashMap<Integer, String>();
+	
+	public static Map<String, String> SEX_MAP = new HashMap<String, String>();
 
 	static {
 		// 证书类型
@@ -38,6 +42,16 @@ public class QualificationType {
 		STYLE_TUPE_MAP.put(5, "耳饰");
 		STYLE_TUPE_MAP.put(6, "情侣款");
 		STYLE_TUPE_MAP.put(7, "其他");
-
+		
+		MATERIAL_TYPE.put(0, "贵金属");
+		MATERIAL_TYPE.put(1, "裸钻");
+		MATERIAL_TYPE.put(2, "镶嵌钻石");
+		MATERIAL_TYPE.put(3, "钻彩");
+		MATERIAL_TYPE.put(4, "祖母绿");
+		MATERIAL_TYPE.put(5, "红宝石");
+		MATERIAL_TYPE.put(6, "蓝宝石");
+		
+		SEX_MAP.put("0", "女");
+		SEX_MAP.put("1", "男");
 	}
 }

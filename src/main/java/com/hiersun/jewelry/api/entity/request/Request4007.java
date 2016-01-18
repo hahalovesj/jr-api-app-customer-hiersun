@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.springframework.util.StringUtils;
 
 import com.hiersun.jewelry.api.entity.Body;
+import com.hiersun.jewelry.api.util.bank.CheckBankCard;
 
 public class Request4007 extends Body implements Serializable {
 
@@ -45,13 +46,18 @@ public class Request4007 extends Body implements Serializable {
 
 	@Override
 	public int volidateValue() {
-		if(StringUtils.isEmpty(this.getBankCardNum())){
+		if (StringUtils.isEmpty(this.getBankCardNum())) {
 			return 400701;
 		}
-		if(StringUtils.isEmpty(this.getBankName())){
+		
+		if (!CheckBankCard.checkBankCard(this.getBankCardNum())) {
+			return 400008;
+		}
+
+		if (StringUtils.isEmpty(this.getBankName())) {
 			return 400702;
 		}
-		if(StringUtils.isEmpty(this.getUserRealName())){
+		if (StringUtils.isEmpty(this.getUserRealName())) {
 			return 400703;
 		}
 		return 0;

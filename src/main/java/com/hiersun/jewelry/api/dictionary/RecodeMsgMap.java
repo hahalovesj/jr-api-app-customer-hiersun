@@ -38,7 +38,6 @@ public class RecodeMsgMap {
 		RECODEMSGMAP.put(200604, "留言人不能为空");
 
 		RECODEMSGMAP.put(200801, "goodsToken不正确");
-
 		RECODEMSGMAP.put(400007, "银行卡号不存在");
 		RECODEMSGMAP.put(400008, "卡号校验失败");
 		RECODEMSGMAP.put(400009, "国外的卡，或者旧银行卡，暂时没有收录");

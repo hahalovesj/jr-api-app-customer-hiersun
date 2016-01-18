@@ -5,12 +5,24 @@ import java.util.Date;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 
-public class RespUser  extends ResponseBody{
+public class RespUser extends ResponseBody {
 	private String mobile;
 	private String nickName;
 	private String sex;
-	private Date birthday;
+	private String birthday;
 	private BankCardNum bankCardNum;
+
+	private String token;
+
+	
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	public String getMobile() {
 		return mobile;
@@ -36,11 +48,11 @@ public class RespUser  extends ResponseBody{
 		this.sex = sex;
 	}
 
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 

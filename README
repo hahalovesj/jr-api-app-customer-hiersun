@@ -9,6 +9,9 @@
 消息中间件 kafka
 分布式服务 dubbo/dubbox
 
+4003
+{"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"getUserInfo","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"PXgP0oSkcCEK14Yi","networkOper":"CMMCC","networkStatus":"4G"},
+"body":{}}
 
 1001
 http://localhost:8081/jr-apiclean/api/main?msg=
@@ -176,7 +179,7 @@ localhost:8080/jr-apiclean/api/main?msg=
 
 4013
 {"body":{"companyCode":"1","numbers":"112721520397","orderNO":"311603303398"},
-"head":{"imei":"868014025350796","networkOper":"4","networkStatus":"2","sign":"c37349df948e7231906ffdb9e7f97e38","terminal":"Android","token":"Pcm2xizYtdjgc1I9","transactionType":"putLogistics","ua":"HUAWEI GRA-UL10","version":"0.5.2","messageID":49,"timeStamp":1452838047733}}
+"head":{"imei":"868014025350796","networkOper":"4","networkStatus":"2","sign":"c37349df948e7231906ffdb9e7f97e38","terminal":"Android","token":"PXgP0oSkcCEK14Yi","transactionType":"putLogistics","ua":"HUAWEI GRA-UL10","version":"0.5.2","messageID":49,"timeStamp":1452838047733}}
 
 
 4014

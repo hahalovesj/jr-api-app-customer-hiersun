@@ -22,7 +22,7 @@ public class ResponseJrdsGood extends ResponseBody {
 	/**
 	 * 结算金额
 	 */
-	private Double settlement;
+	private Double settlementPrice;
 	/**
 	 * 商品留言
 	 */
@@ -47,6 +47,76 @@ public class ResponseJrdsGood extends ResponseBody {
 	 * 佣金
 	 */
 	private Double commissionPrice;
+	/**
+	 * 支付时间
+	 */
+	private String payTime;
+	/**
+	 * 支付方式
+	 */
+	private String payType;
+	/**
+	 * 鉴定完成时间
+	 */
+	private String appraisaledTime;
+	/**
+	 * 配送时间
+	 */
+	private String deliveryedTime;
+	/**
+	 * 确认收货时间
+	 */
+	private String confirmedTime;
+
+	private String orderNO;
+	
+	public String getOrderNO() {
+		return orderNO;
+	}
+
+	public void setOrderNO(String orderNO) {
+		this.orderNO = orderNO;
+	}
+
+	public String getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(String payTime) {
+		this.payTime = payTime;
+	}
+
+	public String getPayType() {
+		return payType;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType;
+	}
+
+	public String getAppraisaledTime() {
+		return appraisaledTime;
+	}
+
+	public void setAppraisaledTime(String appraisaledTime) {
+		this.appraisaledTime = appraisaledTime;
+	}
+
+	public String getDeliveryedTime() {
+		return deliveryedTime;
+	}
+
+	public void setDeliveryedTime(String deliveryedTime) {
+		this.deliveryedTime = deliveryedTime;
+	}
+
+	public String getConfirmedTime() {
+		return confirmedTime;
+	}
+
+	public void setConfirmedTime(String confirmedTime) {
+		this.confirmedTime = confirmedTime;
+	}
 
 	public String getCreateTime() {
 		return createTime;
@@ -120,10 +190,6 @@ public class ResponseJrdsGood extends ResponseBody {
 		this.orderStatusDes = orderStatusDes;
 	}
 
-	public void setSettlement(Double settlement) {
-		this.settlement = settlement;
-	}
-
 	public Integer getOrderStatusCode() {
 		return orderStatusCode;
 	}
@@ -132,8 +198,12 @@ public class ResponseJrdsGood extends ResponseBody {
 		this.orderStatusCode = orderStatusCode;
 	}
 
-	public Double getSettlement() {
-		return settlement;
+	public Double getSettlementPrice() {
+		return settlementPrice;
+	}
+
+	public void setSettlementPrice(Double settlementPrice) {
+		this.settlementPrice = settlementPrice;
 	}
 
 	public String getApplyNO() {

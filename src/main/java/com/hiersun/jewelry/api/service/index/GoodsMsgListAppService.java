@@ -34,7 +34,7 @@ public class GoodsMsgListAppService implements BaseService {
 
 	@Override
 	public boolean ifValidateLogin() {
-		return true;
+		return false;
 	}
 
 	@Override
