@@ -10,17 +10,23 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.CatchKey;
-import com.hiersun.jewelry.api.dictionary.IcoDictionary;
+import com.hiersun.jewelry.api.dictionary.Commons;
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.RequestRegist;
+import com.hiersun.jewelry.api.entity.response.RespUser;
+import com.hiersun.jewelry.api.entity.response.ResponseLogin;
 import com.hiersun.jewelry.api.entity.response.ResponseRegist;
+import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
 import com.hiersun.jewelry.api.user.domain.User;
+import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
@@ -47,6 +53,7 @@ public class RegistAppService implements BaseService {
 
 		RequestRegist body = JSON.parseObject(bodyStr, RequestRegist.class);
 		return body.volidateValue();
+		// return 0;
 	}
 
 	@Override
@@ -88,7 +95,7 @@ public class RegistAppService implements BaseService {
 			user.setImie(reqHead.getImei());
 			user.setPushId(body.getPushMsgID());
 
-			Map<String,String> icoMap = CommonUtils.getIco(0);
+			Map<String, String> icoMap = CommonUtils.getIco(0);
 
 			// 默认女头像和女性别
 			user.setBigIcon(icoMap.get("big"));
@@ -103,12 +110,50 @@ public class RegistAppService implements BaseService {
 			// 存token
 			redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + token, userId.toString());
 
-			// 配置返回信息
-			ResponseRegist responseBody = new ResponseRegist();
-			responseBody.setMobile(body.getMobile());
+			ResponseLogin responseBody = new ResponseLogin();
+
+			UserInfo info = new UserInfo();
+			info.setUserMobile(body.getMobile());
+			UserInfo resultUserInfo = userService.getUserInfoByMobile(info);
+
 			responseBody.setJumpTransaction(body.getJumpTransaction());
-			responseBody.setUserId(userId.toString());
-			responseBody.setToken(token);
+			RespUser respUser = new RespUser();
+			respUser.setMobile(body.getMobile());
+			respUser.setToken(token);
+			respUser.setBigIcon(Commons.PIC_DOMAIN + resultUserInfo.getBigIcon());
+			respUser.setSmallIcon(Commons.PIC_DOMAIN + resultUserInfo.getSmallIcon());
+			if (resultUserInfo.getSex() == null) {
+				respUser.setSex(QualificationType.SEX_MAP.get("0"));
+			} else {
+				respUser.setSex(resultUserInfo.getSex().equals("0") ? "女" : "男");
+			}
+			if (resultUserInfo.getNickName() != null) {
+				respUser.setNickName(resultUserInfo.getNickName());
+			} else {
+				respUser.setNickName(CommonUtils.mobileForNickName(body.getMobile()));
+			}
+			if (resultUserInfo.getBirthday() != null) {
+				respUser.setBirthday(DateUtil.dateTypeToString(resultUserInfo.getBirthday(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			BankCardNum bankCarNum = new BankCardNum();
+			if (resultUserInfo.getCardNo() != null) {
+				bankCarNum.setBankCardNum(resultUserInfo.getCardNo());
+			}
+			if (resultUserInfo.getBankName() != null) {
+				bankCarNum.setBankName(resultUserInfo.getBankName());
+			}
+			if (resultUserInfo.getRealName() != null) {
+				bankCarNum.setUserRealName(resultUserInfo.getRealName());
+			}
+			respUser.setBankCardNum(bankCarNum);
+			responseBody.setUser(respUser);
+
+			// // 配置返回信息
+			// ResponseRegist responseBody = new ResponseRegist();
+			// responseBody.setMobile(body.getMobile());
+			// responseBody.setJumpTransaction(body.getJumpTransaction());
+			// responseBody.setUserId(userId.toString());
+			// responseBody.setToken(token);
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {

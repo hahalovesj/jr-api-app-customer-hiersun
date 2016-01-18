@@ -70,6 +70,7 @@ public class IndexAppService implements BaseService{
 			vo.setStart(pageNo * 20);
 			vo.setEnd(20);
 			vo.setOrderBy("time");
+			vo.setOrderType("desc");
 			List<QueryGoodsByParamVo> goodList = directGoodsService.getGoodsListByParam(vo);
 			List<JrdsActivity> actList = null;
 			if (type.equals("all")) {
@@ -123,7 +124,8 @@ public class IndexAppService implements BaseService{
 				} else {
 					userMap.put("nickName", CommonUtils.mobileForNickName(goodList.get(i).getUser().getMobile()));
 				}
-				userMap.put("icon", Commons.HEAD_IOC);
+				userMap.put("bigIcon",Commons.PIC_DOMAIN +  goodList.get(i).getUser().getBigIcon());
+				userMap.put("smallIcon", Commons.PIC_DOMAIN + goodList.get(i).getUser().getSmallIcon());
 
 				map.put("user", userMap);
 				goodsList.add(map);

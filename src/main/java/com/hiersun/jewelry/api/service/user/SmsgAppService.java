@@ -77,7 +77,7 @@ public class SmsgAppService implements BaseService{
 			//DoSmsUtil.doSms(veriNumber, mobile, acctionType);
 			String content = "您好，您的6位验证码为：" + veriNumber + "【二手珠宝】";
 			String appName = "二手珠宝";
-//			String content = "内容";
+			//String content = "内容";
 			String scenario = acctionType;
 			sMSMessageService.sendMessage(content, appName, mobile, scenario);
 			
