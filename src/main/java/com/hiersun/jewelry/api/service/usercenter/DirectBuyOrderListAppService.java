@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.constant.StatusMap;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.direct.domain.JrdsOrderVo;
 import com.hiersun.jewelry.api.direct.service.DirectOrderService;
 import com.hiersun.jewelry.api.entity.RequestHeader;
@@ -90,7 +91,7 @@ public class DirectBuyOrderListAppService implements BaseService {
 				responseServiceOrder.setCreateTime(DateUtil.dateToStr(orderList.get(i).getCreated(),
 						"yyyy-MM-dd HH:mm:ss"));
 				responseServiceOrder.setGoodsName(orderList.get(i).getGoodsName());
-				responseServiceOrder.setGoodsPicUrl(orderList.get(i).getGoodsPic());
+				responseServiceOrder.setGoodsPicUrl(Commons.PIC_DOMAIN+orderList.get(i).getGoodsPic());
 				responseServiceOrder.setOrderID(orderList.get(i).getId());
 				responseServiceOrder.setOrderNO(orderList.get(i).getOrderNo());
 				if (orderList.get(i).getOrderAmount() != null) {

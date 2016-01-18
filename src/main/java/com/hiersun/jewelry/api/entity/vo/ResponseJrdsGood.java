@@ -41,7 +41,7 @@ public class ResponseJrdsGood extends ResponseBody {
 	/**
 	 * 商品日志
 	 */
-	private String goodsLogs;
+	private String orderLogs;
 
 	/**
 	 * 佣金
@@ -214,12 +214,13 @@ public class ResponseJrdsGood extends ResponseBody {
 		this.applyNO = applyNO;
 	}
 
-	public String getGoodsLogs() {
-		return goodsLogs;
+
+	public String getOrderLogs() {
+		return orderLogs;
 	}
 
-	public void setGoodsLogs(String goodsLogs) {
-		this.goodsLogs = goodsLogs;
+	public void setOrderLogs(String orderLogs) {
+		this.orderLogs = orderLogs;
 	}
 
 	public Double getCommissionPrice() {
