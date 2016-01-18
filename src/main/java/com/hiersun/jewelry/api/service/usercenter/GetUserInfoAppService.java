@@ -60,7 +60,7 @@ public class GetUserInfoAppService implements BaseService {
 			}
 
 			RespUser respUser = new RespUser();
-			respUser.setMobile(userInfo.getUserMobile());
+			respUser.setMobile(user.getUserMobile());
 			respUser.setToken(reqHead.getToken());
 			respUser.setBigIcon(Commons.PIC_DOMAIN + user.getBigIcon());
 			respUser.setSmallIcon(Commons.PIC_DOMAIN + user.getSmallIcon());
