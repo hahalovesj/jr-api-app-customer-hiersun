@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.CatchKey;
+import com.hiersun.jewelry.api.dictionary.IcoDictionary;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
@@ -19,6 +20,7 @@ import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
 import com.hiersun.jewelry.api.user.domain.User;
 import com.hiersun.jewelry.api.user.service.UserService;
+import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
@@ -45,7 +47,6 @@ public class RegistAppService implements BaseService {
 
 		RequestRegist body = JSON.parseObject(bodyStr, RequestRegist.class);
 		return body.volidateValue();
-
 	}
 
 	@Override
@@ -86,6 +87,13 @@ public class RegistAppService implements BaseService {
 			user.setUserPassword(body.getPassword());
 			user.setImie(reqHead.getImei());
 			user.setPushId(body.getPushMsgID());
+
+			Map<String,String> icoMap = CommonUtils.getIco(0);
+
+			// 默认女头像和女性别
+			user.setBigIcon(icoMap.get("big"));
+			user.setSmallIcon(icoMap.get("small"));
+			user.setSex(0);
 
 			userId = userService.regist(user);
 			String token = RandomStringUtil.randomString(16);

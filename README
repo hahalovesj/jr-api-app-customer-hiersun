@@ -17,7 +17,7 @@
 http://localhost:8081/jr-apiclean/api/main?msg=
 
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"smsg","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},
-"body":{"mobile":"15652388352","acctionType":"changepwd"}}
+"body":{"mobile":"15652388352","acctionType":"reg"}}
 
 
 1002
