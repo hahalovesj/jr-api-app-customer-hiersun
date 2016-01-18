@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.constant.StatusMap;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.direct.domain.JrAfterSalesAuditVo;
 import com.hiersun.jewelry.api.direct.domain.JrdsOrderVo;
@@ -82,7 +83,7 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 
 			ResponseJrdsOrder order = new ResponseJrdsOrder();
 			order.setGoodsName(jrdsOrderVo.getGoodsName());
-			order.setGoodsPic(jrdsOrderVo.getGoodsPic());
+			order.setGoodsPicUrl(Commons.PIC_DOMAIN+jrdsOrderVo.getGoodsPic());
 			order.setOrderID(jrdsOrderVo.getId());
 			order.setOrderNO(jrdsOrderVo.getOrderNo());
 //			order.setGoodsBuyPrice(jrdsOrderVo.getPayAmount().doubleValue());
