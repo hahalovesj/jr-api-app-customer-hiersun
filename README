@@ -170,7 +170,7 @@ localhost:8080/jr-apiclean/api/main?msg=
 "token":"542B1ED2FE787A3CD1CD0E343928DC28","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{"orderNO":"111"}}
 4008
-{"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"changeUserBaseInfo","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"ABE0B1169BFF7EF9C903059C1B87B2C4","networkOper":"CMMCC","networkStatus":"4G"},
+{"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"changeUserBaseInfo","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"32ZHlhexnSb3nkoq","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{"nickName":"asd","sex":"1"}}
 
 4002
