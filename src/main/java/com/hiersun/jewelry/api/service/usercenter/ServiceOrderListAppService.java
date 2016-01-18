@@ -84,15 +84,22 @@ public class ServiceOrderListAppService implements BaseService {
 				responseServiceOrder.setOrderID(orderVo.getId());
 				responseServiceOrder.setOrderNO(orderVo.getOrderNo());
 				responseServiceOrder.setOrderMsg(orderVo.getOrderMsg());
-				responseServiceOrder.setOrderStatusCode(orderVo.getStatus().intValue());
 				// 如果订单状态为待配送和待发货 需要用鉴定状态去判断显示什么内容
 				if (orderVo.getStatus().intValue() == StatusMap.SERVICE_ORDER_DB_STAUE_DPS
 						|| orderVo.getStatus().intValue() == StatusMap.SERVICE_ORDER_DB_STAUE_DSH) {
-					responseServiceOrder.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_APP_MAP.get(orderVo
-							.getStype() + "_" + orderVo.getStatus() + "_" + orderVo.getJdResult()));
+					
+					responseServiceOrder.setOrderStatusCode(StatusMap.SERVICE_ORDER_STAUTECODE_APP_MAP.get(orderVo.getStype()
+							+ "_" + orderVo.getStatus() + "_" + orderVo.getJdResult()));
+					
+					responseServiceOrder.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_APP_MAP.get(orderVo.getStype()
+							+ "_" + orderVo.getStatus() + "_" + orderVo.getJdResult()));
 				} else {
-					responseServiceOrder.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_APP_MAP.get(orderVo
-							.getStype() + "_" + orderVo.getStatus()));
+					
+					responseServiceOrder.setOrderStatusCode(StatusMap.SERVICE_ORDER_STAUTECODE_APP_MAP.get(orderVo.getStype()
+							+ "_" + orderVo.getStatus()));
+					
+					responseServiceOrder.setOrderStatusDes(StatusMap.SERVICE_ORDER_STAUTEDES_APP_MAP.get(orderVo.getStype()
+							+ "_" + orderVo.getStatus()));
 				}
 
 				responseServiceOrder.setOrderPrice(orderVo.getAmount().doubleValue());
