@@ -76,7 +76,7 @@ public class AddPayeeInfoAppService implements BaseService {
 			respUser.setNickName(user.getNickName());
 
 			if (StringUtils.isEmpty(user.getSex())) {
-				respUser.setSex("男");
+				respUser.setSex(QualificationType.SEX_MAP.get("0"));
 			} else {
 				respUser.setSex(QualificationType.SEX_MAP.get(user.getSex()));
 			}
