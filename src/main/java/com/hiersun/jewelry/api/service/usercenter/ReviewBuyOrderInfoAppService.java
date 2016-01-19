@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.direct.pojo.JrdsGood;
 import com.hiersun.jewelry.api.direct.pojo.JrdsOrder;
 import com.hiersun.jewelry.api.direct.service.DirectGoodsService;
@@ -67,16 +68,9 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(jrdsOrder.getGoodId(),Byte.parseByte("2"));
 			// 根据goodsId查询商品信息（图片等）
 			JrdsGood jrdsGood = directGoodsService.getOneDirectGoods(jrasGoodInfoConfirm.getGoodId(), false);
-			// 鉴定信息的商品原图片
-			Map<String, Object> paramMap = new HashMap<String, Object>();
 			// 直售业务的鉴定信息
 			List<OrderQualificationPicVo> OPiclist = orderService.selectOrderPic(jrasGoodInfoConfirm.getId(),"jras_good_info_confirm");
 
-			//Map<String, Object> paramMap = new HashMap<String, Object>();
-			//paramMap.put("goodsId", jrdsOrder.getGoodId());
-			 //直售业务的确认信息
-			//paramMap.put("businessType", 2);
-			//JrasGoodQualification qual = orderService.selectQualification(paramMap);
 			// 返回信息
 			Response4022 resp = new Response4022();
 			ResponseOrder order = new ResponseOrder();
@@ -86,7 +80,7 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 			order.setGoodsPrice(jrdsGood.getDirectPrice().doubleValue());
 			order.setOrderNO(jrdsOrder.getOrderNo());
 			Map<String, Object> goodsPicList = new HashMap<String, Object>();
-			goodsPicList.put("picUrl", jrdsGood.getHostGragp());
+			goodsPicList.put("picUrl", Commons.PIC_DOMAIN+jrdsGood.getHostGragp());
 			order.setGoodsPicList(goodsPicList);
 			Qualification qualification = new Qualification();
 
@@ -96,7 +90,7 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 			List<Map<String, String>> qualiPicList = new ArrayList<Map<String, String>>();
 			Map<String, String> resultOM = new HashMap<String, String>();
 			for (int i = 0; i < OPiclist.size(); i++) {
-				resultOM.put("picUrl", OPiclist.get(i).getPicUrl());
+				resultOM.put("picUrl",Commons.PIC_DOMAIN+OPiclist.get(i).getPicUrl());
 				resultOM.put("picDesc", OPiclist.get(i).getPicDesc());
 				qualiPicList.add(resultOM);
 			}

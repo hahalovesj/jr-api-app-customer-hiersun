@@ -90,8 +90,8 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			if (jrdsOrderVo.getOrderAmount() != null) {
 				order.setOrderPrice(jrdsOrderVo.getOrderAmount().doubleValue());
 			}
-			if (jrdsOrderVo.getPayAmount() != null) {
-				order.setGoodsBuyPrice(jrdsOrderVo.getPayAmount().doubleValue());
+			if (jrdsOrderVo.getGoodsPrice() != null) {
+				order.setGoodsBuyPrice(jrdsOrderVo.getGoodsPrice().doubleValue());
 			}
 
 			order.setFreightDesc("￥0.00元运费（平台包邮）");// 暂时写死
