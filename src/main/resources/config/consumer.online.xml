@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd ">
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="api-consumer" />
+	<!-- dubbo接口去除注册中心，采用直连的方式 -->
+<dubbo:registry id="zk-app" protocol="zookeeper" address="192.168.4.92:2181,192.168.4.92:2182,192.168.4.92:2183" ></dubbo:registry>
+	<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
+	<dubbo:reference id="userService"
+		interface="com.hiersun.jewelry.api.user.service.UserService" />
+	<dubbo:reference id="uploadService"
+		interface="com.hiersun.jewelry.api.uploadresource.service.AttachmentService"
+		check="false" />
+	<dubbo:reference id="orderService"
+		interface="com.hiersun.jewelry.api.orderservice.service.OrderService"
+		check="false" />
+	<dubbo:reference id="keyWordService"
+		interface="com.hiersun.jewelry.api.homescreen.service.KeyWordService"
+		check="false" />
+	<dubbo:reference id="directGoodsService"
+		interface="com.hiersun.jewelry.api.direct.service.DirectGoodsService"
+		check="false" />
+	<dubbo:reference id="directGoodMessageService"
+		interface="com.hiersun.jewelry.api.direct.service.DirectGoodMessageService"
+		check="false" />
+	<dubbo:reference id="DirectOrderService"
+		interface="com.hiersun.jewelry.api.direct.service.DirectOrderService"
+		check="false" />
+	<dubbo:reference id="expressInfoService"
+		interface="com.hiersun.jewelry.api.expressinfo.service.ExpressInfoService"
+		check="false"/>
+	<dubbo:reference id="memberCentreMessageService"
+		interface="com.hiersun.jewelry.api.user.service.MemberCentreMessageService"
+		check="false" />
+	<dubbo:reference id="LogisticsTrackingInfoService"
+		interface="com.hiersun.jewelry.api.expressinfo.service.LogisticsTrackingInfoService"
+		check="false" />
+	<dubbo:reference id="sMSMessageService"
+		interface="com.hiersun.jewelry.api.ott.service.SMSMessageService" 
+		check="false" />
+	<dubbo:reference id="weixinPayService"
+		interface="com.hiersun.jewelry.api.ott.service.WeixinPayService"  
+		check="false"/>
+	<dubbo:reference id="tripartiteService"
+		interface="com.hiersun.jewelry.api.service.TripartiteService"
+		check="false"/>
+</beans>

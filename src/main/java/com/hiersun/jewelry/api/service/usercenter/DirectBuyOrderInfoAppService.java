@@ -111,7 +111,8 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			}
 			// 0 下单时间 1 支付时间 7 鉴定时间 9 配送时间 10 确认收货时间
 			order.setCreateTime(map.get(0));
-			order.setPayType(QualificationType.PAY_TYPE_MAP.get(jrdsOrderVo.getPayType()));
+			order.setPayType(QualificationType.PAY_TYPE_MAP.get(jrdsOrderVo.getPayType().intValue()));
+			order.setPayTime(DateUtil.dateToStr(jrdsOrderVo.getPayTime(), "yyyy-MM-dd HH:mm:ss"));
 			order.setDeliveryedTime(map.get(9));
 			order.setConfirmedTime(map.get(10));
 			order.setAppraisaledTime(map.get(7) == null ? map.get(5) : null);
