@@ -74,6 +74,7 @@ public class MainAction{
 			response.getWriter().print("fail orderNo is Null");
 		}else{
 			PayMentVo vo = new PayMentVo();
+			vo.setPayNo("2131232131231");
 			vo.setMoney(BigDecimal.ONE);
 			vo.setOrderNo(orderNo);
 			vo.setPayMsg("自动生成");
