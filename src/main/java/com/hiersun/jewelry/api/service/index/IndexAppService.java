@@ -24,6 +24,7 @@ import com.hiersun.jewelry.api.entity.request.Request2001;
 import com.hiersun.jewelry.api.entity.response.Response2001;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
+import com.hiersun.jewelry.api.user.service.MemberCentreMessageService;
 import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.ResponseUtil;
@@ -42,6 +43,9 @@ public class IndexAppService implements BaseService{
 	
 	@Resource
 	private DirectGoodsService directGoodsService;
+	
+	@Resource
+	private MemberCentreMessageService memberCentreMessageService;
 	
 	@Override
 	public boolean ifValidateLogin() {
@@ -162,7 +166,11 @@ public class IndexAppService implements BaseService{
 			String terminal = reqHead.getTerminal();
 			VersionInfo info = ValiHeadUtil.checkVersion(version, terminal);
 			responseBody.setVersionInfo(info);
-
+			
+			if (userId != null ) {
+				Integer count = memberCentreMessageService.getUnreadMessageCount(userId);
+				responseBody.setUnreadMessageCount(count);
+			}
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
 			log.error("index 2001接口，发生异常，异常信息："+e.getMessage());

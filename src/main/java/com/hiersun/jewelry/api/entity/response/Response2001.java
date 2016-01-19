@@ -18,6 +18,17 @@ public class Response2001 extends ResponseBody {
 	private boolean isEnd;
 
 	private VersionInfo versionInfo;
+	
+	private Integer unreadMessageCount;
+	
+
+	public Integer getUnreadMessageCount() {
+		return unreadMessageCount;
+	}
+
+	public void setUnreadMessageCount(Integer unreadMessageCount) {
+		this.unreadMessageCount = unreadMessageCount;
+	}
 
 	public VersionInfo getVersionInfo() {
 		return versionInfo;
