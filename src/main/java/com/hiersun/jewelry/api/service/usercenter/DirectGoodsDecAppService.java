@@ -157,8 +157,7 @@ public class DirectGoodsDecAppService implements BaseService {
 			return returnStrBuffer.toString();
 		} else {
 			returnStrBuffer.append("订单编号:")
-					.append(DateUtil.dateToStr(queryGoodsByParamVo.getAuditTime(), "yyyy-MM-dd HH:mm:ss"))
-					.append("\r\n\r\n");
+					.append(queryGoodsByParamVo.getOrderNo()).append("\r\n\r\n");
 
 			returnStrBuffer.append("下单时间:").append(logMap.get(0)).append("\r\n\r\n");
 		}
