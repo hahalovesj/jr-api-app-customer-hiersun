@@ -58,7 +58,7 @@ public class CancelOrderAppService implements BaseService {
 			case 1: {
 				// 查询goodID
 				JrdsGoodsPutawayVo jgpvo = new JrdsGoodsPutawayVo();
-				jgpvo.setGoodNo(body.getGoodNO());
+				jgpvo.setGoodNo(body.getGoodsNO());
 				// 根据商品编号查询商品详情
 				JrdsGood jg = directGoodsService.getJrdsGoodId(jgpvo);
 				if (jg != null) {
@@ -76,7 +76,7 @@ public class CancelOrderAppService implements BaseService {
 			case 2: {
 				JrdsGoodVo jgvo = new JrdsGoodVo();
 				jgvo.setSellerMemberId(userId);
-				jgvo.setGoodNo(body.getGoodNO());
+				jgvo.setGoodNo(body.getGoodsNO());
 				directGoodsService.delJrdsGoods(jgvo);
 				Response4025 resp = new Response4025();
 				ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
@@ -85,7 +85,7 @@ public class CancelOrderAppService implements BaseService {
 			// 商品重新上架
 			case 3: {
 				JrdsGoodsPutawayVo jgpvo = new JrdsGoodsPutawayVo();
-				jgpvo.setGoodNo(body.getGoodNO());
+				jgpvo.setGoodNo(body.getGoodsNO());
 				// 根据商品编号查询商品详情
 				JrdsGood jg = directGoodsService.getJrdsGoodId(jgpvo);
 				if (jg != null) {

@@ -114,8 +114,8 @@ public class MainAction{
 			BaseService baseService = (BaseService)SpringContextUtil.getBean(tranType+"AppService",BaseService.class);
 			//看是否需要登陆
 			Long userId = null;
-				userId = reqHead.getToken() == null?null : UserUtil.getUsetId(reqHead.getToken(),redisBaseServiceImpl);
-				if(baseService.ifValidateLogin()){
+			userId = reqHead.getToken() == null?null : UserUtil.getUsetId(reqHead.getToken(),redisBaseServiceImpl);
+			if(baseService.ifValidateLogin()){
 				if (userId == null) {
 					ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 900010);
 					ResponseBody responseBody = new ResponseBody();

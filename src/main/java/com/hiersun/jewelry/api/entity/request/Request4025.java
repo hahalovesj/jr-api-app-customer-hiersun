@@ -3,22 +3,22 @@ package com.hiersun.jewelry.api.entity.request;
 import com.hiersun.jewelry.api.entity.Body;
 
 public class Request4025 extends Body {
-	
-	/*** 商品编码  ***/
-	private String goodNO;
-	
+
+	/*** 商品编码 ***/
+	private String goodsNO;
+
 	/*** 商品id ***/
 	private Long goodsID;
-	
+
 	/*** 请求类型 ***/
 	private String actionType;
-	
-	public String getGoodNO() {
-		return goodNO;
+
+	public String getGoodsNO() {
+		return goodsNO;
 	}
 
-	public void setGoodNO(String goodNO) {
-		this.goodNO = goodNO;
+	public void setGoodsNO(String goodsNO) {
+		this.goodsNO = goodsNO;
 	}
 
 	public Long getGoodsID() {
