@@ -79,7 +79,7 @@ public class DirectGoodsDecAppService implements BaseService {
 						DateUtil.dateToStr(jrdsOrderLog.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 			}
 			String orderLog = this.packageOrderLog(map, queryGoodsByParamVo);
-			responseJrdsGood.setGoodsLogs(orderLog);
+			responseJrdsGood.setOrderLogs(orderLog);
 
 			// 消息头
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
@@ -103,7 +103,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		ResponseJrdsGood jesponseJrdsGood = new ResponseJrdsGood();
 		// 封装订单列表集合
 		jesponseJrdsGood = new ResponseJrdsGood();
-		jesponseJrdsGood.setCreateTime(DateUtil.dateToStr(vo.getCreated(), "yyyy-MM-dd HH:mm:ss"));
+		//jesponseJrdsGood.setCreateTime(DateUtil.dateToStr(vo.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 		jesponseJrdsGood.setGoodsName(vo.getGoodName());
 		jesponseJrdsGood.setGoodsPicUrl(Commons.PIC_DOMAIN + vo.getHostGragp());
 		jesponseJrdsGood.setGoodsID(vo.getId());

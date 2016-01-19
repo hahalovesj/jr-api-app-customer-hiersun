@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.CatchKey;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
@@ -91,11 +92,11 @@ public class LoginAppService implements BaseService {
 			ResponseLogin responseBody = new ResponseLogin();
 
 			responseBody.setJumpTransaction(body.getJumpTransaction());
-			responseBody.setMobile(userInfo.getUserMobile());
-			responseBody.setToken(token);
 			RespUser user = new RespUser();
-//			 user.setMobile(userInfo.getUserMobile());
-//			 user.setToken(token);
+			user.setMobile(userInfo.getUserMobile());
+			user.setToken(token);
+			user.setBigIcon(Commons.PIC_DOMAIN + resultUserInfo.getBigIcon());
+			user.setSmallIcon(Commons.PIC_DOMAIN +resultUserInfo.getSmallIcon());
 			if (resultUserInfo.getSex() == null) {
 				user.setSex(QualificationType.SEX_MAP.get("0"));
 			} else {

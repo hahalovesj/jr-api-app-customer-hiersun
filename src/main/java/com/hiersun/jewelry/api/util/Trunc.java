@@ -13,4 +13,5 @@ public class Trunc {
 	public static void main(String[] args) {
 		System.out.println(getRandomForRange(100000l, 999999));
 	}
+	
 }

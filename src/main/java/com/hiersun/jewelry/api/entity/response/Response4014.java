@@ -2,15 +2,13 @@ package com.hiersun.jewelry.api.entity.response;
 
 import java.util.List;
 
-import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.vo.LogisticsInfo;
-import com.hiersun.jewelry.api.expressinfo.pojo.LogisticsTrackingInfo;
 
 public class Response4014 {
 
 	private String logisticsCompany;
-	private String ogisticsNumber;
-	private String ogisticsPhone;
+	private String logisticsNumber;
+	private String logisticsPhone;
 
 	private List<LogisticsInfo> infoList;
 
@@ -22,20 +20,22 @@ public class Response4014 {
 		this.logisticsCompany = logisticsCompany;
 	}
 
-	public String getOgisticsNumber() {
-		return ogisticsNumber;
+	
+
+	public String getLogisticsNumber() {
+		return logisticsNumber;
 	}
 
-	public void setOgisticsNumber(String ogisticsNumber) {
-		this.ogisticsNumber = ogisticsNumber;
+	public void setLogisticsNumber(String logisticsNumber) {
+		this.logisticsNumber = logisticsNumber;
 	}
 
-	public String getOgisticsPhone() {
-		return ogisticsPhone;
+	public String getLogisticsPhone() {
+		return logisticsPhone;
 	}
 
-	public void setOgisticsPhone(String ogisticsPhone) {
-		this.ogisticsPhone = ogisticsPhone;
+	public void setLogisticsPhone(String logisticsPhone) {
+		this.logisticsPhone = logisticsPhone;
 	}
 
 	public List<LogisticsInfo> getInfoList() {

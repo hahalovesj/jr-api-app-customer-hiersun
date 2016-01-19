@@ -10,6 +10,24 @@ public class RespUser extends ResponseBody {
 	private String birthday;
 	private BankCardNum bankCardNum;
 	private String token;
+	private String smallIcon;
+	private String bigIcon;
+
+	public String getSmallIcon() {
+		return smallIcon;
+	}
+
+	public void setSmallIcon(String smallIcon) {
+		this.smallIcon = smallIcon;
+	}
+
+	public String getBigIcon() {
+		return bigIcon;
+	}
+
+	public void setBigIcon(String bigIcon) {
+		this.bigIcon = bigIcon;
+	}
 
 	public String getToken() {
 		return token;

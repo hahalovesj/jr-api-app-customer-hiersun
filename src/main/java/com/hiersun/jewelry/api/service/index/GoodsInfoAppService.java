@@ -104,7 +104,7 @@ public class GoodsInfoAppService implements BaseService {
 					user.setNickName(CommonUtils.mobileForNickName(userInifo.getJrMemberAccount().getUserMobile()));
 				}
 			}
-			user.setIcon(Commons.HEAD_IOC);
+			user.setIcon(Commons.PIC_DOMAIN + userInifo.getJrMemberInfo().getSmallIcon());
 			resultGoods.setUser(user);
 
 			List<Map<String, Object>> goodsPicList = new ArrayList<Map<String, Object>>();

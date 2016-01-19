@@ -9,7 +9,7 @@ public class ResponseJrdsOrder{
 	private String deliveryedTime;
 	private String confirmedTime;
 	private String goodsName;
-	private String goodsPic;
+	private String goodsPicUrl;
 	private Long orderID;
 	private String orderNO;
 	private Double orderPrice;
@@ -87,12 +87,15 @@ public class ResponseJrdsOrder{
 		this.goodsName = goodsName;
 	}
 
-	public String getGoodsPic() {
-		return goodsPic;
+	
+	
+	
+	public String getGoodsPicUrl() {
+		return goodsPicUrl;
 	}
 
-	public void setGoodsPic(String goodsPic) {
-		this.goodsPic = goodsPic;
+	public void setGoodsPicUrl(String goodsPicUrl) {
+		this.goodsPicUrl = goodsPicUrl;
 	}
 
 	public Long getOrderID() {

@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.CatchKey;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
@@ -85,13 +86,19 @@ public class ChangepwdAppService implements BaseService {
 			UserInfo resultUserInfo = userService.getUserInfoByMobile(info);
 			// 登陆成功 存token
 			String newToken = RandomStringUtil.randomString(16);
-			redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + newToken, resultUserInfo.getUserId().toString());
+			redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + newToken, resultUserInfo.getUserId()
+					.toString());
 			// 配置返回信息
 			ResponseLogin responseBody = new ResponseLogin();
 
-			responseBody.setMobile(resultUserInfo.getUserMobile());
-			responseBody.setToken(newToken);
+			// responseBody.setMobile(resultUserInfo.getUserMobile());
+			// responseBody.setToken(newToken);
 			RespUser resuUser = new RespUser();
+			resuUser.setToken(newToken);
+			resuUser.setMobile(resultUserInfo.getUserMobile());
+			resuUser.setBigIcon(Commons.PIC_DOMAIN + resultUserInfo.getBigIcon());
+			resuUser.setSmallIcon(Commons.PIC_DOMAIN + resultUserInfo.getSmallIcon());
+			
 			if (resultUserInfo.getSex() == null) {
 				resuUser.setSex(QualificationType.SEX_MAP.get("0"));
 			} else {

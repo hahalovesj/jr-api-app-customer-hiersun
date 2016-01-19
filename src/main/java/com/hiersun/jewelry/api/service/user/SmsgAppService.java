@@ -22,30 +22,29 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 import com.hiersun.jewelry.api.util.Trunc;
 
 @Service("smsgAppService")
-public class SmsgAppService implements BaseService{
+public class SmsgAppService implements BaseService {
 	@Resource
 	private SMSMessageService sMSMessageService;
-	
+
 	@Resource
 	private UserService userService;
-	
+
 	@Resource
 	private RedisBaseService redisBaseServiceImpl;
-	
+
 	@Override
 	public boolean ifValidateLogin() {
 		return false;
 	}
 
 	@Override
-	public Integer baseValidateMsgBody(String bodyStr,Long userId) {
+	public Integer baseValidateMsgBody(String bodyStr, Long userId) {
 		RequestSmsg body = JSON.parseObject(bodyStr, RequestSmsg.class);
 		return body.volidateValue();
 	}
 
-	
 	@Override
-	public Map<String,Object> doController(RequestHeader reqHead,String bodyStr,Long userId)  throws Exception{
+	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
 		try {
 			RequestSmsg body = JSON.parseObject(bodyStr, RequestSmsg.class);
 			String mobile = body.getMobile();
@@ -72,15 +71,16 @@ public class SmsgAppService implements BaseService{
 			}
 
 			// 放入缓存中
-			redisBaseServiceImpl.set(CatchKey.APP_MSG_KEY + acctionType + mobile, 1 * 60 * 60 * 24 * 7, veriNumber.toString());
+			redisBaseServiceImpl.set(CatchKey.APP_MSG_KEY + acctionType + mobile, 1 * 60 * 60 * 24 * 7,
+					veriNumber.toString());
 			// 发送短信
-			//DoSmsUtil.doSms(veriNumber, mobile, acctionType);
-			String content = "您好，您的6位验证码为：" + veriNumber + "【二手珠宝】";
+			// DoSmsUtil.doSms(veriNumber, mobile, acctionType);
+			String content = "您好，您的6位验证码为：" + veriNumber + "不要告诉别人哦！";
 			String appName = "二手珠宝";
-//			String content = "内容";
+			// String content = "内容";
 			String scenario = acctionType;
 			sMSMessageService.sendMessage(content, appName, mobile, scenario);
-			
+
 			// 配置返回信息
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 
@@ -95,15 +95,15 @@ public class SmsgAppService implements BaseService{
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseSmsg res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseSmsg res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

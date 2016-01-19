@@ -40,7 +40,7 @@ public class SelectAuditAppService implements BaseService {
 
 	@Override
 	public Integer baseValidateMsgBody(String bodyStr, Long userId) {
-		Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
+		Request4026 body = JSON.parseObject(bodyStr, Request4026.class);
 		return body.volidateValue();
 	}
 

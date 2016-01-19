@@ -84,7 +84,7 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 			}
 			Long id = qual.getId();
 			// 商品确认信息
-			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(jrdsOrder.getGoodId());
+			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(jrdsOrder.getGoodId(),Byte.parseByte("2"));
 			// 商品实物信息
 			List<AttachmentVo> pciList = directGoodsService.getJrdsGoodPic(jrasGoodInfoConfirm.getId(),
 					"jras_good_info_confirm", "jrdsconfirm");

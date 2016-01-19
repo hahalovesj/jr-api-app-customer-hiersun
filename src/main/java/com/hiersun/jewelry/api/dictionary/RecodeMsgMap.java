@@ -70,7 +70,7 @@ public class RecodeMsgMap {
 		
 		RECODEMSGMAP.put(402001, "直售订单号不能为空");
 		RECODEMSGMAP.put(402002, "直售操作异常");
-		
+		RECODEMSGMAP.put(200901, "您的收货地址已有10条");
 		
 	}
 }

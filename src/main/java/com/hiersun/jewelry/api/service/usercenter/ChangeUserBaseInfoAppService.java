@@ -22,6 +22,7 @@ import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.user.domain.JrMemberInfoVo;
 import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
+import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("changeUserBaseInfoAppService")
@@ -48,21 +49,28 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 
 		log.info("changeUserBaseInfo	3007	请求信息：" + reqHead.toString());
 		log.info("changeUserBaseInfo	3007 	请求信息：" + bodyStr);
-
+			
+		JrMemberInfoVo jrMemberInfoVo = null;
+		UserInfo user = null;
 		try {
 			Request4008 body = JSON.parseObject(bodyStr, Request4008.class);
 			Map<String,String> map = new HashMap<String, String>();
 			map.put("女", "0");
 			map.put("男", "1");
 			
-			JrMemberInfoVo jrMemberInfoVo = new JrMemberInfoVo();
+			jrMemberInfoVo = new JrMemberInfoVo();
 			jrMemberInfoVo.setUserId(userId);
 
 			if (!StringUtils.isEmpty(body.getNickName())) {
 				jrMemberInfoVo.setNickName(body.getNickName());
 			}
 			if (!StringUtils.isEmpty(body.getSex())) {
-				jrMemberInfoVo.setSex(map.get(body.getSex()));
+				Map<String,String > mmap = CommonUtils.getIco(Integer.parseInt(map.get(body.getSex())));
+				
+				
+				
+				jrMemberInfoVo.setBigIcon(mmap.get("big"));
+				jrMemberInfoVo.setSmallIcon(mmap.get("small"));
 			}
 
 			userService.updateUserInfo(jrMemberInfoVo);
@@ -70,7 +78,7 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 			UserInfo userInfo = new UserInfo();
 			userInfo.setUserId(userId);
 
-			UserInfo user = userService.getUserInfoByMobile(userInfo);
+			user = userService.getUserInfoByMobile(userInfo);
 			Response4008 res = new Response4008();
 			if (user == null) {
 				ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 200102);
