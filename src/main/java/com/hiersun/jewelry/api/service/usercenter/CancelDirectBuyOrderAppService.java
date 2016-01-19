@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.OrderCategory;
-import com.hiersun.jewelry.api.direct.pojo.JrdsOrder;
 import com.hiersun.jewelry.api.direct.service.DirectOrderService;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
@@ -43,22 +42,24 @@ public class CancelDirectBuyOrderAppService implements BaseService {
 
 		log.info("cancelDirectBuyOrder	4020	请求信息：" + reqHead.toString());
 		log.info("cancelDirectBuyOrder	4020 	请求信息：" + bodyStr);
+		
+		//JrdsOrder jrdsOrder = null;
 
 		try {
 			Request4020 body = JSON.parseObject(bodyStr, Request4020.class);
 
 			String orderNo = body.getOrderNo();
 			String actionType = body.getActionType();
-			JrdsOrder jrdsOrder = directOrderService.selectOrderByOrderNo(orderNo);
+			//jrdsOrder = directOrderService.selectOrderByOrderNo(orderNo);
 
 			if (actionType.equals(OrderCategory.ORDER_CATEGORY_FQGM)) {
-				directOrderService.updateGiveUpOrder(jrdsOrder);
+				directOrderService.updateGiveUpOrder(orderNo);
 			} else if (actionType.equals(OrderCategory.ORDER_CATEGORY_QRGM)) {
-				directOrderService.updateConfirmBuyOrder(jrdsOrder);
+				directOrderService.updateConfirmBuyOrder(orderNo);
 			} else if (actionType.equals(OrderCategory.ORDER_CATEGORY_SCDD)) {
-				directOrderService.updateDeleteOrder(jrdsOrder);
+				directOrderService.updateDeleteOrder(orderNo);
 			} else if (actionType.equals(OrderCategory.ORDER_CATEGORY_QRSH)) {
-				directOrderService.updateConfirmReceivingOrder(jrdsOrder);
+				directOrderService.updateConfirmReceivingOrder(orderNo);
 			}
 
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
