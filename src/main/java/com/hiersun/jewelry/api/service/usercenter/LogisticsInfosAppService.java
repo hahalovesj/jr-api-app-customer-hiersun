@@ -114,7 +114,7 @@ public class LogisticsInfosAppService implements BaseService {
 			}
 			responseBody.setLogisticsCompany(exInfo.getEcName());
 			responseBody.setLogisticsNumber(exInfo.getExpressNo());
-			responseBody.setLogisticsPhone("客服电话请产品确认！！！");
+			responseBody.setLogisticsPhone("95538");
 			responseBody.setInfoList(infoList);
 			// 配置返回信息
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
