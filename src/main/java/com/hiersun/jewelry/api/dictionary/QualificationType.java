@@ -25,7 +25,7 @@ public class QualificationType {
 		QUALIFICATION_TYPE.put(5, "宝玉石首饰鉴定证书");
 		QUALIFICATION_TYPE.put(6, "珠宝首饰鉴定证书");
 		// 描述信息匹配度
-		MATCHED_DEGREE.put(0, "完全一至");
+		MATCHED_DEGREE.put(0, "完全一致");
 		MATCHED_DEGREE.put(1, "完全不符");
 		MATCHED_DEGREE.put(2, "细节差异");
 		// 支付方式
