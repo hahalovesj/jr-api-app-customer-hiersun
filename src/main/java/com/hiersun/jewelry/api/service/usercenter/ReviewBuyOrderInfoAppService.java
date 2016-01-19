@@ -52,9 +52,8 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 		return body.volidateValue();
 	}
 
-	@Overrid
+	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-321231231233123123123
 		log.info("reviewBuyOrderInfo 	4022	接口请求消息体：" + reqHead.toString());
 		log.info("reviewBuyOrderInfo 	4022	接口请求消息体：" + bodyStr);
 
