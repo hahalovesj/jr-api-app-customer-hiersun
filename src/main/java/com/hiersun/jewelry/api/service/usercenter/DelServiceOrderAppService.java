@@ -13,6 +13,7 @@ import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4017;
+import com.hiersun.jewelry.api.orderservice.domain.OrderVo;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
@@ -21,7 +22,7 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 public class DelServiceOrderAppService implements BaseService {
 
 	private static Logger log = Logger.getLogger(DelServiceOrderAppService.class);
-	
+
 	@Resource
 	OrderService orderService;
 
@@ -38,13 +39,14 @@ public class DelServiceOrderAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-		
+
 		log.info("delServiceOrder 	4015	接口请求消息体：" + reqHead.toString());
 		log.info("delServiceOrder 	4015	接口请求消息体：" + bodyStr);
-		
+
 		try {
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
 			String orderNo = body.getOrderNO();
+
 			orderService.delOrderByOrderNo(orderNo);
 
 			ResponseBody res = new ResponseBody();
