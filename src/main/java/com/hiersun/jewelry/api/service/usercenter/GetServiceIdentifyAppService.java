@@ -74,7 +74,7 @@ public class GetServiceIdentifyAppService implements BaseService {
 			}
 			Long id = qual.getId();
 			// 商品确认信息
-			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(goodsId);
+			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(goodsId,Byte.parseByte("1"));
 			// 商品实物信息
 			List<AttachmentVo> pciList = directGoodsService.getJrdsGoodPic(jrasGoodInfoConfirm.getId(),
 					"jras_good_info_confirm", "jrasconfirm");

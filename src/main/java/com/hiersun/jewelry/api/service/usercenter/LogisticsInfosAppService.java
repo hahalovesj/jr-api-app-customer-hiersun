@@ -78,21 +78,21 @@ public class LogisticsInfosAppService implements BaseService {
 
 				ExpressInfo ex = new ExpressInfo();
 				ex.setBusinessType(Byte.valueOf("1"));
+				ex.setOrderId(asOrder.getId());
 				//2,4,6,7 邮入 其他 邮出
 				if(asOrder.getStatus().intValue() == 2 || asOrder.getStatus().intValue() == 4|| 
 						asOrder.getStatus().intValue() == 6 || asOrder.getStatus().intValue() == 7 ){
-					ex.setExpressMark(false);//1是邮出，0是邮入
-				}else{
-					ex.setExpressMark(true);//1是邮出，0是邮入
-				}
-				if(asOrder.getIsDelivery()==null || asOrder.getIsDelivery().intValue()==0){
-					exInfo = null;
-				}else{
-					ex.setOrderId(asOrder.getId());
+					ex.setExpressMark(false);//邮入
 					exInfo = expressInfoService.getExpressInfo(ex);
+				}else{
+					if(asOrder.getIsDelivery()==null || asOrder.getIsDelivery().intValue()==0){
+						exInfo = null;
+					}else{
+						ex.setExpressMark(true);//邮出 需要判断是否邮寄了 否则都不用去数据库了
+						ex.setOrderId(asOrder.getId());
+						exInfo = expressInfoService.getExpressInfo(ex);
+					}
 				}
-				//ex.setExpressMark(asOrder.getStatus().intValue() > 7 ? true : false);//1是邮出，0是邮入
-				
 			}
 
 			// 返回的body
@@ -112,7 +112,9 @@ public class LogisticsInfosAppService implements BaseService {
 					}
 				}
 			}
-		
+			responseBody.setLogisticsCompany(exInfo.getEcName());
+			responseBody.setLogisticsNumber(exInfo.getExpressNo());
+			responseBody.setLogisticsPhone("客服电话请产品确认！！！");
 			responseBody.setInfoList(infoList);
 			// 配置返回信息
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);

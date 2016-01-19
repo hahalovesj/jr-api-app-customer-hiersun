@@ -56,7 +56,7 @@ public class DelAddressAppService implements BaseService {
 				this.packageMsgMap(responseBody, respHead);
 			}
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			ResponseBody responseBody = new ResponseBody();
 
 			return this.packageMsgMap(responseBody, respHead);
