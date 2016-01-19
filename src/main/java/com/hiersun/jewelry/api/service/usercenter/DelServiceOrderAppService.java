@@ -48,9 +48,10 @@ public class DelServiceOrderAppService implements BaseService {
 			String orderNo = body.getOrderNO();
 
 			orderService.delOrderByOrderNo(orderNo);
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 
 			ResponseBody res = new ResponseBody();
-			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
+
 			return this.packageMsgMap(res, respHead);
 		} catch (Exception e) {
 			log.error("delServiceOrder 	4015	接口发生异常，异常信息：" + e.getMessage());
