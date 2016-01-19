@@ -157,13 +157,12 @@ public class DirectGoodsDecAppService implements BaseService {
 			return returnStrBuffer.toString();
 		} else {
 			returnStrBuffer.append("订单编号:")
-					.append(DateUtil.dateToStr(queryGoodsByParamVo.getAuditTime(), "yyyy-MM-dd HH:mm:ss"))
-					.append("\r\n\r\n");
+					.append(queryGoodsByParamVo.getOrderNo()).append("\r\n\r\n");
 
 			returnStrBuffer.append("下单时间:").append(logMap.get(0)).append("\r\n\r\n");
 		}
 
-		if (queryGoodsByParamVo.getPayType() != null) {
+		if (queryGoodsByParamVo.getPayType() == null) {
 			return returnStrBuffer.toString();
 		} else {
 			returnStrBuffer.append("支付方式:").append(QualificationType.PAY_TYPE_MAP.get(queryGoodsByParamVo.getPayType()))
