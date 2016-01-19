@@ -10,12 +10,12 @@ public class GetBankNameUtil {
 			// 位数校验
 			if (cardNumber.length() == 16 || cardNumber.length() == 19) {
 			} else {
-				return "校验失败";
+				return "校验失败,请检查银行卡是否正确";
 			}
 			// 校验
 			if (CheckBankCard.checkBankCard(cardNumber) == true) {
 			} else {
-				return "校验失败";
+				return "校验失败,请检查银行卡是否正确";
 			}
 			// 判断是不是银联，老的卡号都是服务电话开头，比如农行是95599
 			// http://cn.unionpay.com/cardCommend/gyylbzk/gaishu/file_6330036.html
