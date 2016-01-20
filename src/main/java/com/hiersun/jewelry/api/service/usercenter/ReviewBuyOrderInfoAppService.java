@@ -25,7 +25,6 @@ import com.hiersun.jewelry.api.entity.vo.Qualification;
 import com.hiersun.jewelry.api.entity.vo.ResponseOrder;
 import com.hiersun.jewelry.api.orderservice.domain.OrderQualificationPicVo;
 import com.hiersun.jewelry.api.orderservice.pojo.JrasGoodInfoConfirm;
-import com.hiersun.jewelry.api.orderservice.pojo.JrasGoodQualification;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
