@@ -77,14 +77,16 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 			// 增值业务
 			paramMap.put("businessType", 2);
 			JrasGoodQualification qual = orderService.selectQualification(paramMap);
-			if (qual == null) {
-				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
-				ResponseBody responseBody = new ResponseBody();
-				return this.packageMsgMap(responseBody, respHeader);
-			}
-			Long id = qual.getId();
+			// if (qual == null) {
+			// ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead,
+			// 200102);
+			// ResponseBody responseBody = new ResponseBody();
+			// return this.packageMsgMap(responseBody, respHeader);
+			// }
+			
 			// 商品确认信息
-			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(jrdsOrder.getGoodId(),Byte.parseByte("2"));
+			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(jrdsOrder.getGoodId(),
+					Byte.parseByte("2"));
 			// 商品实物信息
 			List<AttachmentVo> pciList = directGoodsService.getJrdsGoodPic(jrasGoodInfoConfirm.getId(),
 					"jras_good_info_confirm", "jrdsconfirm");
@@ -98,28 +100,30 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 			}
 
 			Response4017 resp = new Response4017();
-			// 证书类型
-			if (qual.getCertificationType() != 0) {
-				String str = QualificationType.QUALIFICATION_TYPE.get(qual.getCertificationType().intValue());
-				resp.setCertificateType(str);
-				// 鉴定结果图片
-				// 增值服务的查询条件
-				// 表名：（table_name）jras_good_qualification
-				// 文件类型（fileType）:jrasappraisal
-				Map<String, Object> paramMapQ = new HashMap<String, Object>();
-				paramMapQ.put("table_name", "jras_good_qualification");
-				paramMapQ.put("file_type", "jrdsappraisal");
-				paramMapQ.put("data_id", id);
-				List<QualificationPicVo> QPicList = orderService.selectQualificationPicList(paramMapQ);
-				resp.setDesc(qual.getRemark());
-				resp.setCertificatePicUrl(Commons.PIC_DOMAIN + QPicList.get(0).getPicUrl());
+			if (qual != null) {
+				Long id = qual.getId();
+				// 证书类型
+				if (qual.getCertificationType() != 0) {
+					String str = QualificationType.QUALIFICATION_TYPE.get(qual.getCertificationType().intValue());
+					resp.setCertificateType(str);
+					// 鉴定结果图片
+					// 增值服务的查询条件
+					// 表名：（table_name）jras_good_qualification
+					// 文件类型（fileType）:jrasappraisal
+					Map<String, Object> paramMapQ = new HashMap<String, Object>();
+					paramMapQ.put("table_name", "jras_good_qualification");
+					paramMapQ.put("file_type", "jrdsappraisal");
+					paramMapQ.put("data_id", id);
+					List<QualificationPicVo> QPicList = orderService.selectQualificationPicList(paramMapQ);
+					resp.setDesc(qual.getRemark());
+					resp.setCertificatePicUrl(Commons.PIC_DOMAIN + QPicList.get(0).getPicUrl());
+				}
 			}
-
+			
 			Integer mNumber = jrasGoodInfoConfirm.getMatchedDegree().intValue();
 			resp.setBeanInfo(QualificationType.MATCHED_DEGREE.get(mNumber));
 			resp.setIdentifyResult(jrasGoodInfoConfirm.getSpecify());
 			resp.setPicList(resultO);
-
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(resp, respHeader);
 		} catch (Exception e) {
