@@ -72,5 +72,7 @@ public class RecodeMsgMap {
 		RECODEMSGMAP.put(402002, "直售操作异常");
 		RECODEMSGMAP.put(200901, "您的收货地址已有10条");
 		
+		RECODEMSGMAP.put(401301, "订单信息已经存在，无须重新提交订单");
+		
 	}
 }
