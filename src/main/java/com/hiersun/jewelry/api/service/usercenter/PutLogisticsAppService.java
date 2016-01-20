@@ -17,6 +17,7 @@ import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4013;
 import com.hiersun.jewelry.api.entity.response.Response4013;
 import com.hiersun.jewelry.api.expressinfo.domain.ExpressVo;
+import com.hiersun.jewelry.api.expressinfo.pojo.ExpressInfo;
 import com.hiersun.jewelry.api.expressinfo.service.ExpressInfoService;
 import com.hiersun.jewelry.api.expressinfo.service.LogisticsTrackingInfoService;
 import com.hiersun.jewelry.api.orderservice.pojo.JrasOrder;
@@ -75,6 +76,16 @@ public class PutLogisticsAppService implements BaseService {
 				evo.setBusinessType(Byte.valueOf("2"));//直售的业务类型为2
 				evo.setJrdsOrder(dsOrder);
 				
+				ExpressInfo expressInfo = new ExpressInfo();
+				expressInfo.setOrderId(dsOrder.getId());
+				// 查询快递单号是否存在
+				ExpressInfo ei = expressInfoService.getExpressInfo(expressInfo);
+				if (ei != null) {
+					log.error("订单信息已经存在，无须重新提交订单！订单号：" + body.getOrderNO());
+					ResponseBody res = new ResponseBody();
+					ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 99999);
+					return this.packageMsgMap(res, respHead);
+				}
 				// 保存物流信息
 				expressInfoService.saveExpressJrds(evo);
 			} else if (body.getOrderNO().startsWith("31")) {
@@ -82,6 +93,17 @@ public class PutLogisticsAppService implements BaseService {
 				evo.setOrderId(asOrder.getId());
 				evo.setJrasOrder(asOrder);
 				evo.setBusinessType(Byte.valueOf("1"));//服务的业务类型为1
+				
+				ExpressInfo expressInfo = new ExpressInfo();
+				expressInfo.setOrderId(asOrder.getId());
+				// 查询快递单号是否存在
+				ExpressInfo ei = expressInfoService.getExpressInfo(expressInfo);
+				if (ei != null) {
+					log.error("订单信息已经存在，无须重新提交订单！订单号：" + body.getOrderNO());
+					ResponseBody res = new ResponseBody();
+					ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 99999);
+					return this.packageMsgMap(res, respHead);
+				}
 				// 保存服务物流信息
 				expressInfoService.saveExpress(evo);
 			}
@@ -99,7 +121,7 @@ public class PutLogisticsAppService implements BaseService {
 			return this.packageMsgMap(res, respHead);
 		}
 	}
-
+	
 	private Map<String, Object> packageMsgMap(Response4013 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);

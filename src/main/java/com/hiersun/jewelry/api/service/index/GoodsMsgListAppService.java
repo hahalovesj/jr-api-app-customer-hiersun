@@ -94,7 +94,7 @@ public class GoodsMsgListAppService implements BaseService {
 //				map.put("bigIcon", Commons.PIC_DOMAIN + dvo.getBigIcon());
 				map.put("icon", Commons.PIC_DOMAIN + dvo.getSmallIcon());
 				
-				Boolean isMine = dvo.getSellerMemberId() == userId ? true : false;
+				Boolean isMine = dvo.getInitiatorId() == userId ? true : false;
 				
 				map.put("isMine", isMine);
 				resultList.add(map);
