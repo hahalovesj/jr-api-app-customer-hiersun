@@ -49,15 +49,15 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 
 		log.info("changeUserBaseInfo	3007	请求信息：" + reqHead.toString());
 		log.info("changeUserBaseInfo	3007 	请求信息：" + bodyStr);
-			
+
 		JrMemberInfoVo jrMemberInfoVo = null;
 		UserInfo user = null;
 		try {
 			Request4008 body = JSON.parseObject(bodyStr, Request4008.class);
-			Map<String,String> map = new HashMap<String, String>();
+			Map<String, String> map = new HashMap<String, String>();
 			map.put("女", "0");
 			map.put("男", "1");
-			
+
 			jrMemberInfoVo = new JrMemberInfoVo();
 			jrMemberInfoVo.setUserId(userId);
 
@@ -65,10 +65,13 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 				jrMemberInfoVo.setNickName(body.getNickName());
 			}
 			if (!StringUtils.isEmpty(body.getSex())) {
-				Map<String,String > mmap = CommonUtils.getIco(Integer.parseInt(map.get(body.getSex())));
-				
-				
-				
+				Map<String, String> mmap = CommonUtils.getIco(Integer.parseInt(map.get(body.getSex())));
+				if (body.getSex().equals("男")) {
+					jrMemberInfoVo.setSex("1");
+				} else {
+					jrMemberInfoVo.setSex("0");
+				}
+
 				jrMemberInfoVo.setBigIcon(mmap.get("big"));
 				jrMemberInfoVo.setSmallIcon(mmap.get("small"));
 			}

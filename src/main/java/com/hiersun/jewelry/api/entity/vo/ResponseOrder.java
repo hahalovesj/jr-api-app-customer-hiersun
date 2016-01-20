@@ -1,10 +1,11 @@
 package com.hiersun.jewelry.api.entity.vo;
 
+import java.util.List;
 import java.util.Map;
 
 public class ResponseOrder {
 
-	private Map<String, Object> goodsPicList;
+	private List<Map<String, Object>> goodsPicList;
 
 	private double goodsPrice;
 
@@ -16,11 +17,11 @@ public class ResponseOrder {
 
 	private String freight;
 
-	public Map<String, Object> getGoodsPicList() {
+	public List<Map<String, Object>> getGoodsPicList() {
 		return goodsPicList;
 	}
 
-	public void setGoodsPicList(Map<String, Object> goodsPicList) {
+	public void setGoodsPicList(List<Map<String, Object>> goodsPicList) {
 		this.goodsPicList = goodsPicList;
 	}
 

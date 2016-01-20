@@ -177,13 +177,6 @@ public class DirectGoodsDecAppService implements BaseService {
 			returnStrBuffer.append("发货到平台:").append(logMap.get(2)).append("\r\n\r\n");
 		}
 
-		if (queryGoodsByParamVo.getOrderStatus().intValue() < 3) {
-			return returnStrBuffer.toString();
-		} else {
-			returnStrBuffer.append("鉴定时间:").append(logMap.get(3) != null ? logMap.get(3) : logMap.get(4))
-					.append("\r\n\r\n");
-		}
-
 		if (queryGoodsByParamVo.getOrderStatus().intValue() < 5) {
 			return returnStrBuffer.toString();
 		} else {
@@ -192,7 +185,15 @@ public class DirectGoodsDecAppService implements BaseService {
 				returnStrBuffer.append("再次确认时间").append(logMap.get(5)).append("\r\n\r\n");
 			}
 		}
+		
+		if (queryGoodsByParamVo.getOrderStatus().intValue() < 7) {
+			return returnStrBuffer.toString();
+		} else {
+			returnStrBuffer.append("鉴定时间:").append(logMap.get(3) != null ? logMap.get(3) : logMap.get(4))
+					.append("\r\n\r\n");
+		}
 
+		
 		if (queryGoodsByParamVo.getOrderStatus().intValue() < 9) {
 			return returnStrBuffer.toString();
 		} else {
