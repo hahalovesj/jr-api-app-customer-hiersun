@@ -29,6 +29,7 @@ import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
+import com.hiersun.jewelry.api.util.bank.CommonsUtil;
 
 /**
  * Created by lijunteng on 16/1/11.
@@ -102,11 +103,12 @@ public class RegistAppService implements BaseService {
 			user.setSmallIcon(icoMap.get("small"));
 			user.setSex(0);
 
+			user.setNickName(CommonUtils.mobileForNickName(mobile));
 			userId = userService.regist(user);
 			String token = RandomStringUtil.randomString(16);
 
 			// 注册成功，删除缓存的验证码
-			redisBaseServiceImpl.del(CatchKey.APP_MSG_KEY + acctionType + mobile);
+//			redisBaseServiceImpl.del(CatchKey.APP_MSG_KEY + acctionType + mobile);
 			// 存token
 			redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + token, userId.toString());
 

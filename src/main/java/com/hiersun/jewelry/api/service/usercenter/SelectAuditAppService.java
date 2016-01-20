@@ -69,7 +69,7 @@ public class SelectAuditAppService implements BaseService {
 			JrdsGoodAudit jrdsGoodAudit = directGoodsService.getGoodAudit(jg.getId());
 			Response4026 resp = new Response4026();
 			resp.setAuditExplain(jrdsGoodAudit.getCommentInfo());
-			resp.setAuditResult(jrdsGoodAudit.getResult() == true ? "同意直售" : "不予直售");
+			resp.setAuditResult(jrdsGoodAudit.getResult() == true ? "同意直售" : "审核未通过");
 
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(resp, respHead);

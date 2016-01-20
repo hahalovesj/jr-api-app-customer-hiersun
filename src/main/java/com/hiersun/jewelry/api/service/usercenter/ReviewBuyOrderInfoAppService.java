@@ -71,12 +71,13 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 			// 根据goodsId查询商品信息（图片等）
 			JrdsGood jrdsGood = directGoodsService.getOneDirectGoods(jrasGoodInfoConfirm.getGoodId(), false);
 			// 直售业务的鉴定信息
-			List<OrderQualificationPicVo> OPiclist = orderService.selectOrderPic(jrasGoodInfoConfirm.getId(),
-					"jras_good_info_confirm");
+			// List<OrderQualificationPicVo> OPiclist =
+			// orderService.selectOrderPic(jrasGoodInfoConfirm.getId(),
+			// "jrds_good_info_confirm");
 
 			// 商品实物信息
 			List<AttachmentVo> pciList = directGoodsService.getJrdsGoodPic(jrasGoodInfoConfirm.getId(),
-					"jras_good_info_confirm", "jrasconfirm");
+					"jras_good_info_confirm", "jrdsconfirm");
 
 			// 返回信息
 			Response4022 resp = new Response4022();
