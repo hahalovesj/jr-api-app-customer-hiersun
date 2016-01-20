@@ -19,11 +19,11 @@ public class Qualification {
 		this.qualiPicList = qualiPicList2;
 	}
 
-	public String getIdentifyResult() {
+	public String getIsIdentifyResult() {
 		return identifyResult;
 	}
 
-	public void setIdentifyResult(String identifyResult) {
+	public void setIsIdentifyResult(String identifyResult) {
 		this.identifyResult = identifyResult;
 	}
 

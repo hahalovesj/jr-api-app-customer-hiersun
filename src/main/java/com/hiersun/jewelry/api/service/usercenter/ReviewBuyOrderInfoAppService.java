@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.Commons;
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.direct.pojo.JrdsGood;
 import com.hiersun.jewelry.api.direct.pojo.JrdsOrder;
 import com.hiersun.jewelry.api.direct.service.DirectGoodsService;
@@ -27,6 +28,7 @@ import com.hiersun.jewelry.api.orderservice.domain.OrderQualificationPicVo;
 import com.hiersun.jewelry.api.orderservice.pojo.JrasGoodInfoConfirm;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;
 import com.hiersun.jewelry.api.service.BaseService;
+import com.hiersun.jewelry.api.uploadresource.domain.AttachmentVo;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("reviewBuyOrderInfoAppService")
@@ -61,14 +63,20 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
 			String orderNo = body.getOrderNO();
 			// 根据orderNo查询订单信息（goodsid 价格等）
-			
+
 			JrdsOrder jrdsOrder = directOrderService.selectOrderByOrderNo(orderNo);
-			//确认信息
-			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(jrdsOrder.getGoodId(),Byte.parseByte("2"));
+			// 确认信息
+			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(jrdsOrder.getGoodId(),
+					Byte.parseByte("2"));
 			// 根据goodsId查询商品信息（图片等）
 			JrdsGood jrdsGood = directGoodsService.getOneDirectGoods(jrasGoodInfoConfirm.getGoodId(), false);
 			// 直售业务的鉴定信息
-			List<OrderQualificationPicVo> OPiclist = orderService.selectOrderPic(jrasGoodInfoConfirm.getId(),"jras_good_info_confirm");
+			List<OrderQualificationPicVo> OPiclist = orderService.selectOrderPic(jrasGoodInfoConfirm.getId(),
+					"jras_good_info_confirm");
+
+			// 商品实物信息
+			List<AttachmentVo> pciList = directGoodsService.getJrdsGoodPic(jrasGoodInfoConfirm.getId(),
+					"jras_good_info_confirm", "jrasconfirm");
 
 			// 返回信息
 			Response4022 resp = new Response4022();
@@ -79,21 +87,27 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 			order.setGoodsPrice(jrdsGood.getDirectPrice().doubleValue());
 			order.setOrderNO(jrdsOrder.getOrderNo());
 			Map<String, Object> goodsPicList = new HashMap<String, Object>();
-			goodsPicList.put("picUrl", Commons.PIC_DOMAIN+jrdsGood.getHostGragp());
-			order.setGoodsPicList(goodsPicList);
+			goodsPicList.put("picUrl", Commons.PIC_DOMAIN + jrdsGood.getHostGragp());
+
+			List<Map<String, Object>> picList = new ArrayList<Map<String, Object>>();
+			picList.add(goodsPicList);
+
+			order.setGoodsPicList(picList);
 			Qualification qualification = new Qualification();
 
-			qualification.setBeanInfo("有细微差异");
-			qualification.setIdentifyResult(jrasGoodInfoConfirm.getSpecify());
+			Integer mNumber = jrasGoodInfoConfirm.getMatchedDegree().intValue();
+			qualification.setBeanInfo(QualificationType.MATCHED_DEGREE.get(mNumber));
+			qualification.setIsIdentifyResult(jrasGoodInfoConfirm.getSpecify());
 
-			List<Map<String, String>> qualiPicList = new ArrayList<Map<String, String>>();
+			List<Map<String, String>> resultO = new ArrayList<Map<String, String>>();
 			Map<String, String> resultOM = new HashMap<String, String>();
-			for (int i = 0; i < OPiclist.size(); i++) {
-				resultOM.put("picUrl",Commons.PIC_DOMAIN+OPiclist.get(i).getPicUrl());
-				resultOM.put("picDesc", OPiclist.get(i).getPicDesc());
-				qualiPicList.add(resultOM);
+			for (int i = 0; i < pciList.size(); i++) {
+				resultOM.put("picUrl", Commons.PIC_DOMAIN + pciList.get(i).getFullName());
+				resultOM.put("picDesc", pciList.get(i).getAttrDesc());
+				resultO.add(resultOM);
 			}
-			qualification.setQualiPicList(qualiPicList);
+
+			qualification.setQualiPicList(resultO);
 
 			resp.setQualification(qualification);
 			resp.setOrder(order);
