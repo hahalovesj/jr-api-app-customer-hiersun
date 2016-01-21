@@ -176,6 +176,11 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			returnStrBuffer.append("发货到平台:").append(logMap.get(2)).append("\r\n\r\n");
 		}
+		
+		if (queryGoodsByParamVo.getOrderStatus().intValue() == 3) {
+			return returnStrBuffer.append("鉴定时间:").append(logMap.get(3)).append("\r\n\r\n").toString();
+		} 
+
 
 		if (queryGoodsByParamVo.getOrderStatus().intValue() < 5) {
 			return returnStrBuffer.toString();
@@ -189,7 +194,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		if (queryGoodsByParamVo.getOrderStatus().intValue() < 7) {
 			return returnStrBuffer.toString();
 		} else {
-			returnStrBuffer.append("鉴定时间:").append(logMap.get(3) != null ? logMap.get(3) : logMap.get(4))
+			returnStrBuffer.append("鉴定时间:").append(logMap.get(7) != null ? logMap.get(7) : logMap.get(8))
 					.append("\r\n\r\n");
 		}
 
