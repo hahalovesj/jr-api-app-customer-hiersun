@@ -231,7 +231,7 @@ localhost:8080/jr-apiclean/api/main?msg=
 "transactionType":"directBuyOrderInfo","ua":"PRO 5","version":"0.2.1"}}
 
 4027
-{"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"directBuyOrderInfo","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"4E0F0FFAD77F40CFF9AE829781402B63","networkOper":"CMMCC","networkStatus":"4G"},
+{"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"checkSalesAfter","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"4E0F0FFAD77F40CFF9AE829781402B63","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{"orderNo":"JSO20000"}}
 
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"selectAudit","sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"4E0F0FFAD77F40CFF9AE829781402B63","networkOper":"CMMCC","networkStatus":"4G"},
