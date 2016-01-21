@@ -49,11 +49,13 @@ public class CheckSalesAfterAppService implements BaseService {
 			Request4027 body = JSON.parseObject(bodyStr, Request4027.class);
 			String orderNo = body.getOrderNo();
 			JrAfterSalesAuditVo jrSalesVo = directOrderService.selectAfterByOrderId(orderNo);
+			
 			JrdsOrderVo jrdsOrderVo = directOrderService.selectDirectOrder(orderNo);
-
+			
+			jrSalesVo.setJrdsOrderVo(jrdsOrderVo);
+			
 			Response4027 res = new Response4027();
 			res.setJrAfterSalesAuditVo(jrSalesVo);
-			res.setJrdsOrderVo(jrdsOrderVo);
 
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(res, respHead);
