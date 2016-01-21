@@ -8,7 +8,8 @@
 	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
 	<dubbo:application name="api-consumer" />
 	<!-- dubbo接口去除注册中心，采用直连的方式 -->
-<dubbo:registry id="zk-app" protocol="zookeeper" address="192.168.4.92:2181,192.168.4.92:2182,192.168.4.92:2183" ></dubbo:registry>
+	
+<dubbo:registry id="zk-app" protocol="zookeeper" address="10.0.1.12:2181,10.0.1.17:2181,10.0.1.18:2181" ></dubbo:registry>
 	<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
 	<dubbo:reference id="userService"
 		interface="com.hiersun.jewelry.api.user.service.UserService" />
