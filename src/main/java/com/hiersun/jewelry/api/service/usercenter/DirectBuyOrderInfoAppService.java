@@ -119,8 +119,12 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			if (jrdsOrderVo.getPayTime() != null) {
 				order.setPayTime(DateUtil.dateToStr(jrdsOrderVo.getPayTime(), "yyyy-MM-dd HH:mm:ss"));
 			}
-
-			order.setCancelTime(map.get(11));
+			if (jrdsOrderVo.getOrderStatus().intValue() == 11) {
+				order.setCancelTime(map.get(11));
+			}
+			if (jrdsOrderVo.getOrderStatus().intValue() == 12) {
+				order.setCancelTime(map.get(12));
+			}
 			order.setDeliveryedTime(map.get(9));
 			order.setConfirmedTime(map.get(10));
 			// 鉴定时间 如果8的状态不为空 去抓的时间 8位鉴定通过 发货，7为鉴定不通过 5为验证未通过 modifyBy Li.Long
