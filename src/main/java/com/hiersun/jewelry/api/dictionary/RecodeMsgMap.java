@@ -9,7 +9,7 @@ public class RecodeMsgMap {
 
 	static {
 		RECODEMSGMAP.put(0, "操作成功");
-		RECODEMSGMAP.put(99999, "服务器维护中");
+		RECODEMSGMAP.put(99999, "服务器异常，请重试");
 		RECODEMSGMAP.put(900002, "JSON解析错误");
 		RECODEMSGMAP.put(900003, "messageID错误");
 		RECODEMSGMAP.put(900004, "timeStamp错误");

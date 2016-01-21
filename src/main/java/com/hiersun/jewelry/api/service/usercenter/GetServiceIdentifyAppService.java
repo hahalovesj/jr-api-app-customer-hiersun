@@ -26,6 +26,7 @@ import com.hiersun.jewelry.api.orderservice.pojo.JrasGoodQualification;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.uploadresource.domain.AttachmentVo;
+import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("getServiceIdentifyAppService")
@@ -107,15 +108,16 @@ public class GetServiceIdentifyAppService implements BaseService {
 				paramMapQ.put("file_type", "jrasappraisal");
 				paramMapQ.put("data_id", id);
 				List<QualificationPicVo> QPicList = orderService.selectQualificationPicList(paramMapQ);
-				
+				resp.setDesc(qual.getRemark());
 				resp.setCertificatePicUrl(Commons.PIC_DOMAIN + QPicList.get(0).getPicUrl());
 			}
 
 			Integer mNumber = jrasGoodInfoConfirm.getMatchedDegree().intValue();
 			resp.setBeanInfo(QualificationType.MATCHED_DEGREE.get(mNumber));
-			resp.setIdentifyResult(jrasGoodInfoConfirm.getSpecify());
+			resp.setIdentifyResult(CommonUtils.stripHtml(jrasGoodInfoConfirm.getSpecify()));
 			resp.setPicList(resultO);
-
+		
+			
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(resp, respHeader);
 
