@@ -1,5 +1,6 @@
 package com.hiersun.jewelry.api.service.usercenter;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,8 @@ import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4027;
 import com.hiersun.jewelry.api.entity.response.Response4027;
+import com.hiersun.jewelry.api.entity.vo.Order;
+import com.hiersun.jewelry.api.entity.vo.Review;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
@@ -44,18 +47,45 @@ public class CheckSalesAfterAppService implements BaseService {
 		
 		log.info("checkSalesAfter	4027	接口请求消息体：" + reqHead.toString());
 		log.info("checkSalesAfter	4027	接口请求消息体：" + bodyStr);
-		
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd"); 
+		Order order = null;
+		Review review = null;
 		try {
 			Request4027 body = JSON.parseObject(bodyStr, Request4027.class);
 			String orderNo = body.getOrderNo();
 			JrAfterSalesAuditVo jrSalesVo = directOrderService.selectAfterByOrderId(orderNo);
-			
 			JrdsOrderVo jrdsOrderVo = directOrderService.selectDirectOrder(orderNo);
-			jrdsOrderVo.setJrSalesVo(jrSalesVo);
-			
 			Response4027 res = new Response4027();
-			res.setJrdsOrderVo(jrdsOrderVo);
-			
+			order = new Order();
+			order.setGoodsName(jrdsOrderVo.getGoodsName());
+			order.setGoodsPicUrl(jrdsOrderVo.getGoodsPic());
+			order.setOrderID(jrdsOrderVo.getId());
+			order.setOrderNO(jrdsOrderVo.getOrderNo());
+			order.setOrderPrice(jrdsOrderVo.getPayAmount().doubleValue());
+			order.setGoodsBuyPrice(jrdsOrderVo.getGoodsPrice().doubleValue());
+			order.setFreightDesc("￥0.00元运费（平台包邮）");
+			review = new Review();
+			review.setReviewExplain(jrSalesVo.getInstruction());
+			if(jrSalesVo.getAuditResult()!=null){
+				review.setReviewResult(String.valueOf(jrSalesVo.getAuditResult()));
+			}
+			if(jrSalesVo.getApplyTime()!=null){
+				review.setApplyTime(sdf.format(jrSalesVo.getApplyTime()));
+			}
+			if(jrSalesVo.getReviewTime()!=null){
+				review.setReviewTime(sdf.format(jrSalesVo.getReviewTime()));
+			}
+			if(jrSalesVo.getReturnTime()!=null){
+				review.setReturnTime(sdf.format(jrSalesVo.getReturnTime()));
+			}
+			if(jrSalesVo.getAppraisalTime()!=null){
+				review.setAppraisalTime(sdf.format(jrSalesVo.getAppraisalTime()));
+			}
+			if(jrSalesVo.getCreateTime()!=null){
+				review.setCreateTime(sdf.format(jrSalesVo.getCreateTime()));
+			}
+			order.setReview(review);
+			res.setOrder(order);
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(res, respHead);
 		} catch (Exception e) {
