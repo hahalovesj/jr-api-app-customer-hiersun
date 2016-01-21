@@ -61,8 +61,13 @@ public class CheckSalesAfterAppService implements BaseService {
 			order.setGoodsPicUrl(jrdsOrderVo.getGoodsPic());
 			order.setOrderID(jrdsOrderVo.getId());
 			order.setOrderNO(jrdsOrderVo.getOrderNo());
-			order.setOrderPrice(jrdsOrderVo.getPayAmount().doubleValue());
-			order.setGoodsBuyPrice(jrdsOrderVo.getGoodsPrice().doubleValue());
+			if(jrdsOrderVo.getOrderAmount()!=null){
+				order.setOrderPrice(jrdsOrderVo.getOrderAmount().doubleValue());
+			}
+			if(jrdsOrderVo.getGoodsPrice()!=null){
+				order.setGoodsBuyPrice(jrdsOrderVo.getGoodsPrice().doubleValue());
+			}
+			
 			order.setFreightDesc("￥0.00元运费（平台包邮）");
 			review = new Review();
 			review.setReviewExplain(jrSalesVo.getInstruction());
