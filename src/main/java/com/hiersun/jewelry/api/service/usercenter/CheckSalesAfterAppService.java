@@ -51,8 +51,7 @@ public class CheckSalesAfterAppService implements BaseService {
 			JrAfterSalesAuditVo jrSalesVo = directOrderService.selectAfterByOrderId(orderNo);
 			
 			JrdsOrderVo jrdsOrderVo = directOrderService.selectDirectOrder(orderNo);
-			
-			jrSalesVo.setJrdsOrderVo(jrdsOrderVo);
+			jrdsOrderVo.setJrSalesVo(jrSalesVo);
 			
 			Response4027 res = new Response4027();
 			res.setJrAfterSalesAuditVo(jrSalesVo);
