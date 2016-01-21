@@ -61,8 +61,8 @@ public class CheckSalesAfterAppService implements BaseService {
 			order.setGoodsPicUrl(jrdsOrderVo.getGoodsPic());
 			order.setOrderID(jrdsOrderVo.getId());
 			order.setOrderNO(jrdsOrderVo.getOrderNo());
-			if(jrdsOrderVo.getPayAmount()!=null){
-				order.setOrderPrice(jrdsOrderVo.getPayAmount().doubleValue());
+			if(jrdsOrderVo.getOrderAmount()!=null){
+				order.setOrderPrice(jrdsOrderVo.getOrderAmount().doubleValue());
 			}
 			if(jrdsOrderVo.getGoodsPrice()!=null){
 				order.setGoodsBuyPrice(jrdsOrderVo.getGoodsPrice().doubleValue());
