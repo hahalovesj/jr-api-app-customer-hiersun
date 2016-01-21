@@ -187,7 +187,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			// 需要确认的才做确认记录
 			if (logMap.get(5) != null) {
-				returnStrBuffer.append("再次确认时间").append(logMap.get(5)).append("\r\n\r\n");
+				returnStrBuffer.append("再次确认时间:").append(logMap.get(5)).append("\r\n\r\n");
 			}
 		}
 		
@@ -204,7 +204,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			// 需要确认的才做确认记录
 			if (logMap.get(9) != null) {
-				returnStrBuffer.append("发货到买家时间").append(logMap.get(9)).append("\r\n\r\n");
+				returnStrBuffer.append("发货到买家时间:").append(logMap.get(9)).append("\r\n\r\n");
 			}
 		}
 
@@ -213,7 +213,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			// 需要确认的才做确认记录
 			if (logMap.get(10) != null) {
-				returnStrBuffer.append("发货到买家时间").append(logMap.get(10)).append("\r\n\r\n");
+				returnStrBuffer.append("发货到买家时间:").append(logMap.get(10)).append("\r\n\r\n");
 			}
 		}
 
