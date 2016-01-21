@@ -1,7 +1,6 @@
 package com.hiersun.jewelry.api.entity.vo;
 
-
-public class ResponseJrdsOrder{
+public class ResponseJrdsOrder {
 	private String createTime;
 	private String payTime;
 	private String payType;
@@ -20,8 +19,15 @@ public class ResponseJrdsOrder{
 	private Integer orderStatusCode;
 	private ResponseAddress address;
 	private Boolean isAfter;
-	
-	
+	private String cancelTime;
+
+	public String getCancelTime() {
+		return cancelTime;
+	}
+
+	public void setCancelTime(String cancelTime) {
+		this.cancelTime = cancelTime;
+	}
 
 	public Boolean getIsAfter() {
 		return isAfter;
@@ -87,9 +93,6 @@ public class ResponseJrdsOrder{
 		this.goodsName = goodsName;
 	}
 
-	
-	
-	
 	public String getGoodsPicUrl() {
 		return goodsPicUrl;
 	}
@@ -154,7 +157,6 @@ public class ResponseJrdsOrder{
 		this.orderStatusDes = orderStatusDes;
 	}
 
-	
 	public Integer getOrderStatusCode() {
 		return orderStatusCode;
 	}
@@ -172,4 +174,3 @@ public class ResponseJrdsOrder{
 	}
 
 }
-
