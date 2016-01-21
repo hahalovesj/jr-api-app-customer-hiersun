@@ -83,10 +83,11 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 
 			ResponseJrdsOrder order = new ResponseJrdsOrder();
 			order.setGoodsName(jrdsOrderVo.getGoodsName());
-			order.setGoodsPicUrl(Commons.PIC_DOMAIN+jrdsOrderVo.getGoodsPic());
+
+			order.setGoodsPicUrl(Commons.PIC_DOMAIN + jrdsOrderVo.getGoodsPic());
 			order.setOrderID(jrdsOrderVo.getId());
 			order.setOrderNO(jrdsOrderVo.getOrderNo());
-//			order.setGoodsBuyPrice(jrdsOrderVo.getPayAmount().doubleValue());
+			// order.setGoodsBuyPrice(jrdsOrderVo.getPayAmount().doubleValue());
 			if (jrdsOrderVo.getOrderAmount() != null) {
 				order.setOrderPrice(jrdsOrderVo.getOrderAmount().doubleValue());
 			}
@@ -111,18 +112,20 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			}
 			// 0 下单时间 1 支付时间 7 鉴定时间 9 配送时间 10 确认收货时间
 			order.setCreateTime(map.get(0));
-			if(jrdsOrderVo.getPayType()!=null){
+
+			if (jrdsOrderVo.getPayType() != null) {
 				order.setPayType(QualificationType.PAY_TYPE_MAP.get(jrdsOrderVo.getPayType().intValue()));
 			}
-			if(jrdsOrderVo.getPayTime()!=null){
+			if (jrdsOrderVo.getPayTime() != null) {
 				order.setPayTime(DateUtil.dateToStr(jrdsOrderVo.getPayTime(), "yyyy-MM-dd HH:mm:ss"));
 			}
+
+			order.setCancelTime(map.get(11));
 			order.setDeliveryedTime(map.get(9));
 			order.setConfirmedTime(map.get(10));
-			//鉴定时间 如果8的状态不为空 去抓的时间 8位鉴定通过 发货，7为鉴定不通过 5为验证未通过 modifyBy Li.Long
-			order.setAppraisaledTime(map.get(8) != null ? map.get(8):
-				(map.get(7)!=null?map.get(7):
-					(map.get(5)!=null?map.get(5):null)));
+			// 鉴定时间 如果8的状态不为空 去抓的时间 8位鉴定通过 发货，7为鉴定不通过 5为验证未通过 modifyBy Li.Long
+			order.setAppraisaledTime(map.get(8) != null ? map.get(8) : (map.get(7) != null ? map.get(7)
+					: (map.get(5) != null ? map.get(5) : null)));
 
 			// 收货地址
 			Long addressID = jrdsOrderVo.getAddressId();
