@@ -54,8 +54,8 @@ public class CheckSalesAfterAppService implements BaseService {
 			jrdsOrderVo.setJrSalesVo(jrSalesVo);
 			
 			Response4027 res = new Response4027();
-			res.setJrAfterSalesAuditVo(jrSalesVo);
-
+			res.setJrdsOrderVo(jrdsOrderVo);
+			
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(res, respHead);
 		} catch (Exception e) {
