@@ -9,7 +9,7 @@ public class RecodeMsgMap {
 
 	static {
 		RECODEMSGMAP.put(0, "操作成功");
-		RECODEMSGMAP.put(99999, "服务器维护中");
+		RECODEMSGMAP.put(99999, "服务器异常，请重试");
 		RECODEMSGMAP.put(900002, "JSON解析错误");
 		RECODEMSGMAP.put(900003, "messageID错误");
 		RECODEMSGMAP.put(900004, "timeStamp错误");
@@ -39,6 +39,8 @@ public class RecodeMsgMap {
 		RECODEMSGMAP.put(200604, "留言人不能为空");
 
 		RECODEMSGMAP.put(200801, "goodsToken不正确");
+		
+		RECODEMSGMAP.put(300401, "请输入200字以内描述");
 		RECODEMSGMAP.put(400007, "银行卡号不存在");
 		RECODEMSGMAP.put(400008, "卡号校验失败");
 		RECODEMSGMAP.put(400009, "国外的卡，或者旧银行卡，暂时没有收录");

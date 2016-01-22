@@ -20,6 +20,15 @@ public class ResponseJrdsOrder {
 	private ResponseAddress address;
 	private Boolean isAfter;
 	private String cancelTime;
+	private String confirmedBuyTime;
+
+	public String getConfirmedBuyTime() {
+		return confirmedBuyTime;
+	}
+
+	public void setConfirmedBuyTime(String confirmedBuyTime) {
+		this.confirmedBuyTime = confirmedBuyTime;
+	}
 
 	public String getCancelTime() {
 		return cancelTime;
