@@ -63,9 +63,9 @@ public class CheckSalesAfterAppService implements BaseService {
 			order.setOrderID(jrdsOrderVo.getId());
 			order.setOrderNO(jrdsOrderVo.getOrderNo());
 			
-			Map<Integer, String> map = new HashMap<Integer, String>();
-			map.put(1, "受理");
-			map.put(2, "未受理");
+			Map<Byte, String> map = new HashMap<Byte, String>();
+			map.put((byte) 1, "受理");
+			map.put((byte) 2, "未受理");
 			if(jrdsOrderVo.getOrderAmount()!=null){
 				order.setOrderPrice(jrdsOrderVo.getOrderAmount().doubleValue());
 			}
