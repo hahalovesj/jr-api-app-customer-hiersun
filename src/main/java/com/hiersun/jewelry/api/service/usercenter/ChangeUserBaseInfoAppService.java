@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
@@ -102,6 +103,7 @@ public class ChangeUserBaseInfoAppService implements BaseService {
 			bank.setBankName(user.getBankName());
 			bank.setUserRealName(user.getRealName());
 			result.setBankCardNum(bank);
+			result.setBigIcon(Commons.PIC_DOMAIN + user.getBigIcon());
 			res.setUser(result);
 
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
