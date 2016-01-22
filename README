@@ -56,7 +56,7 @@ localhost:8080/jr-apisys/api/main?msg=
 2001
 http://localhost:8080/jr-apisys/api/main?msg=
 {"head":{"messageID":123456,"timeStamp":20130415091534,"transactionType":"index",
-"sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.0.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},
+"sign":"mnx3F2vrUFDvUnT2l8Hnzg","terminal":"1","version":"1.1.1","imei":"sssss","ua":"ipone6sP","token":"88888888","networkOper":"CMMCC","networkStatus":"4G"},
 "body":{"pageNo ":0,"type":"all"}}
 
 2002

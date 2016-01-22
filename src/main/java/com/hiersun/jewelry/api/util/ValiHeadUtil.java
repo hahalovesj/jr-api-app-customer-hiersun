@@ -146,18 +146,20 @@ public class ValiHeadUtil {
 		String sign = MD5.MD5Encode(reqHead.getMessageID() + reqHead.getTransactionType() + reqHead.getTimeStamp()
 				+ reqHead.getToken() + msg);
 
-//		if (!sign.toUpperCase().trim().equals(reqHead.getSign().toUpperCase().trim())) {
-//			// sign 校验不通过
-//			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
-//			responseHeader.setResCode(900006);
-//			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900006));
-//
-//			Map<String, Object> responseMsg = new HashMap<String, Object>();
-//			responseMsg.put("head", responseHeader);
-//			responseMsg.put("body", null);
-//			response.getWriter().print(JSON.toJSONString(responseMsg));
-//			return false;
-//		}
+		// if
+		// (!sign.toUpperCase().trim().equals(reqHead.getSign().toUpperCase().trim()))
+		// {
+		// // sign 校验不通过
+		// responseHeader.setTimeStamp(DateUtil.getTimeStamp());
+		// responseHeader.setResCode(900006);
+		// responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900006));
+		//
+		// Map<String, Object> responseMsg = new HashMap<String, Object>();
+		// responseMsg.put("head", responseHeader);
+		// responseMsg.put("body", null);
+		// response.getWriter().print(JSON.toJSONString(responseMsg));
+		// return false;
+		// }
 		return true;
 	}
 
@@ -237,22 +239,42 @@ public class ValiHeadUtil {
 		ProperContextUtil proper = new ProperContextUtil();
 		String properName = "version.properties";
 		String force = proper.getValue(properName, "force");
+
+		String numStr = version.replace(".", "");
 		if (terminal.toUpperCase().equals(proper.getValue(properName, "ios"))) {
 			// IOS版本号
-			if (!version.equals(proper.getValue(properName, "ios.version"))) {
+			
+			String iosVer = proper.getValue(properName, "ios.version").replace(".", "");
+			
+			if (Integer.parseInt(iosVer) > Integer.parseInt(numStr)) {
 				info.setDownUrl(proper.getValue(properName, "ios.versionUrl"));
 				info.setForce(force.equals("true") ? true : false);
 				info.setVersion(proper.getValue(properName, "ios.version"));
 				info.setVersionDes(proper.getValue(properName, "versionDes"));
 			}
+			// if (!version.equals(proper.getValue(properName, "ios.version")))
+			// {
+			// info.setDownUrl(proper.getValue(properName, "ios.versionUrl"));
+			// info.setForce(force.equals("true") ? true : false);
+			// info.setVersion(proper.getValue(properName, "ios.version"));
+			// info.setVersionDes(proper.getValue(properName, "versionDes"));
+			// }
 		} else {
 			// 安卓的版本号
-			if (!version.equals(proper.getValue(properName, "andrion.version"))) {
+			String iosVer = proper.getValue(properName, "andrion.version").replace(".", "");
+			
+			if (Integer.parseInt(iosVer) > Integer.parseInt(numStr)) {
 				info.setDownUrl(proper.getValue(properName, "andrion.versionUrl"));
 				info.setForce(force.equals("true") ? true : false);
 				info.setVersion(proper.getValue(properName, "andrion.version"));
 				info.setVersionDes(proper.getValue(properName, "versinDes"));
 			}
+//			if (!version.equals(proper.getValue(properName, "andrion.version"))) {
+//				info.setDownUrl(proper.getValue(properName, "andrion.versionUrl"));
+//				info.setForce(force.equals("true") ? true : false);
+//				info.setVersion(proper.getValue(properName, "andrion.version"));
+//				info.setVersionDes(proper.getValue(properName, "versinDes"));
+//			}
 		}
 		return info;
 	}
