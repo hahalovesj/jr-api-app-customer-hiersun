@@ -2,15 +2,23 @@ package com.hiersun.jewelry.api.service.user;
 
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.CatchKey;
+import com.hiersun.jewelry.api.dictionary.Commons;
+import com.hiersun.jewelry.api.dictionary.QualificationType;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.RequestResetpwd;
+import com.hiersun.jewelry.api.entity.response.RespUser;
 import com.hiersun.jewelry.api.entity.response.ResponseResetpwd;
+import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
 import com.hiersun.jewelry.api.user.domain.User;
+import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
+import com.hiersun.jewelry.api.util.CommonUtils;
+import com.hiersun.jewelry.api.util.DateUtil;
+import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 import org.apache.log4j.Logger;
@@ -77,17 +85,56 @@ public class ResetpwdAppService implements BaseService {
             // 数据库操作
             User userQuery = new User();
             userQuery.setUserMobile(body.getMobile());
-            User user = userService.getUserByMobile(userQuery);
-            user.setUserPassword(body.getPassword());
-            userService.modifyPassword(user);
+            User u = userService.getUserByMobile(userQuery);
+            u.setUserPassword(body.getPassword());
+            userService.modifyPassword(u);
             
-            // 修改，删除缓存的验证码
+            // 删除旧的token
+         	String token = reqHead.getToken();
+       		redisBaseServiceImpl.del(CatchKey.APP_USERID_CACH_KEY_START + token);
+            
+            UserInfo info = new UserInfo();
+			info.setUserMobile(u.getMobile());
+			UserInfo resultUserInfo = userService.getUserInfoByMobile(info);
+			// 登陆成功 存token
+       		String newToken = RandomStringUtil.randomString(16);
+       		redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + newToken, resultUserInfo.getUserId().toString());
+       		// 修改，删除缓存的验证码
             redisBaseServiceImpl.del(CatchKey.APP_MSG_KEY + acctionType + body.getMobile());
-
+            
             // 配置返回信息
             ResponseResetpwd responseBody = new ResponseResetpwd();
-            responseBody.setMobile(body.getMobile());
 
+			RespUser user = new RespUser();
+			user.setMobile(resultUserInfo.getUserMobile());
+			user.setToken(newToken);
+			user.setBigIcon(Commons.PIC_DOMAIN + resultUserInfo.getBigIcon());
+			user.setSmallIcon(Commons.PIC_DOMAIN +resultUserInfo.getSmallIcon());
+			if (resultUserInfo.getSex() == null) {
+				user.setSex(QualificationType.SEX_MAP.get("0"));
+			} else {
+				user.setSex(resultUserInfo.getSex().equals("0") ? "女" : "男");
+			}
+			if (resultUserInfo.getNickName() != null) {
+				user.setNickName(resultUserInfo.getNickName());
+			} else {
+				user.setNickName(CommonUtils.mobileForNickName(body.getMobile()));
+			}
+			if (resultUserInfo.getBirthday() != null) {
+				user.setBirthday(DateUtil.dateTypeToString(resultUserInfo.getBirthday(), "yyyy-MM-dd HH:mm:ss"));
+			}
+			BankCardNum bankCarNum = new BankCardNum();
+			if (resultUserInfo.getCardNo() != null) {
+				bankCarNum.setBankCardNum(resultUserInfo.getCardNo());
+			}
+			if (resultUserInfo.getBankName() != null) {
+				bankCarNum.setBankName(resultUserInfo.getBankName());
+			}
+			if (resultUserInfo.getRealName() != null) {
+				bankCarNum.setUserRealName(resultUserInfo.getRealName());
+			}
+			user.setBankCardNum(bankCarNum);
+			responseBody.setUser(user);
             ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 
             return this.packageMsgMap(responseBody, respHead);

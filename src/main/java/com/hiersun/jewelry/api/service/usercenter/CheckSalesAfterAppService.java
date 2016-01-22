@@ -47,7 +47,7 @@ public class CheckSalesAfterAppService implements BaseService {
 		
 		log.info("checkSalesAfter	4027	接口请求消息体：" + reqHead.toString());
 		log.info("checkSalesAfter	4027	接口请求消息体：" + bodyStr);
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd"); 
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		Order order = null;
 		Review review = null;
 		try {
