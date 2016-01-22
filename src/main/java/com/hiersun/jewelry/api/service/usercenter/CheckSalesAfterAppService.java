@@ -62,6 +62,10 @@ public class CheckSalesAfterAppService implements BaseService {
 			order.setGoodsPicUrl(Commons.PIC_DOMAIN+jrdsOrderVo.getGoodsPic());
 			order.setOrderID(jrdsOrderVo.getId());
 			order.setOrderNO(jrdsOrderVo.getOrderNo());
+			
+			Map<Byte, String> map = new HashMap<Byte, String>();
+			map.put((byte) 1, "受理");
+			map.put((byte) 2, "未受理");
 			if(jrdsOrderVo.getOrderAmount()!=null){
 				order.setOrderPrice(jrdsOrderVo.getOrderAmount().doubleValue());
 			}
@@ -72,7 +76,7 @@ public class CheckSalesAfterAppService implements BaseService {
 			review = new Review();
 			review.setReviewExplain(jrSalesVo.getInstruction());
 			if(jrSalesVo.getAuditResult()!=null){
-				review.setReviewResult(String.valueOf(jrSalesVo.getAuditResult()));
+				review.setReviewResult(map.get(jrSalesVo.getAuditResult()));
 			}
 			if(jrSalesVo.getApplyTime()!=null){
 				review.setApplyTime(sdf.format(jrSalesVo.getApplyTime()));
