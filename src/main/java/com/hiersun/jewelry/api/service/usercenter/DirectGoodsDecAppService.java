@@ -78,9 +78,20 @@ public class DirectGoodsDecAppService implements BaseService {
 				map.put(jrdsOrderLog.getLogStatus().intValue(),
 						DateUtil.dateToStr(jrdsOrderLog.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 			}
-			String orderLog = this.packageOrderLog(map, queryGoodsByParamVo);
+			
+			String orderLog = "";
+			//人工取消的订单不做日志下发
+			if(queryGoodsByParamVo.getOrderStatus()!=null && 
+					queryGoodsByParamVo.getOrderStatus().intValue()==12){
+				orderLog = "";
+				responseJrdsGood.setOrderLogs(orderLog);
+				
+			}else{
+				orderLog = this.packageOrderLog(map, queryGoodsByParamVo);
+				
+			}
+		
 			responseJrdsGood.setOrderLogs(orderLog);
-
 			// 消息头
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			// 消息体
