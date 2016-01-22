@@ -70,7 +70,7 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			JrdsOrderVo jrdsOrderVo = directOrderService.selectDirectOrder(orderNo);
 			JrAfterSalesAuditVo jrSalesVo = directOrderService.selectAfterByOrderId(orderNo);
 			// 是否可以申请售后
-			Boolean isAfter = jrSalesVo == null ? true : false;
+			Boolean isAfter = (jrSalesVo != null && jrSalesVo.getApplyTime()!=null )? false : true;
 
 			if (jrdsOrderVo == null) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 200102);
