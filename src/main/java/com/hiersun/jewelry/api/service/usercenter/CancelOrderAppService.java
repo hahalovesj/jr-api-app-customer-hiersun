@@ -72,7 +72,7 @@ public class CancelOrderAppService implements BaseService {
 					return this.packageMsgMap(resp, respHead);
 				}
 			}
-			// 删除订单
+			// 删除订单（实际删除商品）
 			case 2: {
 				JrdsGoodVo jgvo = new JrdsGoodVo();
 				jgvo.setSellerMemberId(userId);

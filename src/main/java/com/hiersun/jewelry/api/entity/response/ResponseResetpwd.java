@@ -4,14 +4,14 @@ import com.hiersun.jewelry.api.entity.ResponseBody;
 
 public class ResponseResetpwd  extends ResponseBody{
 
-	private String mobile;
-
-	public String getMobile() {
-		return mobile;
+	private RespUser user;
+	public RespUser getUser() {
+		return user;
 	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setUser(RespUser user) {
+		this.user = user;
 	}
+	
+	
 
 }
