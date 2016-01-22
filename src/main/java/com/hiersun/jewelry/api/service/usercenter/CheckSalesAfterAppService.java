@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.direct.domain.JrAfterSalesAuditVo;
 import com.hiersun.jewelry.api.direct.domain.JrdsOrderVo;
 import com.hiersun.jewelry.api.direct.service.DirectOrderService;
@@ -58,7 +59,7 @@ public class CheckSalesAfterAppService implements BaseService {
 			Response4027 res = new Response4027();
 			order = new Order();
 			order.setGoodsName(jrdsOrderVo.getGoodsName());
-			order.setGoodsPicUrl(jrdsOrderVo.getGoodsPic());
+			order.setGoodsPicUrl(Commons.PIC_DOMAIN+jrdsOrderVo.getGoodsPic());
 			order.setOrderID(jrdsOrderVo.getId());
 			order.setOrderNO(jrdsOrderVo.getOrderNo());
 			if(jrdsOrderVo.getOrderAmount()!=null){
@@ -67,7 +68,6 @@ public class CheckSalesAfterAppService implements BaseService {
 			if(jrdsOrderVo.getGoodsPrice()!=null){
 				order.setGoodsBuyPrice(jrdsOrderVo.getGoodsPrice().doubleValue());
 			}
-			
 			order.setFreightDesc("￥0.00元运费（平台包邮）");
 			review = new Review();
 			review.setReviewExplain(jrSalesVo.getInstruction());
