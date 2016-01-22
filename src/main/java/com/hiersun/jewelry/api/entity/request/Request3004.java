@@ -63,7 +63,11 @@ public class Request3004 extends Body {
 
 	@Override
 	public int volidateValue() {
-		// TODO Auto-generated method stub
+
+		if (this.getGoodsDec().length() > 200) {
+			return 300401;
+		}
+
 		return 0;
 	}
 

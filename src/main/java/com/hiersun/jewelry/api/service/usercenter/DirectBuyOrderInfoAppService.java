@@ -123,10 +123,10 @@ public class DirectBuyOrderInfoAppService implements BaseService {
 			if (jrdsOrderVo.getOrderStatus().intValue() == 11) {
 				order.setCancelTime(map.get(11));
 			}
-			if(jrdsOrderVo.getOrderStatus().intValue() == 12){
+			if (jrdsOrderVo.getOrderStatus().intValue() == 12) {
 				order.setCancelTime(map.get(12));
 			}
-			
+
 			order.setDeliveryedTime(map.get(9));
 			order.setConfirmedTime(map.get(10));
 
