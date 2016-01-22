@@ -46,7 +46,7 @@ public class QualificationType {
 		MATERIAL_TYPE.put(0, "贵金属");
 		MATERIAL_TYPE.put(1, "裸钻");
 		MATERIAL_TYPE.put(2, "镶嵌钻石");
-		MATERIAL_TYPE.put(3, "钻彩");
+		MATERIAL_TYPE.put(3, "彩钻");
 		MATERIAL_TYPE.put(4, "祖母绿");
 		MATERIAL_TYPE.put(5, "红宝石");
 		MATERIAL_TYPE.put(6, "蓝宝石");
