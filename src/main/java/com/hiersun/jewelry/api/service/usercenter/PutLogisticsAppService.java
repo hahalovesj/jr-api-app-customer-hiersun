@@ -72,9 +72,11 @@ public class PutLogisticsAppService implements BaseService {
 			}
 			if (body.getOrderNO().startsWith("30")) {
 				JrdsOrder dsOrder = directOrderService.selectOrderByOrderNo(body.getOrderNO());
+				dsOrder.setReturnAddressId(evo.getRerturnAddressId());
 				evo.setOrderId(dsOrder.getId());
 				evo.setBusinessType(Byte.valueOf("2"));//直售的业务类型为2
 				evo.setJrdsOrder(dsOrder);
+			 
 				
 				if (dsOrder != null && dsOrder.getOrderStatus().intValue() != 1) {
 					log.error("订单信息已经存在，无须重新提交订单！订单号：" + body.getOrderNO());
