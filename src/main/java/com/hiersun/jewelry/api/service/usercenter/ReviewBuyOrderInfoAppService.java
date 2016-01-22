@@ -101,8 +101,9 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 			qualification.setIsIdentifyResult(jrasGoodInfoConfirm.getSpecify());
 
 			List<Map<String, String>> resultO = new ArrayList<Map<String, String>>();
-			Map<String, String> resultOM = new HashMap<String, String>();
+
 			for (int i = 0; i < pciList.size(); i++) {
+				Map<String, String> resultOM = new HashMap<String, String>();
 				resultOM.put("picUrl", Commons.PIC_DOMAIN + pciList.get(i).getFullName());
 				resultOM.put("picDesc", pciList.get(i).getAttrDesc());
 				resultO.add(resultOM);
