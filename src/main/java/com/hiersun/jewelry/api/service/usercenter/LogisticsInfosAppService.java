@@ -107,7 +107,7 @@ public class LogisticsInfosAppService implements BaseService {
 						LogisticsInfo li = new LogisticsInfo();
 						li.setDes(list.get(i).getContent());
 						li.setTime(list.get(i).getFormatTime());
-						li.setIsEnd(list.get(i).getState().intValue() == 3 ? true : false);
+						li.setIsEnd(i == list.size() - 1 && list.get(i).getState().intValue() == 3 ? true : false);
 						infoList.add(li);
 					}
 				}
