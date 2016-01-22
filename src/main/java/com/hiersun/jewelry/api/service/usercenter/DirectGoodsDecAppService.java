@@ -200,6 +200,9 @@ public class DirectGoodsDecAppService implements BaseService {
 			if (logMap.get(5) != null) {
 				returnStrBuffer.append("再次确认时间:").append(logMap.get(5)).append("\r\n\r\n");
 			}
+			if (logMap.get(4) != null && logMap.get(6) != null) {
+				returnStrBuffer.append("再次确认时间:").append(logMap.get(6)).append("\r\n\r\n");
+			}
 		}
 		
 		if (queryGoodsByParamVo.getOrderStatus().intValue() < 7) {
