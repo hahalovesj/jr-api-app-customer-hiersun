@@ -88,6 +88,8 @@ public class ChangepwdAppService implements BaseService {
 			String newToken = RandomStringUtil.randomString(16);
 			redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + newToken, resultUserInfo.getUserId()
 					.toString());
+			// 删除缓存的验证码
+			redisBaseServiceImpl.del(CatchKey.APP_MSG_KEY + acctionType + mobile);
 			// 配置返回信息
 			ResponseLogin responseBody = new ResponseLogin();
 
@@ -98,7 +100,7 @@ public class ChangepwdAppService implements BaseService {
 			resuUser.setMobile(resultUserInfo.getUserMobile());
 			resuUser.setBigIcon(Commons.PIC_DOMAIN + resultUserInfo.getBigIcon());
 			resuUser.setSmallIcon(Commons.PIC_DOMAIN + resultUserInfo.getSmallIcon());
-			
+
 			if (resultUserInfo.getSex() == null) {
 				resuUser.setSex(QualificationType.SEX_MAP.get("0"));
 			} else {

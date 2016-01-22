@@ -27,6 +27,7 @@ import com.hiersun.jewelry.api.orderservice.pojo.JrasGoodQualification;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.uploadresource.domain.AttachmentVo;
+import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("getDirectBuyIdentifyAppService")
@@ -83,7 +84,7 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 			// ResponseBody responseBody = new ResponseBody();
 			// return this.packageMsgMap(responseBody, respHeader);
 			// }
-			
+
 			// 商品确认信息
 			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(jrdsOrder.getGoodId(),
 					Byte.parseByte("2"));
@@ -119,10 +120,10 @@ public class GetDirectBuyIdentifyAppService implements BaseService {
 					resp.setCertificatePicUrl(Commons.PIC_DOMAIN + QPicList.get(0).getPicUrl());
 				}
 			}
-			
+
 			Integer mNumber = jrasGoodInfoConfirm.getMatchedDegree().intValue();
 			resp.setBeanInfo(QualificationType.MATCHED_DEGREE.get(mNumber));
-			resp.setIdentifyResult(jrasGoodInfoConfirm.getSpecify());
+			resp.setIdentifyResult(CommonUtils.stripHtml(jrasGoodInfoConfirm.getSpecify()));
 			resp.setPicList(resultO);
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(resp, respHeader);

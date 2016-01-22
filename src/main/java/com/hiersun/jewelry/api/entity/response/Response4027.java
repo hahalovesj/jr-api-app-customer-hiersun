@@ -1,17 +1,22 @@
 package com.hiersun.jewelry.api.entity.response;
 
-import com.hiersun.jewelry.api.direct.domain.JrAfterSalesAuditVo;
-import com.hiersun.jewelry.api.direct.domain.JrdsOrderVo;
 import com.hiersun.jewelry.api.entity.ResponseBody;
+import com.hiersun.jewelry.api.entity.vo.Order;
 
 public class Response4027  extends ResponseBody{
-	private JrAfterSalesAuditVo jrAfterSalesAuditVo;
-	
-	private JrdsOrderVo jrdsOrderVo;
+	private Order order;
 	
 	private String freight;
 	
-	
+
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 
 	public String getFreight() {
 		return freight;
@@ -21,21 +26,4 @@ public class Response4027  extends ResponseBody{
 		this.freight = freight;
 	}
 
-	public JrAfterSalesAuditVo getJrAfterSalesAuditVo() {
-		return jrAfterSalesAuditVo;
-	}
-
-	public void setJrAfterSalesAuditVo(JrAfterSalesAuditVo jrAfterSalesAuditVo) {
-		this.jrAfterSalesAuditVo = jrAfterSalesAuditVo;
-	}
-
-	public JrdsOrderVo getJrdsOrderVo() {
-		return jrdsOrderVo;
-	}
-
-	public void setJrdsOrderVo(JrdsOrderVo jrdsOrderVo) {
-		this.jrdsOrderVo = jrdsOrderVo;
-	}
-	
-	
 }

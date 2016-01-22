@@ -129,7 +129,7 @@ public class GoodsInfoAppService implements BaseService {
 				appraisal.setBrand(jrdsGoodAudit.getBrand());
 				appraisal.setStyle(QualificationType.STYLE_TUPE_MAP.get(jrdsGoodAudit.getStyle().intValue()));
 				int materialTag = 0;
-				if (StringUtils.isEmpty(jrdsGoodAudit.getMaterialTag())) {
+				if (!StringUtils.isEmpty(jrdsGoodAudit.getMaterialTag())) {
 					materialTag = Integer.parseInt(jrdsGoodAudit.getMaterialTag());
 				}
 				appraisal.setMaterial(QualificationType.MATERIAL_TYPE.get(materialTag));

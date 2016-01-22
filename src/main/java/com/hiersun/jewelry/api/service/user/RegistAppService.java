@@ -108,7 +108,7 @@ public class RegistAppService implements BaseService {
 			String token = RandomStringUtil.randomString(16);
 
 			// 注册成功，删除缓存的验证码
-//			redisBaseServiceImpl.del(CatchKey.APP_MSG_KEY + acctionType + mobile);
+			redisBaseServiceImpl.del(CatchKey.APP_MSG_KEY + acctionType + mobile);
 			// 存token
 			redisBaseServiceImpl.set(CatchKey.APP_USERID_CACH_KEY_START + token, userId.toString());
 

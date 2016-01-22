@@ -176,20 +176,25 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			returnStrBuffer.append("发货到平台:").append(logMap.get(2)).append("\r\n\r\n");
 		}
+		
+		if (queryGoodsByParamVo.getOrderStatus().intValue() == 3) {
+			return returnStrBuffer.append("鉴定时间:").append(logMap.get(3)).append("\r\n\r\n").toString();
+		} 
+
 
 		if (queryGoodsByParamVo.getOrderStatus().intValue() < 5) {
 			return returnStrBuffer.toString();
 		} else {
 			// 需要确认的才做确认记录
 			if (logMap.get(5) != null) {
-				returnStrBuffer.append("再次确认时间").append(logMap.get(5)).append("\r\n\r\n");
+				returnStrBuffer.append("再次确认时间:").append(logMap.get(5)).append("\r\n\r\n");
 			}
 		}
 		
 		if (queryGoodsByParamVo.getOrderStatus().intValue() < 7) {
 			return returnStrBuffer.toString();
 		} else {
-			returnStrBuffer.append("鉴定时间:").append(logMap.get(3) != null ? logMap.get(3) : logMap.get(4))
+			returnStrBuffer.append("鉴定时间:").append(logMap.get(7) != null ? logMap.get(7) : logMap.get(8))
 					.append("\r\n\r\n");
 		}
 
@@ -199,7 +204,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			// 需要确认的才做确认记录
 			if (logMap.get(9) != null) {
-				returnStrBuffer.append("发货到买家时间").append(logMap.get(9)).append("\r\n\r\n");
+				returnStrBuffer.append("发货到买家时间:").append(logMap.get(9)).append("\r\n\r\n");
 			}
 		}
 
@@ -208,7 +213,7 @@ public class DirectGoodsDecAppService implements BaseService {
 		} else {
 			// 需要确认的才做确认记录
 			if (logMap.get(10) != null) {
-				returnStrBuffer.append("发货到买家时间").append(logMap.get(10)).append("\r\n\r\n");
+				returnStrBuffer.append("发货到买家时间:").append(logMap.get(10)).append("\r\n\r\n");
 			}
 		}
 

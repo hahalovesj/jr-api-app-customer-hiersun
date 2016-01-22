@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.hiersun.jewelry.api.dictionary.Commons;
 import com.hiersun.jewelry.api.dictionary.QualificationType;
+import com.hiersun.jewelry.api.direct.pojo.JrdsOrder;
 import com.hiersun.jewelry.api.direct.service.DirectGoodsService;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
@@ -25,6 +26,7 @@ import com.hiersun.jewelry.api.orderservice.pojo.JrasGoodQualification;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.uploadresource.domain.AttachmentVo;
+import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("getServiceIdentifyAppService")
@@ -56,6 +58,7 @@ public class GetServiceIdentifyAppService implements BaseService {
 		log.info("getServiceIdentify 	4017	接口请求消息体：" + bodyStr);
 		
 		try {
+
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
 			// 根据订单查询goodsId
 			long goodsId = orderService.selectGoodIdByOrderNO(body.getOrderNO());
@@ -67,12 +70,11 @@ public class GetServiceIdentifyAppService implements BaseService {
 			paramMap.put("businessType", 1);
 			JrasGoodQualification qual = orderService.selectQualification(paramMap);
 
-			if (qual == null) {
-				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
-				ResponseBody resp = new ResponseBody();
-				return this.packageMsgMap(resp, respHeader);
-			}
-			Long id = qual.getId();
+//			if (qual == null) {
+//				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
+//				ResponseBody resp = new ResponseBody();
+//				return this.packageMsgMap(resp, respHeader);
+//			}
 			// 商品确认信息
 			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(goodsId,Byte.parseByte("1"));
 			// 商品实物信息
@@ -90,8 +92,10 @@ public class GetServiceIdentifyAppService implements BaseService {
 			// 返回
 			Response4017 resp = new Response4017();
 			List<Map<String, String>> resultQ = null;
+			
 			// 证书类型
-			if (qual.getCertificationType() != 0) {
+			if (qual!=null && qual.getCertificationType() != 0) {
+				Long id = qual.getId();
 				String qualificatonType = QualificationType.QUALIFICATION_TYPE.get(qual.getCertificationType()
 						.intValue());
 				resp.setCertificateType(qualificatonType);
@@ -104,15 +108,16 @@ public class GetServiceIdentifyAppService implements BaseService {
 				paramMapQ.put("file_type", "jrasappraisal");
 				paramMapQ.put("data_id", id);
 				List<QualificationPicVo> QPicList = orderService.selectQualificationPicList(paramMapQ);
-				
+				resp.setDesc(qual.getRemark());
 				resp.setCertificatePicUrl(Commons.PIC_DOMAIN + QPicList.get(0).getPicUrl());
 			}
 
 			Integer mNumber = jrasGoodInfoConfirm.getMatchedDegree().intValue();
 			resp.setBeanInfo(QualificationType.MATCHED_DEGREE.get(mNumber));
-			resp.setIdentifyResult(jrasGoodInfoConfirm.getSpecify());
+			resp.setIdentifyResult(CommonUtils.stripHtml(jrasGoodInfoConfirm.getSpecify()));
 			resp.setPicList(resultO);
-
+		
+			
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(resp, respHeader);
 
