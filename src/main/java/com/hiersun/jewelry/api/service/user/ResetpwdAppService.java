@@ -94,7 +94,7 @@ public class ResetpwdAppService implements BaseService {
        		redisBaseServiceImpl.del(CatchKey.APP_USERID_CACH_KEY_START + token);
             
             UserInfo info = new UserInfo();
-			info.setUserMobile(u.getMobile());
+			info.setUserMobile(u.getUserMobile());
 			UserInfo resultUserInfo = userService.getUserInfoByMobile(info);
 			// 登陆成功 存token
        		String newToken = RandomStringUtil.randomString(16);
