@@ -1,5 +1,5 @@
 #master IP  
-redis.master.host=110.0.1.17
+redis.master.host=10.0.1.17
 #master Port  
 redis.master.port=6379
 
