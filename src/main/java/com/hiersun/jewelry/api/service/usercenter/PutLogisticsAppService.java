@@ -17,7 +17,6 @@ import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request4013;
 import com.hiersun.jewelry.api.entity.response.Response4013;
 import com.hiersun.jewelry.api.expressinfo.domain.ExpressVo;
-import com.hiersun.jewelry.api.expressinfo.pojo.ExpressInfo;
 import com.hiersun.jewelry.api.expressinfo.service.ExpressInfoService;
 import com.hiersun.jewelry.api.expressinfo.service.LogisticsTrackingInfoService;
 import com.hiersun.jewelry.api.orderservice.pojo.JrasOrder;
@@ -66,7 +65,7 @@ public class PutLogisticsAppService implements BaseService {
 			ExpressVo evo = new ExpressVo();
 			evo.setEcName(map.get(body.getCompanyCode()));
 			evo.setEcCode(Byte.valueOf(body.getCompanyCode()));
-			evo.setExpressNo(body.getNumbers());
+			evo.setExpressNo(body.getNumbers().replace(" ", ""));
 			if(body.getReturnAddressId()!=null){
 				evo.setRerturnAddressId(body.getReturnAddressId());
 			}
