@@ -117,7 +117,7 @@ public class ApplyServiceAppService implements BaseService{
 			wightMapList.add(new WightMap(223l, Arrays.asList(new Wight[] { new Wight(308L, "重量≤3ct"),new Wight(309L, "10<重量≤3ct") })));
 
 			List<ServiceMoneyMap> moneyList = new ArrayList<ServiceMoneyMap>();
-			if(userId<100L){
+			if(userId!=null && userId<100L){
 				moneyList.add(new ServiceMoneyMap(301L, 0.01, 0.01, 0.01));
 				moneyList.add(new ServiceMoneyMap(311L, 0.01, 0.01, 0.01));
 				moneyList.add(new ServiceMoneyMap(321L, 0.01, 0.01, 0.01));
