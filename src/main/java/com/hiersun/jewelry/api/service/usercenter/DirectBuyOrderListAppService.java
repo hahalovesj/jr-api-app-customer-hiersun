@@ -78,7 +78,7 @@ public class DirectBuyOrderListAppService implements BaseService {
 			Response4010 resp = new Response4010();
 			resp.setPageNO(body.getPageNO());
 			// 是否是最后一页
-			if (countNumber > nowNumber) {
+			if (countNumber >= nowNumber) {
 				resp.setIsEnd(false);
 			} else {
 				resp.setIsEnd(true);
