@@ -5,7 +5,7 @@ public class VersionInfo {
 
 	private String versionDes;
 
-	private boolean force;
+	private Boolean force;
 
 	private String downUrl;
 
@@ -25,11 +25,11 @@ public class VersionInfo {
 		this.versionDes = versionDes;
 	}
 
-	public boolean isForce() {
+	public Boolean isForce() {
 		return force;
 	}
 
-	public void setForce(boolean force) {
+	public void setForce(Boolean force) {
 		this.force = force;
 	}
 

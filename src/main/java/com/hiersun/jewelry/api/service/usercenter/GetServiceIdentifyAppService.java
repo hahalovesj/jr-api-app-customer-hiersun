@@ -33,7 +33,7 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 public class GetServiceIdentifyAppService implements BaseService {
 
 	private static Logger log = Logger.getLogger(GetServiceIdentifyAppService.class);
-	
+
 	@Resource
 	OrderService orderService;
 
@@ -53,10 +53,10 @@ public class GetServiceIdentifyAppService implements BaseService {
 
 	@Override
 	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
-		
+
 		log.info("getServiceIdentify 	4017	接口请求消息体：" + reqHead.toString());
 		log.info("getServiceIdentify 	4017	接口请求消息体：" + bodyStr);
-		
+
 		try {
 
 			Request4017 body = JSON.parseObject(bodyStr, Request4017.class);
@@ -70,21 +70,21 @@ public class GetServiceIdentifyAppService implements BaseService {
 			paramMap.put("businessType", 1);
 			JrasGoodQualification qual = orderService.selectQualification(paramMap);
 
-//			if (qual == null) {
-//				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
-//				ResponseBody resp = new ResponseBody();
-//				return this.packageMsgMap(resp, respHeader);
-//			}
+			// if (qual == null) {
+			// ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
+			// ResponseBody resp = new ResponseBody();
+			// return this.packageMsgMap(resp, respHeader);
+			// }
 			// 商品确认信息
-			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(goodsId,Byte.parseByte("1"));
+			JrasGoodInfoConfirm jrasGoodInfoConfirm = orderService.selectConfirm(goodsId, Byte.parseByte("1"));
 			// 商品实物信息
 			List<AttachmentVo> pciList = directGoodsService.getJrdsGoodPic(jrasGoodInfoConfirm.getId(),
 					"jras_good_info_confirm", "jrasconfirm");
 
 			List<Map<String, String>> resultO = new ArrayList<Map<String, String>>();
-			Map<String, String> resultOM = new HashMap<String, String>();
 			for (int i = 0; i < pciList.size(); i++) {
-				resultOM.put("picUrl",Commons.PIC_DOMAIN + pciList.get(i).getFullName());
+				Map<String, String> resultOM = new HashMap<String, String>();
+				resultOM.put("picUrl", Commons.PIC_DOMAIN + pciList.get(i).getFullName());
 				resultOM.put("picDesc", pciList.get(i).getAttrDesc());
 				resultO.add(resultOM);
 			}
@@ -92,9 +92,9 @@ public class GetServiceIdentifyAppService implements BaseService {
 			// 返回
 			Response4017 resp = new Response4017();
 			List<Map<String, String>> resultQ = null;
-			
+
 			// 证书类型
-			if (qual!=null && qual.getCertificationType() != 0) {
+			if (qual != null && qual.getCertificationType() != 0) {
 				Long id = qual.getId();
 				String qualificatonType = QualificationType.QUALIFICATION_TYPE.get(qual.getCertificationType()
 						.intValue());
@@ -116,8 +116,7 @@ public class GetServiceIdentifyAppService implements BaseService {
 			resp.setBeanInfo(QualificationType.MATCHED_DEGREE.get(mNumber));
 			resp.setIdentifyResult(CommonUtils.stripHtml(jrasGoodInfoConfirm.getSpecify()));
 			resp.setPicList(resultO);
-		
-			
+
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(resp, respHeader);
 
