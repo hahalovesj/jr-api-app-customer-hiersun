@@ -117,7 +117,8 @@ public class SearchAppService implements BaseService {
 				} else {
 					userMap.put("nickName", CommonUtils.mobileForNickName(goodList.get(i).getUser().getMobile()));
 				}
-				userMap.put("icon", Commons.HEAD_IOC);
+//				userMap.put("icon", Commons.HEAD_IOC);
+				userMap.put("icon", Commons.PIC_DOMAIN + goodList.get(i).getUser().getSmallIcon());
 				map.put("user", userMap);
 				goodsList.add(map);
 			}
