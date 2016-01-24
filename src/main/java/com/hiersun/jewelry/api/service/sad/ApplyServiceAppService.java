@@ -92,14 +92,14 @@ public class ApplyServiceAppService implements BaseService{
 			List<WightMap> wightMapList = new ArrayList<WightMap>();
 			// 贵金属
 			wightMapList.add(new WightMap(201l, Arrays.asList(new Wight[] {new Wight(301L, "1g<重量≤10g"),
-					new Wight(311L, "10<重量≤20g"),new Wight(321L, "20<重量≤50g"),new Wight(331L, "50<重量≤100g"), 
-					new Wight(341L, "100<重量≤500g")})));
+					new Wight(311L, "10g<重量≤20g"),new Wight(321L, "20g<重量≤50g"),new Wight(331L, "50g<重量≤100g"), 
+					new Wight(341L, "100g<重量≤500g")})));
 			wightMapList.add(new WightMap(202l, Arrays.asList(new Wight[] { new Wight(301L, "1g<重量≤10g"),
-					new Wight(311L, "10<重量≤20g"),new Wight(321L, "20<重量≤50g"),new Wight(331L, "50<重量≤100g"), 
-					new Wight(341L, "100<重量≤500g")})));
+					new Wight(311L, "10g<重量≤20g"),new Wight(321L, "20g<重量≤50g"),new Wight(331L, "50g<重量≤100g"), 
+					new Wight(341L, "100g<重量≤500g")})));
 			wightMapList.add(new WightMap(203l, Arrays.asList(new Wight[] { new Wight(301L, "1g<重量≤10g"),
-					new Wight(311L, "10<重量≤20g"),new Wight(321L, "20<重量≤50g"),new Wight(331L, "50<重量≤100g"), 
-					new Wight(341L, "100<重量≤500g")})));
+					new Wight(311L, "10g<重量≤20g"),new Wight(321L, "20g<重量≤50g"),new Wight(331L, "50g<重量≤100g"), 
+					new Wight(341L, "100g<重量≤500g")})));
 			//钻石
 			wightMapList.add(new WightMap(211l, Arrays.asList(new Wight[] { new Wight(302l, "0.10ct≤重量≤0.50ct"),
 					new Wight(303l, "0.51ct≤重量≤1.00ct") })));
@@ -110,11 +110,11 @@ public class ApplyServiceAppService implements BaseService{
 			wightMapList.add(new WightMap(213l, Arrays.asList(new Wight[] { new Wight(306L, "0.10ct≤重量≤0.99ct"),
 					new Wight(307L, "1.00ct≤重量≤1.99ct") })));
 			//宝石
-			wightMapList.add(new WightMap(221l, Arrays.asList(new Wight[] { new Wight(308L, "重量≤3ct") ,new Wight(309L, "10<重量≤3ct")})));
+			wightMapList.add(new WightMap(221l, Arrays.asList(new Wight[] { new Wight(308L, "重量≤3ct") ,new Wight(309L, "3ct<重量≤10ct")})));
 
-			wightMapList.add(new WightMap(222l, Arrays.asList(new Wight[] { new Wight(308L, "重量≤3ct"),new Wight(309L, "10<重量≤3ct") })));
+			wightMapList.add(new WightMap(222l, Arrays.asList(new Wight[] { new Wight(308L, "重量≤3ct"),new Wight(309L, "3ct<重量≤10ct") })));
 
-			wightMapList.add(new WightMap(223l, Arrays.asList(new Wight[] { new Wight(308L, "重量≤3ct"),new Wight(309L, "10<重量≤3ct") })));
+			wightMapList.add(new WightMap(223l, Arrays.asList(new Wight[] { new Wight(308L, "重量≤3ct"),new Wight(309L, "3ct<重量≤10ct") })));
 
 			List<ServiceMoneyMap> moneyList = new ArrayList<ServiceMoneyMap>();
 			if(userId!=null && userId<100L){
