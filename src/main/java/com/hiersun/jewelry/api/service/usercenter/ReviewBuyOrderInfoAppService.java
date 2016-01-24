@@ -29,6 +29,7 @@ import com.hiersun.jewelry.api.orderservice.pojo.JrasGoodInfoConfirm;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.uploadresource.domain.AttachmentVo;
+import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("reviewBuyOrderInfoAppService")
@@ -82,7 +83,7 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 			// 返回信息
 			Response4022 resp = new Response4022();
 			ResponseOrder order = new ResponseOrder();
-			order.setFreight("￥0.00元运费（平台包邮");
+			order.setFreight("￥0.00元运费（平台包邮)");
 			order.setGoodsBuyPrice(jrdsGood.getBuyingPrice().doubleValue());
 			order.setGoodsName(jrdsGood.getGoodName());
 			order.setGoodsPrice(jrdsGood.getDirectPrice().doubleValue());
@@ -98,7 +99,7 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 
 			Integer mNumber = jrasGoodInfoConfirm.getMatchedDegree().intValue();
 			qualification.setBeanInfo(QualificationType.MATCHED_DEGREE.get(mNumber));
-			qualification.setIsIdentifyResult(jrasGoodInfoConfirm.getSpecify());
+			qualification.setIsIdentifyResult(CommonUtils.stripHtml(jrasGoodInfoConfirm.getSpecify()));
 
 			List<Map<String, String>> resultO = new ArrayList<Map<String, String>>();
 
