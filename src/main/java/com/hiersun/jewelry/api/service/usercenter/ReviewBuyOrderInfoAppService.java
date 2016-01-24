@@ -99,7 +99,7 @@ public class ReviewBuyOrderInfoAppService implements BaseService {
 
 			Integer mNumber = jrasGoodInfoConfirm.getMatchedDegree().intValue();
 			qualification.setBeanInfo(QualificationType.MATCHED_DEGREE.get(mNumber));
-			qualification.setIsIdentifyResult(CommonUtils.stripHtml(jrasGoodInfoConfirm.getSpecify()));
+			qualification.setIdentifyResult(CommonUtils.stripHtml(jrasGoodInfoConfirm.getSpecify()));
 
 			List<Map<String, String>> resultO = new ArrayList<Map<String, String>>();
 

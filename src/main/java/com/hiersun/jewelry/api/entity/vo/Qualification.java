@@ -15,16 +15,16 @@ public class Qualification {
 		return qualiPicList;
 	}
 
-	public void setQualiPicList(List<Map<String, String>> qualiPicList2) {
-		this.qualiPicList = qualiPicList2;
-	}
-
-	public String getIsIdentifyResult() {
+	public String getIdentifyResult() {
 		return identifyResult;
 	}
 
-	public void setIsIdentifyResult(String identifyResult) {
+	public void setIdentifyResult(String identifyResult) {
 		this.identifyResult = identifyResult;
+	}
+
+	public void setQualiPicList(List<Map<String, String>> qualiPicList2) {
+		this.qualiPicList = qualiPicList2;
 	}
 
 	public String getBeanInfo() {
