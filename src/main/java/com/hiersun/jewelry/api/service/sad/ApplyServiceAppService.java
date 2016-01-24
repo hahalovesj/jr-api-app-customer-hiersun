@@ -117,20 +117,38 @@ public class ApplyServiceAppService implements BaseService{
 			wightMapList.add(new WightMap(223l, Arrays.asList(new Wight[] { new Wight(308L, "重量≤3ct"),new Wight(309L, "10<重量≤3ct") })));
 
 			List<ServiceMoneyMap> moneyList = new ArrayList<ServiceMoneyMap>();
-			moneyList.add(new ServiceMoneyMap(301L, 50.00, 50.00, 100.00));
-			moneyList.add(new ServiceMoneyMap(311L, 50.00, 100.00, 150.00));
-			moneyList.add(new ServiceMoneyMap(321L, 50.00, 200.00, 250.00));
-			moneyList.add(new ServiceMoneyMap(331L, 50.00, 300.00, 350.00));
-			moneyList.add(new ServiceMoneyMap(341L, 50.00, 500.00, 550.00));
+			if(userId!=null && userId<100L){
+				moneyList.add(new ServiceMoneyMap(301L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(311L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(321L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(331L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(341L, 0.01, 0.01, 0.01));
+				
+				moneyList.add(new ServiceMoneyMap(302L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(303L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(304L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(305L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(306L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(307L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(308L, 0.01, 0.01, 0.01));
+				moneyList.add(new ServiceMoneyMap(309L, 0.01, 0.01, 0.01));
+			}else{
+				moneyList.add(new ServiceMoneyMap(301L, 50.00, 50.00, 100.00));
+				moneyList.add(new ServiceMoneyMap(311L, 50.00, 100.00, 150.00));
+				moneyList.add(new ServiceMoneyMap(321L, 50.00, 200.00, 250.00));
+				moneyList.add(new ServiceMoneyMap(331L, 50.00, 300.00, 350.00));
+				moneyList.add(new ServiceMoneyMap(341L, 50.00, 500.00, 550.00));
+				
+				moneyList.add(new ServiceMoneyMap(302L, 200.00, 80.00, 280.00));
+				moneyList.add(new ServiceMoneyMap(303L, 300.00, 120.00, 420.00));
+				moneyList.add(new ServiceMoneyMap(304L, 50.00, 80.00, 130.00));
+				moneyList.add(new ServiceMoneyMap(305L, 150.00, 120.00, 270.00));
+				moneyList.add(new ServiceMoneyMap(306L, 150.00, 80.00, 230.00));
+				moneyList.add(new ServiceMoneyMap(307L, 350.00, 120.00, 470.00));
+				moneyList.add(new ServiceMoneyMap(308L, 300.00, 1000.00, 1300.00));
+				moneyList.add(new ServiceMoneyMap(309L, 800.00, 2000.00, 2800.00));
+			}
 			
-			moneyList.add(new ServiceMoneyMap(302L, 200.00, 80.00, 280.00));
-			moneyList.add(new ServiceMoneyMap(303L, 300.00, 120.00, 420.00));
-			moneyList.add(new ServiceMoneyMap(304L, 50.00, 80.00, 130.00));
-			moneyList.add(new ServiceMoneyMap(305L, 150.00, 120.00, 270.00));
-			moneyList.add(new ServiceMoneyMap(306L, 150.00, 80.00, 230.00));
-			moneyList.add(new ServiceMoneyMap(307L, 350.00, 120.00, 470.00));
-			moneyList.add(new ServiceMoneyMap(308L, 300.00, 1000.00, 1300.00));
-			moneyList.add(new ServiceMoneyMap(309L, 800.00, 2000.00, 2800.00));
 
 			responseBody.setFirstTypeList(firstTypeList);
 			responseBody.setSecondTypeList(secondTypeList);
