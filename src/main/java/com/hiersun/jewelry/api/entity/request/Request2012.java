@@ -1,5 +1,7 @@
 package com.hiersun.jewelry.api.entity.request;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.hiersun.jewelry.api.entity.Body;
 
 public class Request2012 extends Body {
@@ -16,7 +18,10 @@ public class Request2012 extends Body {
 
 	@Override
 	public int volidateValue() {
-		// TODO Auto-generated method stub
+		if(StringUtils.isEmpty(Long.toString(this.addressID)))
+		{
+			return 900008;
+		}
 		return 0;
 	}
 
