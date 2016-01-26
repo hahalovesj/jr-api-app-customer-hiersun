@@ -42,10 +42,10 @@
 		url="dubbo://127.0.0.1:20880/com.hiersun.jewelry.api.expressinfo.service.LogisticsTrackingInfoService" />
 	<dubbo:reference id="sMSMessageService"
 		interface="com.hiersun.jewelry.api.ott.service.SMSMessageService"
-		url="dubbo://127.0.0.1:20883/com.hiersun.jewelry.api.ott.service.SMSMessageService" />
+		url="dubbo://192.168.4.94:20883/com.hiersun.jewelry.api.ott.service.SMSMessageService" />
 	<dubbo:reference id="weixinPayService"
 		interface="com.hiersun.jewelry.api.ott.service.WeixinPayService"
-		url="dubbo://127.0.0.1:20883/com.hiersun.jewelry.api.ott.service.WeixinPayService" />
+		url="dubbo://192.168.4.94:20883/com.hiersun.jewelry.api.ott.service.WeixinPayService" />
 	<dubbo:reference id="tripartiteService"
 		interface="com.hiersun.jewelry.api.service.TripartiteService"
 		url="dubbo://127.0.0.1:20880/com.hiersun.jewelry.api.service.TripartiteService" />

@@ -49,7 +49,7 @@ public class ValiHeadUtil {
 	 */
 	public static boolean VeriParams(String msg, HttpServletResponse response) throws Exception {
 		ResponseHeader responseHeader = new ResponseHeader();
-		
+
 		// 请求msg为空
 		if (msg == null || msg.trim().length() < 1) {
 			ValiHeadUtil.responseNullHead(responseHeader, response);
@@ -58,12 +58,17 @@ public class ValiHeadUtil {
 		System.out.println("msg === " + msg);
 		String newMsg = msg.replace(" ", "");
 		RequestHeader reqHead = null;
-
+		String bodyStr = "";
 		try {
 			// 把json转为map
 			Map msgEntity = JSON.parseObject(newMsg, Map.class);
 			// 获取head信息
 			String requestHeadStr = JSON.toJSONString(msgEntity.get("head"));
+			// 去除body的值
+			String[] msgArray = msg.split("\"body\":");
+			int end = msgArray[1].indexOf("}") + 1;
+			bodyStr = msgArray[1].substring(0, end);
+
 			// 根据head的json串转换成HeadBend
 			reqHead = JSON.parseObject(requestHeadStr, RequestHeader.class);
 		} catch (Exception e) {
@@ -158,7 +163,7 @@ public class ValiHeadUtil {
 		}
 
 		String sign = MD5.MD5Encode(reqHead.getMessageID() + reqHead.getTransactionType() + reqHead.getTimeStamp()
-				+ reqHead.getToken() + msg);
+				+ reqHead.getToken() + bodyStr);
 
 		if (!sign.toUpperCase().trim().equals(reqHead.getSign().toUpperCase().trim())) {
 			// sign 校验不通过

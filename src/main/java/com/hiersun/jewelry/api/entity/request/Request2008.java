@@ -12,7 +12,7 @@ public class Request2008 extends Body {
 	private Long addressID;
 	private String goodsToken;
 
-	public int getFreight() {
+	public int getFreight() {  
 		return freight;
 	}
 
