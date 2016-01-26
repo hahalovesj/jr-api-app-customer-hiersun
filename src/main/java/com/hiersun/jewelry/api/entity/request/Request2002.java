@@ -8,8 +8,8 @@ public class Request2002 extends Body {
 	private String orderBy;
 	private String orderType;
 	private Integer pageNo;
-	private Integer pageSize;
-
+//	private Integer pageSize;
+//
 	public String getOrderBy() {
 		return orderBy;
 	}
@@ -45,13 +45,13 @@ public class Request2002 extends Body {
 		this.pageNo = pageNo;
 	}
 
-	public Integer getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
+//	public Integer getPageSize() {
+//		return pageSize;
+//	}
+//
+//	public void setPageSize(Integer pageSize) {
+//		this.pageSize = pageSize;
+//	}
 
 	@Override
 	public int volidateValue() {

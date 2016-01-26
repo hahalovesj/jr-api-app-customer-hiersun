@@ -8,7 +8,13 @@ public class Goods {
 	private String goodsNO;
 	private String visitTimes;
 	private String goodsMsgTimes;
+	/**
+	 * 商品当前价格
+	 */
 	private Double goodsPrice;
+	/**
+	 * 商品购买价
+	 */
 	private Double goodsBuyPrice;
 	private String goodsName;
 	private String goodsDesc;

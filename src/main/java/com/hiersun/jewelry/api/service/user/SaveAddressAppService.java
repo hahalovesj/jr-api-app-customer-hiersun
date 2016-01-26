@@ -25,7 +25,7 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("saveAddressAppService")
 public class SaveAddressAppService implements BaseService {
-	
+
 	private static Logger log = Logger.getLogger(SaveAddressAppService.class);
 
 	@Resource
@@ -33,7 +33,7 @@ public class SaveAddressAppService implements BaseService {
 
 	@Resource
 	DirectOrderService directOrderService;
-	
+
 	@Resource
 	UserService userService;
 
@@ -58,15 +58,15 @@ public class SaveAddressAppService implements BaseService {
 			AddressVo addressVo = new AddressVo();
 			addressVo.setUserId(userId);
 			List<AddressVo> addrList = userService.getListAddressVo(addressVo);
-			if(addrList.size()>=10){
+			if (addrList.size() >= 10) {
 				ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 200901);
 				ResponseBody responseBody = new ResponseBody();
 				return this.packageMsgMap(responseBody, respHead);
 			}
+
 			AddressVo addrVo = new AddressVo();
 			addrVo.setArea(body.getArea());
 			addrVo.setDetailedAddress(body.getDetailedAddress());
-
 			addrVo.setIsDefault(body.getIsDefault() ? "1" : "0");
 			addrVo.setReceiver(body.getReceiver());
 			addrVo.setReceiverMobile(body.getReceiverMobile());
@@ -98,7 +98,7 @@ public class SaveAddressAppService implements BaseService {
 			respHead.setMessageID(reqHead.getMessageID());
 			respHead.setTimeStamp(new Date().getTime());
 			respHead.setTransactionType(reqHead.getTransactionType());
-			
+
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
 			for (int i = 0; i < e.getStackTrace().length; i++) {

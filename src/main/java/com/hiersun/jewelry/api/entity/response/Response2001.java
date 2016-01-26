@@ -2,8 +2,6 @@ package com.hiersun.jewelry.api.entity.response;
 
 import java.util.List;
 
-import com.hiersun.jewelry.api.direct.domain.QueryGoodsByParamVo;
-import com.hiersun.jewelry.api.direct.pojo.JrdsActivity;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.VersionInfo;
 

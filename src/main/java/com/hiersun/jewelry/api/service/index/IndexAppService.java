@@ -73,6 +73,7 @@ public class IndexAppService implements BaseService{
 			QueryGoodsByParamVo vo = new QueryGoodsByParamVo();
 			vo.setStart(pageNo * 20);
 			vo.setEnd(20);
+			//默认按照访问量排序
 			vo.setOrderBy("visit");
 			vo.setOrderType("desc");
 			List<QueryGoodsByParamVo> goodList = directGoodsService.getGoodsListByParam(vo);

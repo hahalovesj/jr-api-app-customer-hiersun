@@ -16,7 +16,6 @@ import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.Request3002;
-import com.hiersun.jewelry.api.entity.response.Response3001;
 import com.hiersun.jewelry.api.entity.response.Response3002;
 import com.hiersun.jewelry.api.orderservice.domain.ServiceOrderVO;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;
@@ -26,36 +25,35 @@ import com.hiersun.jewelry.api.user.service.UserService;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("subServiceOrderAppService")
-public class SubServiceOrderAppService implements BaseService{
+public class SubServiceOrderAppService implements BaseService {
 
 	@Resource
 	private UserService userService;
-	
+
 	@Resource
 	private RedisBaseService redisBaseServiceImpl;
-	
+
 	@Resource
 	private DirectGoodsService directGoodsService;
-	
+
 	@Resource
 	private OrderService orderService;
-	
+
 	@Override
 	public boolean ifValidateLogin() {
 		return true;
 	}
 
 	@Override
-	public Integer baseValidateMsgBody(String bodyStr,Long userId) {
+	public Integer baseValidateMsgBody(String bodyStr, Long userId) {
 		Request3002 body = JSON.parseObject(bodyStr, Request3002.class);
-		//TODO 实现此方法
+		// TODO 实现此方法
 		return body.volidateValue();
 	}
 
-	
 	@Override
-	public Map<String,Object> doController(RequestHeader reqHead,String bodyStr,Long userId)  throws Exception{
-		try{	
+	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+		try {
 			Request3002 body = JSON.parseObject(bodyStr, Request3002.class);
 			ServiceOrderVO vo = new ServiceOrderVO();
 			vo.setInputServiceType(body.getServiceType());
@@ -76,12 +74,12 @@ public class SubServiceOrderAppService implements BaseService{
 			vo.setInputGoodsName(body.getGoodsName());
 			vo.setInputGoodsDec(body.getGoodsDec());
 			vo.setInputPayFor(body.getPayFor());
-			// 计算价格
-	
+			// TODO  计算价格
+			
 			// 逻辑处理
 			ServiceOrderVO result = orderService.createServiceOrder(vo);
 			// ServiceOrderVO result = new ServiceOrderVO();
-	
+
 			ResponseHeader respHead = null;
 			if (result != null) {
 				// 返回的header
@@ -90,7 +88,7 @@ public class SubServiceOrderAppService implements BaseService{
 				respHead.setTimeStamp(new Date().getTime());
 				respHead.setTransactionType(reqHead.getTransactionType());
 			}
-	
+
 			// 返回的body
 			Response3002 responseBody = new Response3002();
 			responseBody.setGoodsID(result.getOutputGoodsID());
@@ -99,7 +97,7 @@ public class SubServiceOrderAppService implements BaseService{
 			responseBody.setOrderNO(result.getOutputPrderNO());
 			responseBody.setGoodsPrice(body.getPayFor());
 			responseBody.setGoodsDesc(body.getGoodsDec());
-	
+
 			return this.packageMsgMap(responseBody, respHead);
 
 		} catch (Exception e) {
@@ -109,15 +107,15 @@ public class SubServiceOrderAppService implements BaseService{
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response3002 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response3002 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

@@ -34,9 +34,6 @@ public class Request2008 extends Body {
 		this.consumerMsg = consumerMsg;
 	}
 
-
-	
-
 	public Long getGoodsID() {
 		return goodsID;
 	}
@@ -63,7 +60,7 @@ public class Request2008 extends Body {
 
 	@Override
 	public int volidateValue() {
-		// TODO Auto-generated method stub
+		// TODO
 		return 0;
 	}
 

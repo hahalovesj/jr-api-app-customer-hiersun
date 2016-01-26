@@ -1,7 +1,5 @@
 package com.hiersun.jewelry.api.entity.request;
 
-import java.io.File;
-
 import com.hiersun.jewelry.api.entity.Body;
 
 public class RequestImgDown extends Body  {

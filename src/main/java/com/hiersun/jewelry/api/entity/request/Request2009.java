@@ -3,7 +3,6 @@ package com.hiersun.jewelry.api.entity.request;
 import com.hiersun.jewelry.api.entity.Body;
 
 public class Request2009 extends Body {
-	private Long userID;
 	private String type;
 	private Long addressID;
 	private String receiver;
@@ -66,14 +65,6 @@ public class Request2009 extends Body {
 
 	public void setIsDefault(boolean isDefault) {
 		this.isDefault = isDefault;
-	}
-
-	public Long getUserID() {
-		return userID;
-	}
-
-	public void setUserID(Long userID) {
-		this.userID = userID;
 	}
 
 	@Override

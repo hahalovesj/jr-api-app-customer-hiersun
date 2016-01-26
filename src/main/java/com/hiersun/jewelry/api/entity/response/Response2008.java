@@ -4,8 +4,6 @@ import com.hiersun.jewelry.api.entity.ResponseBody;
 
 public class Response2008 extends ResponseBody {
 
-	private Long userID;
-	private String mobile;
 	private Long goodsID;
 	private String orderName;
 	private Double goodsPrice;
@@ -13,16 +11,14 @@ public class Response2008 extends ResponseBody {
 	private String orderDesc;
 	private Double orderPrice;
 
-	public void setOrderName(String orderName){
+	public void setOrderName(String orderName) {
 		this.orderName = orderName;
 	}
-	
-	public String getOrderName(){
+
+	public String getOrderName() {
 		return orderName;
 	}
-	
-	
-	
+
 	public String getOrderDesc() {
 		return orderDesc;
 	}
@@ -39,7 +35,6 @@ public class Response2008 extends ResponseBody {
 		this.orderPrice = orderPrice;
 	}
 
-
 	public String getOrderNO() {
 		return orderNO;
 	}
@@ -48,29 +43,8 @@ public class Response2008 extends ResponseBody {
 		this.orderNO = orderNO;
 	}
 
-
 	public Double getGoodsPrice() {
 		return goodsPrice;
-	}
-
-	public void setGoodsPrice(Double goodsPrice) {
-		this.goodsPrice = goodsPrice;
-	}
-
-	public Long getUserID() {
-		return userID;
-	}
-
-	public void setUserID(Long userID) {
-		this.userID = userID;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
 	}
 
 	public Long getGoodsID() {

@@ -66,7 +66,10 @@ public class GoodsIndexAppService implements BaseService {
 
 				return this.packageMsgMap(responseBody, respHeader);
 			}
+
+			// 返回信息
 			Response2003 responseBody = new Response2003();
+		
 			Goods resultGoods = new Goods();
 			resultGoods.setGoodsBuyPrice(goods.getBuyingPrice().doubleValue());
 			resultGoods.setGoodsDesc(goods.getGoodDesc());
@@ -98,10 +101,6 @@ public class GoodsIndexAppService implements BaseService {
 						user.setNickName(account == null ? "" : CommonUtils.mobileForNickName(account.getUserMobile()));
 					}
 				}
-
-				// user.setIcon(picDoMain +
-				// "apiupload/uploadFile/bd6661231506e0fe52c15a3a77ecc1e7.jpg");
-				// user.setIcon(Commons.HEAD_IOC);
 				user.setIcon(Commons.PIC_DOMAIN + jrMInfo.getSmallIcon());
 				resultGoods.setUser(user);
 			} else {
@@ -117,7 +116,6 @@ public class GoodsIndexAppService implements BaseService {
 			}
 			goodsMainPicList.add(map);
 			resultGoods.setGoodsMainPicList(goodsMainPicList);
-			// responseBody.setGoods(goods);
 			responseBody.setGoods(resultGoods);
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {

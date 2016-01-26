@@ -2,7 +2,6 @@ package com.hiersun.jewelry.api.entity.response;
 
 import java.util.List;
 
-import com.hiersun.jewelry.api.direct.domain.QueryGoodsByParamVo;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 
 public class Response2002 extends ResponseBody {

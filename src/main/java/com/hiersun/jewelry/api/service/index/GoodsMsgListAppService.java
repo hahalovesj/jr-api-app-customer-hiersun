@@ -67,7 +67,6 @@ public class GoodsMsgListAppService implements BaseService {
 			// 返回的body
 			Response2005 responseBody = new Response2005();
 			responseBody.setGoodsID(goodsId);
-
 			responseBody.setGoodsUserID(msgList.get(0).getSellerMemberId());
 
 			List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();

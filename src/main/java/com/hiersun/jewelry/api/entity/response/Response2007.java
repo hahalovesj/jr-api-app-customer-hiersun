@@ -5,12 +5,8 @@ import java.util.Map;
 
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.vo.Goods;
-import com.hiersun.jewelry.api.user.domain.AddressVo;
 
 public class Response2007 extends ResponseBody {
-	public Long userID;
-
-	public String mobile;
 	private Goods goods;
 	private String goodsToken;
 	private int freight;
@@ -55,22 +51,6 @@ public class Response2007 extends ResponseBody {
 
 	public void setAddressList(List<Map<String, Object>> addressList) {
 		this.addressList = addressList;
-	}
-
-	public Long getUserID() {
-		return userID;
-	}
-
-	public void setUserID(Long userID) {
-		this.userID = userID;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
 	}
 
 }

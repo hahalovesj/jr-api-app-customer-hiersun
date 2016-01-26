@@ -96,12 +96,10 @@ public class SetGoodsMsgAppService implements BaseService {
 				if (dvo.getCreated() != null) {
 					map.put("msgTime", DateUtil.dateToStr(dvo.getCreated(), "yyyy-MM-dd HH:mm:ss"));
 				}
-				// map.put("bigIcon",Commons.PIC_DOMAIN + dvo.getBigIcon());
 				map.put("icon", Commons.PIC_DOMAIN + dvo.getSmallIcon());
-
 				Boolean isMine = dvo.getInitiatorId() == userId ? true : false;
-				
 				map.put("isMine", isMine);
+				
 				resultList.add(map);
 			}
 			responseBody.setMsgList(resultList);

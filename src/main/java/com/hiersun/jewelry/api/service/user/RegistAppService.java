@@ -18,7 +18,6 @@ import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.request.RequestRegist;
 import com.hiersun.jewelry.api.entity.response.RespUser;
 import com.hiersun.jewelry.api.entity.response.ResponseLogin;
-import com.hiersun.jewelry.api.entity.response.ResponseRegist;
 import com.hiersun.jewelry.api.entity.vo.BankCardNum;
 import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.service.RedisBaseService;
@@ -29,7 +28,6 @@ import com.hiersun.jewelry.api.util.CommonUtils;
 import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.RandomStringUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
-import com.hiersun.jewelry.api.util.bank.CommonsUtil;
 
 /**
  * Created by lijunteng on 16/1/11.

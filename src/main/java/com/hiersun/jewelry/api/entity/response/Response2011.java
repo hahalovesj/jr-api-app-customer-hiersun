@@ -2,8 +2,6 @@ package com.hiersun.jewelry.api.entity.response;
 
 import java.util.List;
 
-import com.hiersun.jewelry.api.user.domain.AddressVo;
-
 public class Response2011 {
 	private List<Object> addressList;
 
