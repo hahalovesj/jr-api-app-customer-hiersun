@@ -1,7 +1,6 @@
 package com.hiersun.jewelry.api.service.index;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,49 +30,49 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 import com.hiersun.jewelry.api.util.ValiHeadUtil;
 
 @Service("indexAppService")
-public class IndexAppService implements BaseService{
-	
+public class IndexAppService implements BaseService {
+
 	private static final Logger log = Logger.getLogger(IndexAppService.class);
 
 	@Resource
 	private UserService userService;
-	
+
 	@Resource
 	private RedisBaseService redisBaseServiceImpl;
-	
+
 	@Resource
 	private DirectGoodsService directGoodsService;
-	
+
 	@Resource
 	private MemberCentreMessageService memberCentreMessageService;
-	
+
 	@Override
 	public boolean ifValidateLogin() {
 		return false;
 	}
 
 	@Override
-	public Integer baseValidateMsgBody(String bodyStr,Long userId) {
+	public Integer baseValidateMsgBody(String bodyStr, Long userId) {
 		Request2001 body = JSON.parseObject(bodyStr, Request2001.class);
 		return body.volidateValue();
 	}
 
-	
 	@Override
-	public Map<String,Object> doController(RequestHeader reqHead,String bodyStr,Long userId)  throws Exception{
-		log.info("index	2001	接口 请求消息体："+reqHead.toString());
-		log.info("index	2001	接口 请求消息体："+bodyStr);
-		
+	public Map<String, Object> doController(RequestHeader reqHead, String bodyStr, Long userId) throws Exception {
+		log.info("index	2001	接口 请求消息体：" + reqHead.toString());
+		log.info("index	2001	接口 请求消息体：" + bodyStr);
+
 		try {
 			Request2001 body = JSON.parseObject(bodyStr, Request2001.class);
 			Integer pageNo = body.getPageNo();
 			String type = body.getType();
-
+			// 是否需要版本信息和站内信息总数
+			boolean isNeed = body.getIsNeed();
 			// 逻辑处理
 			QueryGoodsByParamVo vo = new QueryGoodsByParamVo();
 			vo.setStart(pageNo * 20);
 			vo.setEnd(20);
-			//默认按照访问量排序
+			// 默认按照访问量排序
 			vo.setOrderBy("visit");
 			vo.setOrderType("desc");
 			List<QueryGoodsByParamVo> goodList = directGoodsService.getGoodsListByParam(vo);
@@ -110,8 +109,8 @@ public class IndexAppService implements BaseService{
 				}
 				map.put("visitTimes", goodList.get(i).getViews() == null ? 0 + "" : goodList.get(i).getViews()
 						.toString());
-				map.put("goodsMsgTimes", goodList.get(i).getMsgTimes() == null ? 0 + "" : goodList.get(i)
-						.getMsgTimes().toString());
+				map.put("goodsMsgTimes", goodList.get(i).getMsgTimes() == null ? 0 + "" : goodList.get(i).getMsgTimes()
+						.toString());
 
 				Map<String, Object> userMap = new HashMap<String, Object>();
 
@@ -159,34 +158,37 @@ public class IndexAppService implements BaseService{
 			} else {
 				responseBody.setIsEnd(true);
 			}
-			// 验证版本号
-			String version = reqHead.getVersion();
-			String terminal = reqHead.getTerminal();
-			VersionInfo info = ValiHeadUtil.checkVersion(version, terminal);
-			responseBody.setVersionInfo(info);
-			
-			if (userId != null ) {
-				Integer count = memberCentreMessageService.getUnreadMessageCount(userId);
-				responseBody.setUnreadMessageCount(count);
+			if (isNeed) {
+				// 验证版本号
+				String version = reqHead.getVersion();
+				String terminal = reqHead.getTerminal();
+				VersionInfo info = ValiHeadUtil.checkVersion(version, terminal);
+				responseBody.setVersionInfo(info);
+				// 未读消息总数
+				if (userId != null) {
+					Integer count = memberCentreMessageService.getUnreadMessageCount(userId);
+					responseBody.setUnreadMessageCount(count);
+				}
 			}
+
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {
-			log.error("index 2001接口，发生异常，异常信息："+e.getMessage());
+			log.error("index 2001接口，发生异常，异常信息：" + e.getMessage());
 			e.printStackTrace();
 			ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 99999);
 			ResponseBody responseBody = new ResponseBody();
 			return this.packageMsgMap(responseBody, respHeader);
 		}
 	}
-	
-	private Map<String,Object> packageMsgMap(Response2001 res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(Response2001 res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);
 		return responseMsg;
 	}
-	
-	private Map<String,Object> packageMsgMap(ResponseBody res,ResponseHeader respHead){
+
+	private Map<String, Object> packageMsgMap(ResponseBody res, ResponseHeader respHead) {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("body", res);
 		responseMsg.put("head", respHead);

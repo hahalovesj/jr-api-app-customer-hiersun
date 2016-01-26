@@ -8,6 +8,16 @@ public class Request2001 extends Body {
 
 	private String type;
 
+	private boolean isNeed;
+
+	public boolean getIsNeed() {
+		return isNeed;
+	}
+
+	public void setIsNeed(boolean isNeed) {
+		this.isNeed = isNeed;
+	}
+
 	public Integer getPageNo() {
 		return pageNo;
 	}
