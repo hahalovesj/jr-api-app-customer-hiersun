@@ -1,27 +1,20 @@
 package com.hiersun.jewelry.api.entity.request;
 
+import com.hiersun.jewelry.api.entity.Body;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 import java.util.Map;
 
-import com.hiersun.jewelry.api.entity.Body;
-
 public class Request3002 extends Body{
-	private int serviceType;
+	private Integer serviceType;
 	private List<Map> goodsPicList;
 	private Long addressID;
 	private String material;
 	private String weight;
 	private String goodsName;
 	private String goodsDec;
-	private double payFor;
-
-	public int getServiceType() {
-		return serviceType;
-	}
-
-	public void setServiceType(int serviceType) {
-		this.serviceType = serviceType;
-	}
+	private Double payFor;
 
 	public List<Map> getGoodsPicList() {
 		return goodsPicList;
@@ -71,17 +64,48 @@ public class Request3002 extends Body{
 		this.goodsDec = goodsDec;
 	}
 
-	public double getPayFor() {
+	public Integer getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(Integer serviceType) {
+		this.serviceType = serviceType;
+	}
+
+	public Double getPayFor() {
 		return payFor;
 	}
 
-	public void setPayFor(double payFor) {
+	public void setPayFor(Double payFor) {
 		this.payFor = payFor;
 	}
 
 	@Override
 	public int volidateValue() {
-		// TODO Auto-generated method stub
+		if(null == this.getServiceType()){
+			return 900008;
+		}
+		if(this.getGoodsPicList().isEmpty()){
+			return 900008;
+		}
+		if(null == this.getAddressID()){
+			return 900008;
+		}
+		if(StringUtils.isBlank(this.getMaterial())){
+			return 900008;
+		}
+		if(StringUtils.isBlank(this.getMaterial())){
+			return 900008;
+		}
+		if(StringUtils.isBlank(this.getWeight())){
+			return 900008;
+		}
+		if(StringUtils.isBlank(this.getGoodsName())){
+			return 900008;
+		}
+		if(null == this.getPayFor()){
+			return 900008;
+		}
 		return 0;
 	}
 

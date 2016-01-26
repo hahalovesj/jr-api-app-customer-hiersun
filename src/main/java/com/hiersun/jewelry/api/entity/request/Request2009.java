@@ -1,5 +1,7 @@
 package com.hiersun.jewelry.api.entity.request;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.hiersun.jewelry.api.entity.Body;
 
 public class Request2009 extends Body {
@@ -69,6 +71,18 @@ public class Request2009 extends Body {
 
 	@Override
 	public int volidateValue() {
+		if(StringUtils.isEmpty(this.type))
+		{
+			return 900008;
+		}
+		if(StringUtils.isEmpty(this.receiver))
+		{
+			return 900008;
+		}
+		if(StringUtils.isEmpty(this.receiverMobile))
+		{
+			return 900008;
+		}
 		return 0;
 	}
 }
