@@ -1,5 +1,7 @@
 package com.hiersun.jewelry.api.entity.request;
 
+import org.springframework.util.StringUtils;
+
 import com.hiersun.jewelry.api.entity.Body;
 
 public class Request2007 extends Body {
@@ -16,8 +18,8 @@ public class Request2007 extends Body {
 
 	@Override
 	public int volidateValue() {
-		if (goodsID < 0) {
-			// TODO
+		if (StringUtils.isEmpty(this.getGoodsID())) {
+			return 900008;
 		}
 		return 0;
 	}
