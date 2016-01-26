@@ -87,10 +87,7 @@ public class IndexAppService implements BaseService{
 			int nowNumber = (pageNo + 1) * 20;
 
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			// 返回的body
 			Response2001 responseBody = new Response2001();
 			List<Object> goodsList = new ArrayList<Object>();

@@ -22,7 +22,6 @@ import com.hiersun.jewelry.api.service.BaseService;
 import com.hiersun.jewelry.api.user.domain.MemberBankVo;
 import com.hiersun.jewelry.api.user.domain.UserInfo;
 import com.hiersun.jewelry.api.user.service.UserService;
-import com.hiersun.jewelry.api.util.DateUtil;
 import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("addPayeeInfoAppService")

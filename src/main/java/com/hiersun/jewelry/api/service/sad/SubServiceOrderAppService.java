@@ -83,10 +83,9 @@ public class SubServiceOrderAppService implements BaseService {
 			ResponseHeader respHead = null;
 			if (result != null) {
 				// 返回的header
-				respHead = new ResponseHeader(0);
-				respHead.setMessageID(reqHead.getMessageID());
-				respHead.setTimeStamp(new Date().getTime());
-				respHead.setTransactionType(reqHead.getTransactionType());
+				respHead = ResponseUtil.getRespHead(reqHead, 0);
+			}else{
+				respHead = ResponseUtil.getRespHead(reqHead, 200102);
 			}
 
 			// 返回的body

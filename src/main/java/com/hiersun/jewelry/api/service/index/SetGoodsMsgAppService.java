@@ -65,10 +65,7 @@ public class SetGoodsMsgAppService implements BaseService {
 
 			List<DirectGoodMessageVo> msgList = directGoodMessageService.getDirectGoodMessageList(goodsId);
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			// 返回的body
 			Response2006 responseBody = new Response2006();
 			// 返回的body

@@ -76,10 +76,8 @@ public class BuyGoodsAppService implements BaseService{
 			List<AddressVo> addrList = userService.getListAddressVo(vo);
 
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
+			
 			// 返回的body
 			Response2007 responseBody = new Response2007();
 			responseBody.setFreight(0);

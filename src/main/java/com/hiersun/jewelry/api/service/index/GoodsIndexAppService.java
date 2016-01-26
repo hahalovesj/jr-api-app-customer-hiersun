@@ -80,10 +80,7 @@ public class GoodsIndexAppService implements BaseService {
 			resultGoods.setGoodsPrice(goods.getDirectPrice().doubleValue());
 			Long seleerUserID = goods.getSellerMemberId();
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			// 返回的body
 			UserAllInfo userInifo = userService.getUserAllInfoByID(seleerUserID);
 			if (userInifo != null) {

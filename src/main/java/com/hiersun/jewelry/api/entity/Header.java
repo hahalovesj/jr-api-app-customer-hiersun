@@ -6,6 +6,11 @@ package com.hiersun.jewelry.api.entity;
  */
 public abstract class Header {
 
+	/**
+	 * 标签（客户端使用）
+	 */
+	public String tab;
+
 	/** 流水号 */
 	public Long messageID;
 
@@ -15,8 +20,15 @@ public abstract class Header {
 	/** 接口编码 */
 	public String transactionType;
 
-
 	public abstract int volidateValue();
+
+	public String getTab() {
+		return tab;
+	}
+
+	public void setTab(String tab) {
+		this.tab = tab;
+	}
 
 	public Long getMessageID() {
 		return messageID;

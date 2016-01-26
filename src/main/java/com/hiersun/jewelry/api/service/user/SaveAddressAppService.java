@@ -82,7 +82,7 @@ public class SaveAddressAppService implements BaseService {
 			}
 			// 返回的body
 			Response2009 responseBody = new Response2009();
-			ResponseHeader respHead = new ResponseHeader(0);
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			if (id > 0 || isUp == true) {
 				// 返回的header
 				responseBody.setIsDefault(body.getIsDefault());
@@ -92,12 +92,9 @@ public class SaveAddressAppService implements BaseService {
 				responseBody.setReceiverMobile(body.getReceiverMobile());
 			} else {
 				responseBody = null;
-				respHead = new ResponseHeader(9999);
+				respHead = ResponseUtil.getRespHead(reqHead, 99999);
 				log.error("添加/修改收货地址失败，新增地址id=" + id + ",更新地址状态isUp=" + isUp);
 			}
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
 
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {

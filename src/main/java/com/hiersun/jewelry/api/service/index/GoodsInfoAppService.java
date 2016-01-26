@@ -75,10 +75,7 @@ public class GoodsInfoAppService implements BaseService {
 				return this.packageMsgMap(responseBody, respHeader);
 			}
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 200102);
 			// 返回的body
 			Response2004 responseBody = new Response2004();
 			Goods resultGoods = new Goods();

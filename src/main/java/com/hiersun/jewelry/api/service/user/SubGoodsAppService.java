@@ -71,16 +71,13 @@ public class SubGoodsAppService implements BaseService {
 			redisBaseServiceImpl.del(CatchKey.APP_GOOD_TOKEN + goodsToken);
 
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 
 			// 返回的body
 			Response2008 responseBody = new Response2008();
 			responseBody.setGoodsID(resultVo.getGoodsID());
 			responseBody.setOrderName(resultVo.getOutputGoodsName());
-//			responseBody.setGoodsPrice(resultVo.getOutputGoodsPrice().doubleValue());
+			// responseBody.setGoodsPrice(resultVo.getOutputGoodsPrice().doubleValue());
 			responseBody.setOrderNO(resultVo.getOutputOrderNO());
 			responseBody.setOrderDesc(resultVo.getOutputGoodsDesc());
 			responseBody.setOrderPrice(resultVo.getOutputGoodsPrice().doubleValue());

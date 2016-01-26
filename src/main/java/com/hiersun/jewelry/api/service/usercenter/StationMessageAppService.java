@@ -70,10 +70,8 @@ public class StationMessageAppService implements BaseService {
 			int nowNumber = (pageNo + 1) * PageSize;
 
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
+			
 			// 返回的body
 			Response4001 responseBody = new Response4001();
 			List<StationMessage> stationMessageList = new ArrayList<StationMessage>();

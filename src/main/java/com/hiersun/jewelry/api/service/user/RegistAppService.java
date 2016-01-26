@@ -149,11 +149,6 @@ public class RegistAppService implements BaseService {
 			responseBody.setUser(respUser);
 
 			// // 配置返回信息
-			// ResponseRegist responseBody = new ResponseRegist();
-			// responseBody.setMobile(body.getMobile());
-			// responseBody.setJumpTransaction(body.getJumpTransaction());
-			// responseBody.setUserId(userId.toString());
-			// responseBody.setToken(token);
 			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			return this.packageMsgMap(responseBody, respHead);
 		} catch (Exception e) {

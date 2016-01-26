@@ -23,15 +23,15 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("addressListAppService")
 public class AddressListAppService implements BaseService {
-	
+
 	private static Logger log = Logger.getLogger(AddressListAppService.class);
 
 	@Resource
 	KeyWordService keyWordService;
-	
+
 	@Resource
 	UserService userService;
-	
+
 	@Override
 	public boolean ifValidateLogin() {
 		return true;
@@ -78,10 +78,7 @@ public class AddressListAppService implements BaseService {
 			}
 
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			// 返回的body
 			Response2011 responseBody = new Response2011();
 			responseBody.setAddressList(resultList);

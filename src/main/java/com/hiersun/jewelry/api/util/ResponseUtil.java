@@ -27,6 +27,7 @@ public class ResponseUtil {
 		respHead.setMessageID(reqHead.getMessageID());
 		respHead.setTimeStamp(new Date().getTime());
 		respHead.setTransactionType(reqHead.getTransactionType());
+		respHead.setTab(reqHead.getTab());
 		return respHead;
 	}
 

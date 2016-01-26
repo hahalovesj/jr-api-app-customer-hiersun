@@ -95,7 +95,6 @@ public class MainAction{
 		response.setContentType("text/html;charset=gbk");
 		try{
 			// 设置编码
-			
 			String msg = request.getParameter("msg");
 			// 验证url参数
 			boolean isRight = ValiHeadUtil.VeriParams(msg, response);

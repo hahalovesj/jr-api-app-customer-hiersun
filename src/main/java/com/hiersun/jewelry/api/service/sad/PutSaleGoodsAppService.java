@@ -80,9 +80,7 @@ public class PutSaleGoodsAppService implements BaseService {
 			}
 
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 
 			Response5001 responseBody = new Response5001();
 			responseBody.setGoodsNO(resultInfo.getOutputGoodsNO());

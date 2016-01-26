@@ -24,7 +24,7 @@ import com.hiersun.jewelry.api.util.ResponseUtil;
 
 @Service("getHotWordAppService")
 public class GetHotWordAppService implements BaseService {
-	
+
 	private static Logger log = Logger.getLogger(GetHotWordAppService.class);
 
 	@Resource
@@ -48,10 +48,7 @@ public class GetHotWordAppService implements BaseService {
 		try {
 			Map<String, Object> responseMsg = new HashMap<String, Object>();
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 0);
 			// 返回的body
 			Response2010 responseBody = new Response2010();
 			List<JrdsSearchKeyword> list = keyWordService.getListKeyWord();

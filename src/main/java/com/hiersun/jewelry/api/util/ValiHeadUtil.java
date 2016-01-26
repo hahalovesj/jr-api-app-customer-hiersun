@@ -49,6 +49,7 @@ public class ValiHeadUtil {
 	 */
 	public static boolean VeriParams(String msg, HttpServletResponse response) throws Exception {
 		ResponseHeader responseHeader = new ResponseHeader();
+		
 		// 请求msg为空
 		if (msg == null || msg.trim().length() < 1) {
 			ValiHeadUtil.responseNullHead(responseHeader, response);
@@ -74,6 +75,19 @@ public class ValiHeadUtil {
 		if (reqHead == null) {
 			// 请求head为空
 			ValiHeadUtil.responseNullHead(responseHeader, response);
+			return false;
+		}
+
+		if (reqHead.getTab() == null) {
+			// messageId（流水号）为空
+			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
+			responseHeader.setResCode(900011);
+			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900011));
+
+			Map<String, Object> responseMsg = new HashMap<String, Object>();
+			responseMsg.put("head", responseHeader);
+			responseMsg.put("body", null);
+			response.getWriter().print(JSON.toJSONString(responseMsg));
 			return false;
 		}
 
@@ -146,20 +160,18 @@ public class ValiHeadUtil {
 		String sign = MD5.MD5Encode(reqHead.getMessageID() + reqHead.getTransactionType() + reqHead.getTimeStamp()
 				+ reqHead.getToken() + msg);
 
-		// if
-		// (!sign.toUpperCase().trim().equals(reqHead.getSign().toUpperCase().trim()))
-		// {
-		// // sign 校验不通过
-		// responseHeader.setTimeStamp(DateUtil.getTimeStamp());
-		// responseHeader.setResCode(900006);
-		// responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900006));
-		//
-		// Map<String, Object> responseMsg = new HashMap<String, Object>();
-		// responseMsg.put("head", responseHeader);
-		// responseMsg.put("body", null);
-		// response.getWriter().print(JSON.toJSONString(responseMsg));
-		// return false;
-		// }
+		if (!sign.toUpperCase().trim().equals(reqHead.getSign().toUpperCase().trim())) {
+			// sign 校验不通过
+			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
+			responseHeader.setResCode(900006);
+			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900006));
+
+			Map<String, Object> responseMsg = new HashMap<String, Object>();
+			responseMsg.put("head", responseHeader);
+			responseMsg.put("body", null);
+			response.getWriter().print(JSON.toJSONString(responseMsg));
+			return false;
+		}
 		return true;
 	}
 
@@ -243,9 +255,9 @@ public class ValiHeadUtil {
 		String numStr = version.replace(".", "");
 		if (terminal.toUpperCase().equals(proper.getValue(properName, "ios"))) {
 			// IOS版本号
-			
+
 			String iosVer = proper.getValue(properName, "ios.version").replace(".", "");
-			
+
 			if (Integer.parseInt(iosVer) > Integer.parseInt(numStr)) {
 				info.setDownUrl(proper.getValue(properName, "ios.versionUrl"));
 				info.setForce(force.equals("true") ? true : false);
@@ -262,19 +274,21 @@ public class ValiHeadUtil {
 		} else {
 			// 安卓的版本号
 			String iosVer = proper.getValue(properName, "andrion.version").replace(".", "");
-			
+
 			if (Integer.parseInt(iosVer) > Integer.parseInt(numStr)) {
 				info.setDownUrl(proper.getValue(properName, "andrion.versionUrl"));
 				info.setForce(force.equals("true") ? true : false);
 				info.setVersion(proper.getValue(properName, "andrion.version"));
 				info.setVersionDes(proper.getValue(properName, "versinDes"));
 			}
-//			if (!version.equals(proper.getValue(properName, "andrion.version"))) {
-//				info.setDownUrl(proper.getValue(properName, "andrion.versionUrl"));
-//				info.setForce(force.equals("true") ? true : false);
-//				info.setVersion(proper.getValue(properName, "andrion.version"));
-//				info.setVersionDes(proper.getValue(properName, "versinDes"));
-//			}
+			// if (!version.equals(proper.getValue(properName,
+			// "andrion.version"))) {
+			// info.setDownUrl(proper.getValue(properName,
+			// "andrion.versionUrl"));
+			// info.setForce(force.equals("true") ? true : false);
+			// info.setVersion(proper.getValue(properName, "andrion.version"));
+			// info.setVersionDes(proper.getValue(properName, "versinDes"));
+			// }
 		}
 		return info;
 	}

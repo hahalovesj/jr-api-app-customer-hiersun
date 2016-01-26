@@ -16,7 +16,6 @@ import com.hiersun.jewelry.api.direct.service.DirectGoodsService;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseBody;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
-import com.hiersun.jewelry.api.entity.request.Request4017;
 import com.hiersun.jewelry.api.entity.request.Request4026;
 import com.hiersun.jewelry.api.entity.response.Response4026;
 import com.hiersun.jewelry.api.orderservice.service.OrderService;

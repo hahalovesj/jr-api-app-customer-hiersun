@@ -55,10 +55,7 @@ public class GoodsMsgListAppService implements BaseService {
 			long goodsId = body.getGoodsID();
 			List<DirectGoodMessageVo> msgList = directGoodMessageService.getDirectGoodMessageList(goodsId);
 			// 返回的header
-			ResponseHeader respHead = new ResponseHeader(0);
-			respHead.setMessageID(reqHead.getMessageID());
-			respHead.setTimeStamp(new Date().getTime());
-			respHead.setTransactionType(reqHead.getTransactionType());
+			ResponseHeader respHead = ResponseUtil.getRespHead(reqHead, 200102);
 			if (msgList.size() <= 0) {
 				ResponseHeader respHeader = ResponseUtil.getRespHead(reqHead, 0);
 				ResponseBody responseBody = new ResponseBody();
