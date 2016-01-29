@@ -1,4 +1,4 @@
-package com.hiersun.jewelry.api.util;
+package com.hiersun.jewelry.api.utiltest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +11,9 @@ import com.hiersun.jewelry.api.dictionary.TransactionTypeMap;
 import com.hiersun.jewelry.api.entity.RequestHeader;
 import com.hiersun.jewelry.api.entity.ResponseHeader;
 import com.hiersun.jewelry.api.entity.VersionInfo;
+import com.hiersun.jewelry.api.util.DateUtil;
+import com.hiersun.jewelry.api.util.MD5;
+import com.hiersun.jewelry.api.util.ProperContextUtil;
 
 /**
  * 验证客户端传递的参数
@@ -18,7 +21,7 @@ import com.hiersun.jewelry.api.entity.VersionInfo;
  * @author xueyuan
  *
  */
-public class ValiHeadUtil {
+public class ValiHeadUtilTest {
 
 	/**
 	 * 验证token
@@ -27,7 +30,7 @@ public class ValiHeadUtil {
 	 * @param response
 	 * @throws Exception
 	 */
-	public static void veriToken(String msg, HttpServletResponse response) throws Exception {
+	public static void veriToken(String msg) throws Exception {
 
 		// 把json转为map
 		Map msgEntity = JSON.parseObject(msg, Map.class);
@@ -47,12 +50,12 @@ public class ValiHeadUtil {
 	 * @param msg
 	 * @return
 	 */
-	public static boolean VeriParams(String msg, HttpServletResponse response) throws Exception {
+	public static  Map<String,Object> map = new HashMap<String,Object>();
+	public static boolean VeriParams(String msg) throws Exception {
 		ResponseHeader responseHeader = new ResponseHeader();
 
 		// 请求msg为空
 		if (msg == null || msg.trim().length() < 1) {
-			ValiHeadUtil.responseNullHead(responseHeader, response);
 			return false;
 		}
 		System.out.println("msg === " + msg);
@@ -66,104 +69,96 @@ public class ValiHeadUtil {
 			// 获取head信息
 			String requestHeadStr = JSON.toJSONString(msgEntity.get("head"));
 			// 去除body的值
-			String bodyMark = "\"body\":";
-			String headMark = "\"head\":";
-			if(newMsg.indexOf(bodyMark)>newMsg.indexOf(headMark)){
-				bodyStr  = newMsg.substring(newMsg.indexOf("\"body\":")+bodyMark.length(), newMsg.length()-1); 
+		
+			if(newMsg.indexOf("\"body\":")>newMsg.indexOf("\"head\":")){
+				bodyStr  = newMsg.substring(newMsg.indexOf("\"body\":")+7, newMsg.length()-1); 
 			}else{
-				bodyStr  = newMsg.substring(newMsg.indexOf(bodyMark)+bodyMark.length(), newMsg.indexOf(headMark)-1); 
+				bodyStr  = newMsg.substring(newMsg.indexOf("\"body\":")+7, newMsg.indexOf("\"head\":")-1); 
 			}
 			
+
 			// 根据head的json串转换成HeadBend
 			reqHead = JSON.parseObject(requestHeadStr, RequestHeader.class);
 		} catch (Exception e) {
 			e.printStackTrace();
-			ValiHeadUtil.responseNullHead(responseHeader, response);
 			return false;
 		}
 
 		if (reqHead == null) {
 			// 请求head为空
-			ValiHeadUtil.responseNullHead(responseHeader, response);
 			return false;
 		}
 
 		if (reqHead.getTab() == null) {
 			// messageId（流水号）为空
-			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
 			responseHeader.setResCode(900011);
 			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900011));
 
 			Map<String, Object> responseMsg = new HashMap<String, Object>();
 			responseMsg.put("head", responseHeader);
 			responseMsg.put("body", null);
-			response.getWriter().print(JSON.toJSONString(responseMsg));
+			map = responseMsg;
 			return false;
 		}
 
 		if (reqHead.getMessageID() == null) {
 			// messageId（流水号）为空
-			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
 			responseHeader.setResCode(900003);
 			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900003));
 
 			Map<String, Object> responseMsg = new HashMap<String, Object>();
 			responseMsg.put("head", responseHeader);
 			responseMsg.put("body", null);
-			response.getWriter().print(JSON.toJSONString(responseMsg));
+			map = responseMsg;
 			return false;
 		}
 
 		if (reqHead.getTimeStamp() == null) {
 			// timeStamp（时间戳）为空
-			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
 			responseHeader.setResCode(900004);
 			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900004));
 
 			Map<String, Object> responseMsg = new HashMap<String, Object>();
 			responseMsg.put("head", responseHeader);
 			responseMsg.put("body", null);
-			response.getWriter().print(JSON.toJSONString(responseMsg));
+			map = responseMsg;
 			return false;
 		}
 
 		if (reqHead.getTransactionType() == null || reqHead.getTransactionType().trim().length() < 1) {
 			// transactionType(接口编码) 为空
-			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
 			responseHeader.setResCode(900005);
 			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900005));
 
 			Map<String, Object> responseMsg = new HashMap<String, Object>();
 			responseMsg.put("head", responseHeader);
 			responseMsg.put("body", null);
-			response.getWriter().print(JSON.toJSONString(responseMsg));
+			map = responseMsg;
 			return false;
 		}
 
 		String tranType = reqHead.getTransactionType();
 		// 如果 TransactionType（接口编码）在字典中没有找到
 		if (TransactionTypeMap.TRANSACTION_TYPE_MAP.get(tranType) == null) {
-			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
 			responseHeader.setResCode(900005);
 			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900005));
 
 			Map<String, Object> responseMsg = new HashMap<String, Object>();
 			responseMsg.put("head", responseHeader);
 			responseMsg.put("body", null);
-			response.getWriter().print(JSON.toJSONString(responseMsg));
+			map = responseMsg;
 			return false;
 		}
 
 		if (reqHead.getSign() == null || reqHead.getSign().trim().length() < 1) {
 			// sign 为空
-			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
 			responseHeader.setResCode(900006);
 			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900006));
 
 			Map<String, Object> responseMsg = new HashMap<String, Object>();
 			responseMsg.put("head", responseHeader);
 			responseMsg.put("body", null);
-			response.getWriter().print(JSON.toJSONString(responseMsg));
+			map = responseMsg;
 			return false;
 		}
 
@@ -172,14 +167,13 @@ public class ValiHeadUtil {
 
 		if (!sign.toUpperCase().trim().equals(reqHead.getSign().toUpperCase().trim())) {
 			// sign 校验不通过
-			responseHeader.setTimeStamp(DateUtil.getTimeStamp());
 			responseHeader.setResCode(900006);
 			responseHeader.setMessage(RecodeMsgMap.RECODEMSGMAP.get(900006));
 
 			Map<String, Object> responseMsg = new HashMap<String, Object>();
 			responseMsg.put("head", responseHeader);
 			responseMsg.put("body", null);
-			response.getWriter().print(JSON.toJSONString(responseMsg));
+			map = responseMsg;
 			return false;
 		}
 		return true;
@@ -201,7 +195,7 @@ public class ValiHeadUtil {
 		Map<String, Object> responseMsg = new HashMap<String, Object>();
 		responseMsg.put("head", responseHeader);
 		responseMsg.put("body", null);
-		response.getWriter().print(JSON.toJSONString(responseMsg));
+		System.out.println(JSON.toJSONString(responseMsg));
 		return false;
 	}
 
